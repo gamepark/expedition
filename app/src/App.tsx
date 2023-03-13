@@ -7,7 +7,7 @@ import HTML5ToTouch from 'react-dnd-multi-backend/dist/cjs/HTML5toTouch'
 import GameDisplay from './GameDisplay'
 import HeaderText from './HeaderText'
 import Images from './images/Images'
-import Game from '@gamepark/board-game-template/Game'
+import Game from '@gamepark/expedition/Game'
 
 export default function App() {
   const game = useGame<Game>()

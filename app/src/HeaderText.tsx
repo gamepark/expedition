@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import {getPlayerName} from '@gamepark/board-game-template/MyBoardGameOptions'
+import {getPlayerName} from '@gamepark/expedition/ExpeditionOptions'
 import {usePlayerId} from '@gamepark/react-client'
 import {useTranslation} from 'react-i18next'
-import Game from '@gamepark/board-game-template/Game'
+import Game from '@gamepark/expedition/Game'
 
 type Props = {
   loading: boolean

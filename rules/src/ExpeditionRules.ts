@@ -1,7 +1,7 @@
 import {Rules} from '@gamepark/rules-api'
 import Game from './Game'
 import Move from './moves/Move'
-import {isGameOptions, MyBoardGameOptions} from './MyBoardGameOptions'
+import {isGameOptions, ExpeditionOptions} from './ExpeditionOptions'
 import Color from './Color'
 
 
@@ -9,7 +9,7 @@ import Color from './Color'
  * This class implements the rules of the board game.
  * It must follow Game Park "Rules" API so that the Game Park server can enforce the rules.
  */
-export default class MyBoardGame extends Rules<Game, Move, Color> {
+export default class ExpeditionRules extends Rules<Game, Move, Color> {
   /**
    * This constructor is called when the game "restarts" from a previously saved state.
    * @param state The state of the game
@@ -19,12 +19,12 @@ export default class MyBoardGame extends Rules<Game, Move, Color> {
    * This constructor is called when a new game is created. If your game has options, or a variable number of players, it will be provided here.
    * @param options The options of the new game
    */
-  constructor(options: MyBoardGameOptions)
+  constructor(options: ExpeditionOptions)
   /**
    * In here you must code the construction of your class. Use a "typeguard" to distinguish a new game from a restored game.
    * @param arg The state of the game, or the options when starting a new game
    */
-  constructor(arg: Game | MyBoardGameOptions) {
+  constructor(arg: Game | ExpeditionOptions) {
     if (isGameOptions(arg)) {
       const newGame = {players: arg.players, round: 1} // complete with everything you need when a new game starts
       super(newGame)
