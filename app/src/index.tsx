@@ -1,6 +1,6 @@
 import {css, Global} from '@emotion/react'
 import {ExpeditionOptionsSpec} from '@gamepark/expedition/ExpeditionOptions'
-import ExpeditionRules from '@gamepark/expedition/ExpeditionRules'
+import {ExpeditionRules} from '@gamepark/expedition/ExpeditionRules'
 import {GameProvider, setupTranslation} from '@gamepark/react-client'
 import normalize from 'emotion-normalize'
 import {StrictMode} from 'react'

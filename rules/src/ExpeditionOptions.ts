@@ -43,11 +43,15 @@ export function getPlayerName(playerId: Color, t: TFunction) {
   switch (playerId) {
     case Color.Red:
       return t('Red player')
+    case Color.Pink :
+      return t('Pink player')
     case Color.Blue:
       return t('Blue player')
     case Color.Green:
       return t('Green player')
     case Color.Yellow:
       return t('Yellow player')
+    case Color.White:
+      return t('White player')
   }
 }

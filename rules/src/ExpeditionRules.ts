@@ -4,12 +4,7 @@ import Move from './moves/Move'
 import {isGameOptions, ExpeditionOptions} from './ExpeditionOptions'
 import Color from './Color'
 
-
-/**
- * This class implements the rules of the board game.
- * It must follow Game Park "Rules" API so that the Game Park server can enforce the rules.
- */
-export default class ExpeditionRules extends Rules<Game, Move, Color> {
+export class ExpeditionRules extends Rules<Game, Move, Color> {
   /**
    * This constructor is called when the game "restarts" from a previously saved state.
    * @param state The state of the game

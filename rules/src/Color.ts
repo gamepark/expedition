@@ -1,7 +1,7 @@
 import {isEnumValue} from '@gamepark/rules-api'
 
 enum Color {
-  Blue = 1, Red, Green, Yellow
+  Red = 1, Pink, Blue, Green, Yellow, White
 }
 
 export default Color
