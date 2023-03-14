@@ -83,4 +83,4 @@ export enum Place {
   FiordlandNationalPark,
 }
 
-export const Places = Object.values(Place).filter(isEnumValue)
+export const places = Object.values(Place).filter<Place>(isEnumValue)
