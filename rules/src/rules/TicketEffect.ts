@@ -1,4 +1,4 @@
-import {PlayerRulesStep} from '../../../../workshop/packages/rules-api'
+import {PlayerRulesStep} from '@gamepark/rules-api'
 import Color from '../Color'
 import {MaterialType} from '../material/ExpeditionMaterial'
 

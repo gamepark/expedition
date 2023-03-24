@@ -1,7 +1,7 @@
-import {isEnumValue} from '../../../../workshop/packages/rules-api'
+import {isEnumValue} from '@gamepark/rules-api'
 
 export enum ArrowColor {
-  Yellow = 1, Blue, Red
+    Yellow = 1, Blue, Red
 }
 
 export const arrowColors = Object.values(ArrowColor).filter<ArrowColor>(isEnumValue)

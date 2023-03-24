@@ -1,20 +1,46 @@
-import Color from '../Color'
-import {MaterialType} from '../material/ExpeditionMaterial'
-import {LocationType} from '../material/ExpeditionLocations'
-import {MaterialMove, MaterialMoveType, MoveKind, PlayerRulesStep} from '@gamepark/rules-api'
+import Color from "../Color";
+import { MaterialType } from "../material/ExpeditionMaterial";
+import { LocationType } from "../material/ExpeditionLocations";
+import { PlayerRulesStep } from "@gamepark/rules-api";
 
-export class SetupKeyPlaces extends PlayerRulesStep<Color, MaterialType> {
+export class SetupKeyPlaces extends PlayerRulesStep<
+  Color,
+  MaterialType,
+  LocationType
+> {
   getPlayerMoves() {
-    const tokens = this.game.items[MaterialType.Token]!.filter(token => token.location.type === LocationType.TokenArea && token.location.player)
-    const cards = this.game.items[MaterialType.Card]!.filter(card => card.location.type === LocationType.Hand && card.location.player === this.player
-      && !this.game.items[MaterialType.Token]!.some(token => token.location.type === LocationType.Place && token.location.id === card.id))
-    return tokens.flatMap((_, index) => cards.map<MaterialMove>(card => ({
-        kind: MoveKind.MaterialMove,
-        itemsType: MaterialType.Token,
-        type: MaterialMoveType.Move,
-        item: index,
-        location: {type: LocationType.Place, id: card.id}
-      }))
-    )
+    const moves = this.initializeMoves();
+
+    // Get all tokens
+    const tokens = this.material(MaterialType.Token);
+    const cards = this.material(MaterialType.Card);
+
+    const tokensOnPlace = tokens.search().location(LocationType.Place).all();
+
+    const cardsInHand = cards
+      .search()
+      .location(LocationType.Hand)
+      .player(this.player)
+      .all();
+
+    const cardsWithoutToken = cardsInHand.filter(
+      (card) => !tokensOnPlace.some((token) => token.location.id === card.id)
+    );
+
+    // Tokens in location
+    const tokenSearch = tokens
+      .search()
+      .location(LocationType.TokenArea)
+      .player(this.player)
+      .moves();
+
+    // TODO: find a better solution
+    for (const card of cardsWithoutToken) {
+      moves.push(
+        ...tokenSearch.moveTo(LocationType.Place, () => ({ id: card.id }))
+      );
+    }
+
+    return moves;
   }
 }
