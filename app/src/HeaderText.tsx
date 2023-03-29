@@ -2,11 +2,11 @@
 import {getPlayerName} from '@gamepark/expedition/ExpeditionOptions'
 import {usePlayerId} from '@gamepark/react-client'
 import {useTranslation} from 'react-i18next'
-import Game from '@gamepark/expedition/Game'
+import {MaterialGame} from '../../../workshop/packages/rules-api'
 
 type Props = {
   loading: boolean
-  game?: Game
+  game?: MaterialGame
 }
 
 export default function HeaderText({loading}: Props) {

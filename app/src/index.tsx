@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import translations from './translations.json'
 
-setupTranslation(translations)
+setupTranslation(translations, {debug: false})
 
 const style = css`
   html {
