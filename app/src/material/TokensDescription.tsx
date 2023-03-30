@@ -1,0 +1,24 @@
+import red from '../images/tokens/red-token.jpg'
+import pink from '../images/tokens/pink-token.jpg'
+import blue from '../images/tokens/blue-token.jpg'
+import green from '../images/tokens/green-token.jpg'
+import yellow from '../images/tokens/yellow-token.jpg'
+import white from '../images/tokens/white-token.jpg'
+import {MaterialComponentType, TokenMaterialDescription} from '@gamepark/react-components'
+import Color from '@gamepark/expedition/Color'
+
+export const TokensDescription: TokenMaterialDescription<Color> = {
+  type: MaterialComponentType.Token,
+  props: {
+    image: {
+      [Color.Red]: red,
+      [Color.Pink]: pink,
+      [Color.Blue]: blue,
+      [Color.Green]: green,
+      [Color.Yellow]: yellow,
+      [Color.White]: white
+    },
+    height: 2,
+    ratio: 1
+  }
+}

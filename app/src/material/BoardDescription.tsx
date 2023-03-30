@@ -8,5 +8,5 @@ export const BoardDescription: BoardMaterialDescription = {
     height: 50,
     ratio: 2053 / 1554
   },
-  items: [{position: [10, 10]}]
+  items: [{position: [0, 0]}]
 }
