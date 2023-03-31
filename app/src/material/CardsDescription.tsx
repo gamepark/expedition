@@ -86,7 +86,7 @@ export const CardsDescription: CardMaterialDescription = {
   type: MaterialComponentType.Card,
   props: {
     height: 10,
-    ratio: 5/7,
+    ratio: 5 / 7,
     back: {
       image: back
     },

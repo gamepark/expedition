@@ -3,7 +3,7 @@ import {css, keyframes} from '@emotion/react'
 import {GameTable} from '@gamepark/react-components'
 import {MaterialsDescription} from './material/MaterialsDescription'
 import {MaterialGame} from '../../../workshop/packages/rules-api'
-import {LocationsDescription} from './material/LocationsDescription'
+import {Locators} from './locators/Locators'
 
 type Props = {
   game: MaterialGame
@@ -11,7 +11,7 @@ type Props = {
 
 export default function GameDisplay({game}: Props) {
   return (
-    <GameTable css={style} material={MaterialsDescription} location={LocationsDescription} items={game.items}>
+    <GameTable css={style} material={MaterialsDescription} locators={Locators} game={game}>
     </GameTable>
   )
 }
