@@ -6,6 +6,6 @@ import {LocationType} from '@gamepark/expedition/material/ExpeditionLocations'
 
 export class PlaceLocator extends ItemLocator<Color, MaterialType, LocationType> {
   place(_item: MaterialItem<Color, LocationType>): string {
-    return 'translate(10em, -10em)'
+    return 'translate(0em, 15em)'
   }
 }

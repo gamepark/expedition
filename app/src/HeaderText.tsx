@@ -2,7 +2,7 @@
 import {getPlayerName} from '@gamepark/expedition/ExpeditionOptions'
 import {usePlayerId} from '@gamepark/react-client'
 import {useTranslation} from 'react-i18next'
-import {MaterialGame} from '../../../workshop/packages/rules-api'
+import {MaterialGame} from '@gamepark/rules-api'
 
 type Props = {
   loading: boolean

@@ -6,7 +6,7 @@ import {DndProvider} from 'react-dnd-multi-backend'
 import HTML5ToTouch from 'react-dnd-multi-backend/dist/cjs/HTML5toTouch'
 import GameDisplay from './GameDisplay'
 import HeaderText from './HeaderText'
-import {MaterialGame} from '../../../workshop/packages/rules-api'
+import {MaterialGame} from '@gamepark/rules-api'
 
 export default function App() {
   const game = useGame<MaterialGame>()

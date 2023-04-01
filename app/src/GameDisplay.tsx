@@ -2,16 +2,18 @@
 import {css, keyframes} from '@emotion/react'
 import {GameTable} from '@gamepark/react-components'
 import {MaterialsDescription} from './material/MaterialsDescription'
-import {MaterialGame} from '../../../workshop/packages/rules-api'
+import {MaterialGame} from '@gamepark/rules-api'
 import {Locators} from './locators/Locators'
+import {usePlayerId} from '@gamepark/react-client'
 
 type Props = {
   game: MaterialGame
 }
 
 export default function GameDisplay({game}: Props) {
+  const playerId = usePlayerId()
   return (
-    <GameTable css={style} material={MaterialsDescription} locators={Locators} game={game}>
+    <GameTable css={style} material={MaterialsDescription} locators={Locators} game={game} playerId={playerId}>
     </GameTable>
   )
 }
