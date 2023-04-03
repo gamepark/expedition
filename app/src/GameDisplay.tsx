@@ -13,7 +13,8 @@ type Props = {
 export default function GameDisplay({game}: Props) {
   const playerId = usePlayerId()
   return (
-    <GameTable css={style} material={MaterialsDescription} locators={Locators} game={game} playerId={playerId}>
+    <GameTable css={style} material={MaterialsDescription} locators={Locators} game={game} playerId={playerId} zoomMin={1.4}
+               margin={{top: 7, left: 0, right: 20, bottom: 0}}>
     </GameTable>
   )
 }

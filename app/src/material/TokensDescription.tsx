@@ -18,7 +18,8 @@ export const TokensDescription: TokenMaterialDescription<Color> = {
       [Color.Yellow]: yellow,
       [Color.White]: white
     },
-    height: 2,
-    ratio: 1
+    height: 1.4,
+    ratio: 1,
+    borderRadius: 1
   }
 }

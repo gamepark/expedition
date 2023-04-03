@@ -12,7 +12,7 @@ export const ArrowsDescription: TokenMaterialDescription<ArrowColor> = {
       [ArrowColor.Blue]: blue,
       [ArrowColor.Yellow]: yellow
     },
-    height: 3,
+    height: 1.215,
     ratio: 500/135
   }
 }

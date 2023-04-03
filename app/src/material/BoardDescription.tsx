@@ -5,8 +5,8 @@ export const BoardDescription: BoardMaterialDescription = {
   type: MaterialComponentType.Board,
   props: {
     image: board,
-    height: 50,
+    height: 56,
     ratio: 2053 / 1554
   },
-  items: [{position: [0, 0]}]
+  items: [{position: [-10, -5]}]
 }

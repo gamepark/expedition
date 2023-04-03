@@ -85,7 +85,7 @@ import {Place} from '@gamepark/expedition/material/Place'
 export const CardsDescription: CardMaterialDescription = {
   type: MaterialComponentType.Card,
   props: {
-    height: 10,
+    height: 8.8,
     ratio: 5 / 7,
     back: {
       image: back

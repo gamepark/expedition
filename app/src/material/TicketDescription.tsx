@@ -6,7 +6,7 @@ export const TicketDescription: TokenMaterialDescription<Color> = {
   type: MaterialComponentType.Token,
   props: {
     image: ticket,
-    height: 5,
+    height: 2,
     ratio: 325/200
   }
 }
