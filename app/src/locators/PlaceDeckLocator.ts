@@ -7,8 +7,4 @@ export class PlaceDeckLocator extends DeckLocator<Color, MaterialType, LocationT
   getCoordinates() {
     return {x: -58, y: -28.5, z: 0}
   }
-
-  getDelta() {
-    return {x: -0.05, y: -0.05, z: 0.05}
-  }
 }
