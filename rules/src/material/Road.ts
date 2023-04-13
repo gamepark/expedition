@@ -1,4 +1,5 @@
-import {Place} from './Place'
+import {Place, places} from './Place'
+import {isEnumValue} from '@gamepark/rules-api'
 
 export enum BlueNode {
   MackenzieDelta_East = 100,
@@ -47,9 +48,9 @@ export enum RedNode {
   Sulawesi_East,
 }
 
-const StartNode = 0
+export const StartNode = 0
 
-type Node = typeof StartNode | Place | BlueNode | RedNode
+export type Node = typeof StartNode | Place | BlueNode | RedNode
 
 export const isGreenNode = (node: Node): node is Place => node < 100
 
@@ -262,3 +263,7 @@ export const roads: Road[] = [
   [RedNode.RapaNui_South, BlueNode.TierraDelFuego_West_West],
   [RedNode.TierraDelFuego_West, BlueNode.TierraDelFuego_West_West],
 ]
+
+export const redNodes = Object.values(RedNode).filter<RedNode>(isEnumValue)
+export const blueNodes = Object.values(BlueNode).filter<BlueNode>(isEnumValue)
+export const nodes = [StartNode, ...places, ...blueNodes, ...redNodes]
