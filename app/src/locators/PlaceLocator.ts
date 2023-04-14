@@ -20,28 +20,21 @@ export class PlaceLocator extends ItemLocator<Color, MaterialType, LocationType>
 
   getLocationCss(location: Location<Color, LocationType, Node>) {
     const borderColor = this.getObjectiveColor(location.id)
-    return css`
-      height: 1.8em;
-      width: 1.8em;
-      border-radius: 50%;
-      border: 0.2em solid ${borderColor};
-    `
+    return [locationCss, borderColor && borderCss(borderColor)]
   }
 
   getObjectiveColor(place?: Node) {
-    if (!place || !isGreenNode(place)) return 'transparent'
-    const commonObjectives = this.game.items[MaterialType.Card]!
-      .filter(card => card.location.type === LocationType.CommonPlacesArea)
+    if (!place || !isGreenNode(place)) return
+    const commonObjectives = this.getMaterial(MaterialType.Card).search().location(LocationType.CommonPlacesArea).all()
       .map<Place>(card => card.id as Place)
     if (commonObjectives.includes(place)) return 'purple'
-    if (!this.player) return 'transparent'
-    const playerObjectives = this.game.items[MaterialType.Card]!
-      .filter(card => card.location.type === LocationType.Hand && card.location.player === this.player)
+    if (!this.player) return
+    const playerObjectives = this.getMaterial(MaterialType.Card).search().location(LocationType.Hand).player(this.player).all()
       .map<Place>(card => card.id as Place)
     if (playerObjectives.includes(place)) {
       return playerColorCode[this.player!]
     }
-    return 'transparent'
+    return
   }
 
   getPositionOnParent(location: Location<Color, LocationType, Place>): Omit<Coordinates, 'z'> {
@@ -182,3 +175,13 @@ export const playerColorCode: Record<Color, string> = {
   [Color.Yellow]: '#FED061',
   [Color.White]: '#FFFFFF'
 }
+
+const locationCss = css`
+  height: 1.8em;
+  width: 1.8em;
+  border-radius: 50%;
+`
+
+const borderCss = (color: string) => css`
+  border: 0.2em solid ${color}
+`
