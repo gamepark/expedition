@@ -1,5 +1,5 @@
 import {ItemLocator} from '@gamepark/react-components'
-import {Coordinates, Location, MaterialItem} from '@gamepark/rules-api'
+import {Coordinates, Location} from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import {MaterialType} from '@gamepark/expedition/material/ExpeditionMaterial'
 import {LocationType} from '@gamepark/expedition/material/ExpeditionLocations'
@@ -9,10 +9,6 @@ import {BlueNode, isGreenNode, Node, nodes, RedNode, StartNode} from '@gamepark/
 
 export class PlaceLocator extends ItemLocator<Color, MaterialType, LocationType> {
   parentItemType = MaterialType.Board
-
-  getPosition(_item: MaterialItem<Color, LocationType>): Coordinates {
-    return {x: 0, y: 0, z: 0}
-  }
 
   getParentItemLocations(): Location<Color, LocationType, Node>[] {
     return nodes.map(place => ({type: LocationType.Place, id: place}))
@@ -38,11 +34,11 @@ export class PlaceLocator extends ItemLocator<Color, MaterialType, LocationType>
   }
 
   getPositionOnParent(location: Location<Color, LocationType, Place>): Omit<Coordinates, 'z'> {
-    return placeCoordinates[location.id!] ?? {x: 0, y: 0}
+    return nodesCoordinates[location.id!]
   }
 }
 
-const placeCoordinates: Partial<Record<Node, Omit<Coordinates, 'z'>>> = {
+export const nodesCoordinates: Record<Node, Omit<Coordinates, 'z'>> = {
   [StartNode]: {x: 46.9, y: 16.1},
   [Place.Denali]: {x: 6.7, y: 6.6},
   [Place.MackenzieDelta]: {x: 14.3, y: 2.75},
