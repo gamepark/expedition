@@ -45,7 +45,7 @@ export enum RedNode {
   Sanaa_South,
   Svalbard_East,
   Sakha_West,
-  Sulawesi_East,
+  Sulawesi_North,
 }
 
 export const StartNode = 0
@@ -241,15 +241,15 @@ export const roads: Road[] = [
   [Place.GreatWallOfChina, Place.MountFuji],
   [Place.MountFuji, RedNode.Denali_West],
   [Place.MountFuji, BlueNode.MountFuji_South],
-  [Place.AngkorVat, RedNode.Sulawesi_East],
+  [Place.AngkorVat, RedNode.Sulawesi_North],
   [Place.AngkorVat, Place.Sulawesi],
-  [Place.Sulawesi, RedNode.Sulawesi_East],
+  [Place.Sulawesi, RedNode.Sulawesi_North],
   [Place.Sulawesi, Place.PapuaNewGuinea],
   [Place.PapuaNewGuinea, BlueNode.PapuaNewGuinea_North],
   [Place.PapuaNewGuinea, Place.ArnhemLand],
-  [BlueNode.MountFuji_South, RedNode.Sulawesi_East],
+  [BlueNode.MountFuji_South, RedNode.Sulawesi_North],
   [BlueNode.MountFuji_South, RedNode.GalapagosIslands_West],
-  [RedNode.Sulawesi_East, RedNode.GalapagosIslands_West],
+  [RedNode.Sulawesi_North, RedNode.GalapagosIslands_West],
   [BlueNode.PapuaNewGuinea_North, RedNode.GalapagosIslands_West],
   [Place.ArnhemLand, Place.Borobudur],
   [Place.ArnhemLand, Place.GreatBarrierReef],
