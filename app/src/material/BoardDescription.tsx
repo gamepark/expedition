@@ -10,5 +10,6 @@ export const BoardDescription: BoardMaterialDescription = {
     height: 56,
     ratio: boardRatio
   },
-  items: [{position: {x: -10, y: -5, z: 0}}]
+  items: [{position: {x: -10, y: -5, z: 0}}],
+  rules: () => null
 }

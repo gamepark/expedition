@@ -79,8 +79,12 @@ import Uluru from '../images/cards/77-Uluru.jpg'
 import Perth from '../images/cards/78-Perth.jpg'
 import Tasmania from '../images/cards/79-Tasmania.jpg'
 import FiordlandNationalPark from '../images/cards/80-FiordlandNationalPark.jpg'
-import {CardMaterialDescription, MaterialComponentType} from '@gamepark/react-components'
+import {CardMaterialDescription, MaterialComponentType, MaterialRulesContext} from '@gamepark/react-components'
 import {Place} from '@gamepark/expedition/material/Place'
+import {TFunction} from 'i18next'
+import {LocationType} from '@gamepark/expedition/material/ExpeditionLocations'
+import {MaterialType} from '@gamepark/expedition/material/ExpeditionMaterial'
+import {MaterialItem} from '../../../../workshop/packages/rules-api'
 
 export const CardsDescription: CardMaterialDescription = {
   type: MaterialComponentType.Card,
@@ -174,5 +178,24 @@ export const CardsDescription: CardMaterialDescription = {
         [Place.FiordlandNationalPark]: FiordlandNationalPark
       }
     }
+  },
+  rules: (t: TFunction, {item, game, player}: MaterialRulesContext) => {
+    const isInMyHand = item.location.type === LocationType.Hand && item.location.player === player
+    const tokens = game.items[MaterialType.Token]! as MaterialItem[]
+    const isRevealed = isInMyHand && tokens.some(token => token.id === player && token.location.type === LocationType.Place && token.location.id === item.id)
+    return <>
+      <h2>{t('rules.card.title')}</h2>
+      <p>{t('rules.card.purpose')}</p>
+      {isInMyHand && !isRevealed && <p>{t('rules.card.hand.private')}</p>}
+      {isRevealed && <p>{t('rules.card.hand.revealed')}</p>}
+      {/*<p>Si l'objectif n'est pas atteint, à la fin de la partie vous perdrez 1 points.</p>
+      <p>Vous pouvez placer un jeton sur ce lieu. L'objectif sera alors connu des autres joueurs mais rapportera 2 points.</p>
+      <p>
+        <button>Placer un jeton sur ce lieu</button>
+      </p>
+      <h3><em>Babylone</em></h3>
+      <p><em><strong>Irak</strong> - Asie</em></p>
+      <p><em>Le Lion de babylone...</em></p>*/}
+    </>
   }
 }

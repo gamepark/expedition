@@ -14,5 +14,6 @@ export const ArrowsDescription: TokenMaterialDescription<ArrowColor> = {
     },
     height: 1.215,
     ratio: 500/135
-  }
+  },
+  rules: () => null
 }

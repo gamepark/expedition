@@ -8,5 +8,6 @@ export const TicketDescription: TokenMaterialDescription<Color> = {
     image: ticket,
     height: 2,
     ratio: 325/200
-  }
+  },
+  rules: () => null
 }

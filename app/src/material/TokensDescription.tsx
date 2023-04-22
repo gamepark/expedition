@@ -21,5 +21,6 @@ export const TokensDescription: TokenMaterialDescription<Color> = {
     height: 1.4,
     ratio: 1,
     borderRadius: 1
-  }
+  },
+  rules: () => null
 }
