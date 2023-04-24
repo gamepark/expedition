@@ -1,5 +1,5 @@
 import {ItemLocator} from '@gamepark/react-components'
-import {Coordinates, Location} from '@gamepark/rules-api'
+import {Location, XYCoordinates} from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import {MaterialType} from '@gamepark/expedition/material/ExpeditionMaterial'
 import {LocationType} from '@gamepark/expedition/material/ExpeditionLocations'
@@ -33,12 +33,12 @@ export class PlaceLocator extends ItemLocator<Color, MaterialType, LocationType>
     return
   }
 
-  getPositionOnParent(location: Location<Color, LocationType, Place>): Omit<Coordinates, 'z'> {
+  getPositionOnParent(location: Location<Color, LocationType, Place>): XYCoordinates {
     return nodesCoordinates[location.id!]
   }
 }
 
-export const nodesCoordinates: Record<Node, Omit<Coordinates, 'z'>> = {
+export const nodesCoordinates: Record<Node, XYCoordinates> = {
   [StartNode]: {x: 46.9, y: 16.1},
   [Place.Denali]: {x: 6.6, y: 6.52},
   [Place.MackenzieDelta]: {x: 14.3, y: 2.75},
@@ -120,47 +120,47 @@ export const nodesCoordinates: Record<Node, Omit<Coordinates, 'z'>> = {
   [Place.Perth]: {x: 79.6, y: 86.65},
   [Place.Tasmania]: {x: 87.4, y: 96.2},
   [Place.FiordlandNationalPark]: {x: 94.45, y: 96.5},
-  [BlueNode.MackenzieDelta_East]: {x: 21.75, y: 2.25},
+  [BlueNode.NorthwestPassage_West]: {x: 21.75, y: 2.25},
   [BlueNode.Thingvellir_West]: {x: 34.25, y: 11.8},
   [BlueNode.Newfoundland_South]: {x: 27.2, y: 29.15},
   [BlueNode.Rome_West]: {x: 38.45, y: 24.95},
   [BlueNode.Elmina_West]: {x: 33, y: 52.3},
-  [BlueNode.Omatako_West]: {x: 38.05, y: 72.2},
+  [BlueNode.Elmiha_South_South]: {x: 38.05, y: 72.2},
   [BlueNode.IguazuFalls_South]: {x: 24.93, y: 81.93},
-  [BlueNode.TierraDelFuego_West_West]: {x: 6.4, y: 93.1},
-  [BlueNode.GrahamLand_North]: {x: 38.6, y: 89.9},
+  [BlueNode.RapaNui_South_SouthEast]: {x: 6.4, y: 93.1},
+  [BlueNode.Elmiha_South_South_South_South]: {x: 38.6, y: 89.9},
   [BlueNode.GrahamLand_East]: {x: 42.12, y: 97.68},
-  [BlueNode.GrahamLand_East_East]: {x: 52.6, y: 97.1},
+  [BlueNode.IndienOcean_SouthWest_SouthEast]: {x: 52.6, y: 97.1},
   [BlueNode.Madagascar_South_South]: {x: 63.92, y: 88.27},
-  [BlueNode.Madagascar_East]: {x: 68.85, y: 62.9},
-  [BlueNode.Madagascar_North]: {x: 58.7, y: 59.2},
-  [BlueNode.CaspianSea_West]: {x: 54.35, y: 20.6},
-  [BlueNode.MountEverest_North]: {x: 75.55, y: 21},
-  [BlueNode.BungleBungleRange_West]: {x: 76.9, y: 72.2},
-  [BlueNode.Tasmania_West]: {x: 78.4, y: 96.7},
+  [BlueNode.Sanaa_South_SouthEast]: {x: 68.85, y: 62.9},
+  [BlueNode.Sanaa_South_SouthWest]: {x: 58.7, y: 59.2},
+  [BlueNode.StartNode_East]: {x: 54.35, y: 20.6},
+  [BlueNode.Novossibirsk_East]: {x: 75.55, y: 21},
+  [BlueNode.Sigiriya_South_South]: {x: 76.9, y: 72.2},
+  [BlueNode.Perth_South]: {x: 78.4, y: 96.7},
   [BlueNode.PapuaNewGuinea_North]: {x: 96.8, y: 59.25},
   [BlueNode.MountFuji_South]: {x: 96.2, y: 38.7},
-  [RedNode.Denali_West]: {x: 0.1, y: 10.2},
-  [RedNode.Banff_East]: {x: 23.05, y: 13.95},
-  [RedNode.PuertoRico_East]: {x: 27.95, y: 40.15},
-  [RedNode.GalapagosIslands_West]: {x: 0.1, y: 50.3},
+  [RedNode.CraterLake_NorthWest]: {x: 0.1, y: 10.2},
+  [RedNode.Newfoundland_West]: {x: 23.05, y: 13.95},
+  [RedNode.Tombouctou_West]: {x: 27.95, y: 40.15},
+  [RedNode.Teotihuacan_SouthWest]: {x: 0.1, y: 50.3},
   [RedNode.Atacama_West]: {x: 11.5, y: 73.9},
   [RedNode.RapaNui_South]: {x: 0.1, y: 85.9},
-  [RedNode.MachuPicchu_North]: {x: 14.8, y: 52.35},
+  [RedNode.SaltoAngel_West]: {x: 14.8, y: 52.35},
   [RedNode.TierraDelFuego_West]: {x: 15.3, y: 96.2},
   [RedNode.Elmiha_South]: {x: 38.55, y: 61.05},
   [RedNode.Douala_South]: {x: 48.35, y: 61.25},
-  [RedNode.IguazuFalls_South_West]: {x: 34.7, y: 81.2},
-  [RedNode.IndienOcean_West]: {x: 47.33, y: 89.25},
-  [RedNode.IndienOcean_South_East]: {x: 60.98, y: 96.68},
-  [RedNode.Tasmania_West_West]: {x: 70.13, y: 95.65},
+  [RedNode.Elmiha_South_South_South]: {x: 34.7, y: 81.2},
+  [RedNode.IndienOcean_SouthWest]: {x: 47.33, y: 89.25},
+  [RedNode.Madagascar_South_South_South]: {x: 60.98, y: 96.68},
+  [RedNode.Madagascar_South_South_SouthEast]: {x: 70.13, y: 95.65},
   [RedNode.Madagascar_South]: {x: 60.6, y: 78.7},
-  [RedNode.Perth_West]: {x: 71.15, y: 81.95},
-  [RedNode.Borobudur_West]: {x: 76.6, y: 61.25},
+  [RedNode.Sigiriya_South_South_South]: {x: 71.15, y: 81.95},
+  [RedNode.Sigiriya_South]: {x: 76.6, y: 61.25},
   [RedNode.Sanaa_South]: {x: 65.25, y: 52.35},
   [RedNode.Svalbard_East]: {x: 56.9, y: 3.7},
-  [RedNode.Sakha_West]: {x: 73.32, y: 11.73},
-  [RedNode.Sulawesi_North]: {x: 93.18, y: 51.32}
+  [RedNode.PutoranaPlateau_SouthEast]: {x: 73.32, y: 11.73},
+  [RedNode.AngkorVat_East]: {x: 93.18, y: 51.32}
 }
 
 export const playerColorCode: Record<Color, string> = {
