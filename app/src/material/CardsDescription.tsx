@@ -84,7 +84,10 @@ import {Place} from '@gamepark/expedition/material/Place'
 import {TFunction} from 'i18next'
 import {LocationType} from '@gamepark/expedition/material/ExpeditionLocations'
 import {MaterialType} from '@gamepark/expedition/material/ExpeditionMaterial'
-import {MaterialItem} from '../../../../workshop/packages/rules-api'
+import {Trans} from 'react-i18next'
+import {PlayMoveButton} from '@gamepark/react-client'
+import {ExpeditionRules} from '@gamepark/expedition'
+import {getPlayerName} from '@gamepark/expedition/ExpeditionOptions'
 
 export const CardsDescription: CardMaterialDescription = {
   type: MaterialComponentType.Card,
@@ -180,19 +183,31 @@ export const CardsDescription: CardMaterialDescription = {
     }
   },
   rules: (t: TFunction, {item, game, player}: MaterialRulesContext) => {
-    const isInMyHand = item.location.type === LocationType.Hand && item.location.player === player
-    const tokens = game.items[MaterialType.Token]! as MaterialItem[]
-    const isRevealed = isInMyHand && tokens.some(token => token.id === player && token.location.type === LocationType.Place && token.location.id === item.id)
+    const rules = new ExpeditionRules(game)
+    const deck = item.location.type === LocationType.CardsDeck
+    const hand = item.location.type === LocationType.Hand
+    const common = item.location.type === LocationType.CommonPlacesArea
+    const scored = item.location.type === LocationType.PlayerPlacesArea
+    const mine = player !== undefined && hand && item.location.player === player
+    const tokens = rules.material(MaterialType.Token)
+    const isRevealed = mine && tokens.search().location(LocationType.Place)
+      .filter(token => token.id === player && token.location.id === item.id).all().length > 0
     return <>
       <h2>{t('rules.card.title')}</h2>
       <p>{t('rules.card.purpose')}</p>
-      {isInMyHand && !isRevealed && <p>{t('rules.card.hand.private')}</p>}
-      {isRevealed && <p>{t('rules.card.hand.revealed')}</p>}
-      {/*<p>Si l'objectif n'est pas atteint, à la fin de la partie vous perdrez 1 points.</p>
-      <p>Vous pouvez placer un jeton sur ce lieu. L'objectif sera alors connu des autres joueurs mais rapportera 2 points.</p>
-      <p>
-        <button>Placer un jeton sur ce lieu</button>
-      </p>
+      {deck && <p>{t('rules.card.deck', {number: rules.material(MaterialType.Card).search().location(LocationType.CardsDeck).all().length})}</p>}
+      {hand && mine && !isRevealed && <p>{t('rules.card.hand.private')}</p>}
+      {hand && mine && isRevealed && <p>{t('rules.card.hand.revealed')}</p>}
+      {hand && mine && !isRevealed && game.rule?.id === 0 && game?.rule.player === player &&
+        <Trans defaults="rules.card.hand.place.token" components={[
+          <PlayMoveButton move={tokens.search().location(LocationType.TokenArea).player(player).moves().moveTo(LocationType.Place, () => ({id: item.id}))[0]}/>
+        ]}/>
+      }
+      {hand && !mine && <p>{t('rules.card.hand.other', {player: getPlayerName(item.location.player!, t)})}</p>}
+      {common && <p>{t('rules.card.common')}</p>}
+      {scored && mine && <p>{t('rules.card.scored')}</p>}
+      {scored && !mine && <p>{t('rules.card.scored.other')}</p>}
+      {/* TODO: add cards texts with translation:
       <h3><em>Babylone</em></h3>
       <p><em><strong>Irak</strong> - Asie</em></p>
       <p><em>Le Lion de babylone...</em></p>*/}
