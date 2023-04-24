@@ -52,7 +52,7 @@ export const nodesCoordinates: Record<Node, XYCoordinates> = {
   [Place.Louisiane]: {x: 14.6, y: 31.7},
   [Place.Teotihuacan]: {x: 9, y: 39},
   [Place.Tikal]: {x: 13.6, y: 41.5},
-  [Place.Newfoundland]: {x: 30.65, y: 19.25},
+  [Place.Newfoundland]: {x: 30.65, y: 19.2},
   [Place.Greenland]: {x: 36.62, y: 2.23},
   [Place.SaltoAngel]: {x: 20.95, y: 48.8},
   [Place.Marajo]: {x: 26.4, y: 54.5},

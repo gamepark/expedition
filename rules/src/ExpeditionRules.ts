@@ -58,9 +58,7 @@ export class ExpeditionRules extends MaterialRules<
         location: { type: LocationType.TokenArea, x, player: player.id }
       }))
       const tickets = this.material(MaterialType.Ticket)
-      tickets.create(3, (x) => ({
-        location: { type: LocationType.TicketArea, x, player: player.id }
-      }))
+      tickets.create([{quantity: 3, location: { type: LocationType.TicketArea, player: player.id }}])
     }
 
     const arrows = this.material(MaterialType.Arrow)
