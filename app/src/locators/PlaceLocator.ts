@@ -1,11 +1,12 @@
 import {ItemLocator} from '@gamepark/react-components'
-import {Location, XYCoordinates} from '@gamepark/rules-api'
+import {Location, Material, XYCoordinates} from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import {MaterialType} from '@gamepark/expedition/material/ExpeditionMaterial'
 import {LocationType} from '@gamepark/expedition/material/ExpeditionLocations'
 import {Place} from '@gamepark/expedition/material/Place'
 import {css} from '@emotion/react'
 import {BlueNode, isGreenNode, Node, nodes, RedNode, StartNode} from '@gamepark/expedition/material/Road'
+import {ExpeditionRules} from '@gamepark/expedition/ExpeditionRules'
 
 export class PlaceLocator extends ItemLocator<Color, MaterialType, LocationType> {
   parentItemType = MaterialType.Board
@@ -14,18 +15,18 @@ export class PlaceLocator extends ItemLocator<Color, MaterialType, LocationType>
     return nodes.map(place => ({type: LocationType.Place, id: place}))
   }
 
-  getLocationCss(location: Location<Color, LocationType, Node>) {
-    const borderColor = this.getObjectiveColor(location.id)
+  getLocationCss(location: Location<Color, LocationType, Node>, rules: ExpeditionRules) {
+    const borderColor = this.getObjectiveColor(rules.material(MaterialType.Card), location.id)
     return [locationCss, borderColor && borderCss(borderColor)]
   }
 
-  getObjectiveColor(place?: Node) {
+  getObjectiveColor(cards: Material, place?: Node) {
     if (!place || !isGreenNode(place)) return
-    const commonObjectives = this.getMaterial(MaterialType.Card).search().location(LocationType.CommonPlacesArea).all()
+    const commonObjectives = cards.search().location(LocationType.CommonPlacesArea).all()
       .map<Place>(card => card.id as Place)
     if (commonObjectives.includes(place)) return 'purple'
     if (!this.player) return
-    const playerObjectives = this.getMaterial(MaterialType.Card).search().location(LocationType.Hand).player(this.player).all()
+    const playerObjectives = cards.search().location(LocationType.Hand).player(this.player).all()
       .map<Place>(card => card.id as Place)
     if (playerObjectives.includes(place)) {
       return playerColorCode[this.player!]
