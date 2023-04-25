@@ -13,14 +13,15 @@ export const TicketDescription: TokenMaterialDescription<Color> = {
     height: 2,
     ratio: 325 / 200
   },
-  rules: (t: TFunction, {item, player}: MaterialRulesContext) => {
+  rules: (t: TFunction, {item, player, legalMoves}: MaterialRulesContext) => {
     // TODO: stock component will result in tickets without a location
     const mine = player !== undefined && item.location.player === player
     return <>
       <h2>{t('rules.ticket.title')}</h2>
       {mine && <p>{t('rules.ticket.mine', {number: item.quantity})}</p>}
-      {mine && <PlayMoveButton move={'TODO'}>{t('rules.ticket.spend')}</PlayMoveButton>}
+      {mine && legalMoves.length === 1 && <PlayMoveButton move={legalMoves[0]}>{t('rules.ticket.spend')}</PlayMoveButton>}
       {!mine && <p>{t('rules.ticket.other', {number: item.quantity, player: getPlayerName(item.location.player!, t)})}</p>}
+      <hr/>
       <p><Trans defaults="rules.ticket.purpose" components={[<strong/>]}/></p>
     </>
   }
