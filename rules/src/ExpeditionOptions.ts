@@ -32,7 +32,7 @@ export function isGameOptions(arg: Game | ExpeditionOptions): arg is ExpeditionO
 export const ExpeditionOptionsSpec: OptionsSpec<ExpeditionOptions> = {
   players: {
     id: {
-      label: (t: TFunction) => t('Color'),
+      label: (t: TFunction) => t('Player color'),
       values: playerColors,
       valueSpec: color => ({label: t => getPlayerName(color, t)})
     }
@@ -42,16 +42,16 @@ export const ExpeditionOptionsSpec: OptionsSpec<ExpeditionOptions> = {
 export function getPlayerName(playerId: Color, t: TFunction) {
   switch (playerId) {
     case Color.Red:
-      return t('Red player')
+      return t('Red')
     case Color.Pink :
-      return t('Pink player')
+      return t('Pink')
     case Color.Blue:
-      return t('Blue player')
+      return t('Blue')
     case Color.Green:
-      return t('Green player')
+      return t('Green')
     case Color.Yellow:
-      return t('Yellow player')
+      return t('Yellow')
     case Color.White:
-      return t('White player')
+      return t('White')
   }
 }
