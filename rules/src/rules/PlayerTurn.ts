@@ -1,18 +1,11 @@
-import {
-  Location,
-  MaterialItem,
-  MaterialMoveType,
-  MaterialRulesMove,
-  MoveKind,
-  PlayerRulesStep
-} from '@gamepark/rules-api'
+import {Location, MaterialItem, MaterialMoveType, MaterialRulesMove, MoveKind, PlayerRulesStep} from '@gamepark/rules-api'
 import Color from '../Color'
-import { MaterialType } from '../material/ExpeditionMaterial'
-import { LocationType } from '../material/ExpeditionLocations'
-import { MainGameData } from '../types/MainGameData'
-import { Node, roads } from '../material/Road'
+import {MaterialType} from '../material/ExpeditionMaterial'
+import {LocationType} from '../material/ExpeditionLocations'
+import {MainGameData} from '../types/MainGameData'
+import {Node, roads} from '../material/Road'
 import isEqual from 'lodash/isEqual'
-import { ArrowColor } from '../material/ArrowColor'
+import {ArrowColor} from '../material/ArrowColor'
 
 export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationType> {
   getPlayerMoves() {
@@ -52,16 +45,13 @@ export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationTyp
           .filter((item) => item.id === arrowColor && (item.quantity ?? 0) > 0)
           .moves()
 
-        const moves = targets
-          .flatMap((t) => arrow.moveTo(LocationType.Road, node === t[1] ? {
-            id: t,
-            orientation: {
-              z: 180
-            }
-          } : { id: t }))
-
-        return moves
-
+        return targets.flatMap((t) => arrow.moveTo(LocationType.Road, {
+          id: t,
+          x: allArrows.search().location(LocationType.Road).filter(item => item.location.id[0] === t[0] && item.location.id[1] === t[1]).count(),
+          orientation: {
+            z: node === t[1] ? 180 : 0
+          }
+        }))
       })
     )
 

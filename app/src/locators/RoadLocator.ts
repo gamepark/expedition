@@ -1,4 +1,4 @@
-import {ItemLocator} from '@gamepark/react-components'
+import {ItemLocator, PlaceItemContext} from '@gamepark/react-components'
 import {Coordinates, Location, MaterialItem, XYCoordinates} from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import {MaterialType} from '@gamepark/expedition/material/ExpeditionMaterial'
@@ -44,6 +44,17 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
   getPositionOnParent(location: Location<Color, LocationType, Road>): XYCoordinates {
     const coordinates = this.getRoadCoordinates(location)
     return {x: average(coordinates.map(c => c.x)), y: average(coordinates.map(c => c.y))}
+  }
+
+  place(item: MaterialItem<Color, LocationType>, context: PlaceItemContext<Color, MaterialType, LocationType>): string {
+    let place = super.place(item, context)
+    const index = this.getItemIndex(item, context)
+    if (index === 1) {
+      place += ` translateX(0.8em)`
+    } else if (index === 2) {
+      place += ` translateX(-0.8em)`
+    }
+    return place
   }
 }
 
