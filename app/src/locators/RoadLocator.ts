@@ -1,12 +1,13 @@
 import {ItemLocator, PlaceItemContext} from '@gamepark/react-components'
-import {Coordinates, Location, MaterialItem, XYCoordinates} from '@gamepark/rules-api'
+import {Coordinates, Location, MaterialItem, MaterialMoveType, MoveKind, XYCoordinates} from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import {MaterialType} from '@gamepark/expedition/material/ExpeditionMaterial'
 import {LocationType} from '@gamepark/expedition/material/ExpeditionLocations'
 import {Road, roads} from '@gamepark/expedition/material/Road'
-import {css} from '@emotion/react'
+import {css, Interpolation, Theme} from '@emotion/react'
 import {nodesCoordinates} from './PlaceLocator'
 import {boardRatio} from '../material/BoardDescription'
+import equal from 'fast-deep-equal'
 
 export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> {
   parentItemType = MaterialType.Board
@@ -55,6 +56,14 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
       place += ` translateX(-0.8em)`
     }
     return place
+  }
+
+  itemExtraCss(item: MaterialItem<Color, LocationType>, {legalMoves}: PlaceItemContext<Color, MaterialType, LocationType>): Interpolation<Theme> {
+    if (legalMoves.some(move => move.kind === MoveKind.MaterialMove && move.type === MaterialMoveType.Move && move.itemsType === MaterialType.Arrow
+      && equal(item.location.id, move.location.id))) {
+      return css`pointer-events: none;`
+    }
+    return
   }
 }
 
