@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import back from '../images/cards/back.jpg'
 import Delani from '../images/cards/01-Denali.jpg'
 import MackenzieDelta from '../images/cards/02-MackenzieDelta.jpg'
@@ -184,14 +185,14 @@ export const CardsDescription: CardMaterialDescription = {
   },
   rules: (t: TFunction, {item, game, player}: MaterialRulesContext) => {
     const rules = new ExpeditionRules(game)
-    const deck = item.location.type === LocationType.CardsDeck
-    const hand = item.location.type === LocationType.Hand
-    const common = item.location.type === LocationType.CommonPlacesArea
-    const scored = item.location.type === LocationType.PlayerPlacesArea
-    const mine = player !== undefined && hand && item.location.player === player
+    const deck = item.location?.type === LocationType.CardsDeck
+    const hand = item.location?.type === LocationType.Hand
+    const common = item.location?.type === LocationType.CommonPlacesArea
+    const scored = item.location?.type === LocationType.PlayerPlacesArea
+    const mine = player !== undefined && hand && item.location?.player === player
     const tokens = rules.material(MaterialType.Token)
     const isRevealed = mine && tokens.search().location(LocationType.Place)
-      .filter(token => token.id === player && token.location.id === item.id).all().length > 0
+      .filter(token => token.id === player && token.location?.id === item.id).all().length > 0
     return <>
       <h2>{t('rules.card.title')}</h2>
       <p>{t('rules.card.purpose')}</p>
@@ -203,7 +204,7 @@ export const CardsDescription: CardMaterialDescription = {
           <PlayMoveButton move={tokens.search().location(LocationType.TokenArea).player(player).moves().moveTo(LocationType.Place, () => ({id: item.id}))[0]}/>
         ]}/>
       }
-      {hand && !mine && <p>{t('rules.card.hand.other', {player: getPlayerName(item.location.player!, t)})}</p>}
+      {hand && !mine && <p>{t('rules.card.hand.other', {player: getPlayerName(item.location!.player!, t)})}</p>}
       {common && <p>{t('rules.card.common')}</p>}
       {scored && mine && <p>{t('rules.card.scored')}</p>}
       {scored && !mine && <p>{t('rules.card.scored.other')}</p>}

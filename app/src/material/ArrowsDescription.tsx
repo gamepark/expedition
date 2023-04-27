@@ -1,6 +1,7 @@
 import red from '../images/arrows/red-arrow.png'
 import blue from '../images/arrows/blue-arrow.png'
 import yellow from '../images/arrows/yellow-arrow.png'
+/** @jsxImportSource @emotion/react */
 import {MaterialComponentType, MaterialRulesContext, TokenMaterialDescription} from '@gamepark/react-components'
 import {ArrowColor} from '@gamepark/expedition/material/ArrowColor'
 import {TFunction} from 'i18next'
@@ -21,7 +22,7 @@ export const ArrowsDescription: TokenMaterialDescription<ArrowColor> = {
   rules: (t: TFunction, {item}: MaterialRulesContext) => {
     return <>
       <h2>{arrowTitle[item.id!](t)}</h2>
-      {item.location.type === LocationType.ArrowsStock && <p>{arrowStock[item.id!](t, item.quantity)}</p>}
+      {item.location?.type === LocationType.ArrowsStock && <p>{arrowStock[item.id!](t, item.quantity)}</p>}
       {/* TODO: if this arrow can be removed using a ticket, add a button to play the ticket and a button to remove the arrow */}
       <hr/>
       <p><Trans defaults="rules.arrow.purpose" components={[<strong/>]}/></p>

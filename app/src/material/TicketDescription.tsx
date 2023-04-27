@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import ticket from '../images/ticket.jpg'
 import {MaterialComponentType, MaterialRulesContext, TokenMaterialDescription} from '@gamepark/react-components'
 import Color from '@gamepark/expedition/Color'
@@ -14,13 +15,13 @@ export const TicketDescription: TokenMaterialDescription<Color> = {
     ratio: 325 / 200
   },
   rules: (t: TFunction, {item, player, legalMoves}: MaterialRulesContext) => {
-    // TODO: stock component will result in tickets without a location
-    const mine = player !== undefined && item.location.player === player
+    const owner = item.location?.player
+    const mine = owner !== undefined && owner === player
     return <>
       <h2>{t('rules.ticket.title')}</h2>
       {mine && <p>{t('rules.ticket.mine', {number: item.quantity})}</p>}
       {mine && legalMoves.length === 1 && <PlayMoveButton move={legalMoves[0]}>{t('rules.ticket.spend')}</PlayMoveButton>}
-      {!mine && <p>{t('rules.ticket.other', {number: item.quantity, player: getPlayerName(item.location.player!, t)})}</p>}
+      {owner !== undefined && !mine && <p>{t('rules.ticket.other', {number: item.quantity, player: getPlayerName(owner, t)})}</p>}
       <hr/>
       <p><Trans defaults="rules.ticket.purpose" components={[<strong/>]}/></p>
     </>
