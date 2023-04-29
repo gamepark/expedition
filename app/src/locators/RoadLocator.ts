@@ -18,7 +18,8 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
   }
 
   getRotation(item: MaterialItem<Color, LocationType>): Partial<Coordinates> {
-    return {z: this.getAngle(this.getRoadCoordinates(item.location))}
+    const roadCoordinates = this.getRoadCoordinates(item.location)
+    return {z: this.getAngle(item.rotation?.z ? [roadCoordinates[1], roadCoordinates[0]] : roadCoordinates)}
   }
 
   getRoadCoordinates(location: Location<Color, LocationType, Road>): [XYCoordinates, XYCoordinates] {
@@ -28,7 +29,7 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
     if (coordinates[0].x > 50 && coordinates[1].x < 1) {
       coordinates[1] = {x: 99.95, y: coordinates[1].y}
     }
-    return location.orientation?.z === 180 ? [coordinates[1], coordinates[0]] : coordinates
+    return coordinates
   }
 
   getAngle(coordinates: [XYCoordinates, XYCoordinates]): number {

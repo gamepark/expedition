@@ -1,11 +1,11 @@
-import {Location, MaterialItem, MaterialMoveType, MaterialRulesMove, MoveKind, PlayerRulesStep} from '@gamepark/rules-api'
+import { createMoveItemMove, MaterialMoveType, MaterialRulesMove, MoveKind, PlayerRulesStep } from '@gamepark/rules-api'
 import Color from '../Color'
-import {MaterialType} from '../material/ExpeditionMaterial'
-import {LocationType} from '../material/ExpeditionLocations'
-import {MainGameData} from '../types/MainGameData'
-import {Node, roads} from '../material/Road'
+import { MaterialType } from '../material/ExpeditionMaterial'
+import { LocationType } from '../material/ExpeditionLocations'
+import { MainGameData } from '../types/MainGameData'
+import { Node, roads } from '../material/Road'
 import isEqual from 'lodash/isEqual'
-import {ArrowColor} from '../material/ArrowColor'
+import { ArrowColor } from '../material/ArrowColor'
 
 export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationType> {
   getPlayerMoves() {
@@ -45,13 +45,15 @@ export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationTyp
           .filter((item) => item.id === arrowColor && (item.quantity ?? 0) > 0)
           .moves()
 
-        return targets.flatMap((t) => arrow.moveTo(LocationType.Road, {
-          id: t,
-          x: allArrows.search().location(LocationType.Road).filter(item => item.location.id[0] === t[0] && item.location.id[1] === t[1]).count(),
-          orientation: {
-            z: node === t[1] ? 180 : 0
-          }
-        }))
+        return targets.flatMap((t) => createMoveItemMove(
+          { type: MaterialType.Arrow, index: arrow.items[0][0] },
+          {
+            type: LocationType.Road,
+            id: t,
+            x: allArrows.search().location(LocationType.Road).filter(item => item.location.id[0] === t[0] && item.location.id[1] === t[1]).count()
+          },
+          node === t[1] ? { rotation: { z: 1 } } : undefined
+        ))
       })
     )
 
@@ -76,28 +78,15 @@ export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationTyp
           .filter((i) => i.id === item.id)
           .all()
 
-        const nextPlace = this.getNextPlaceForExpedition(move.location, expeditionArrows)
-        if (nextPlace === undefined) {
+        expeditions[item.id!] = move.rotation?.z ? move.location.id[0] : move.location.id[1]
+        if (expeditionArrows.some((arrow) => arrow.location.id!.some((place: number) => expeditions[item.id!] === place))) {
           delete expeditions[item.id!]
-        } else {
-          expeditions[item.id!] = nextPlace
         }
       }
       return []
     }
 
     return super.play(move)
-  }
-
-  getNextPlaceForExpedition(location: Location<Color, LocationType, number>, expeditionArrows: MaterialItem<Color, LocationType, number>[]): Node | undefined {
-    const endOfArrow = location.orientation?.z === 180 ? location.id![0] : location.id![1]
-    const isLoop = expeditionArrows.some((arrow) => arrow.location.id!.some((place: number) => endOfArrow === place))
-    if (isLoop) {
-      return undefined
-    }
-
-    return endOfArrow
-
   }
 
   onMovePlayed(move: MaterialRulesMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
