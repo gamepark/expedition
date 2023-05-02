@@ -1,4 +1,4 @@
-import { createMoveItemMove, MaterialMoveType, MaterialRulesMove, MoveKind, PlayerRulesStep } from '@gamepark/rules-api'
+import { createMoveItemMove, MaterialItem, MaterialMoveType, MaterialRulesMove, MoveKind, PlayerRulesStep } from '@gamepark/rules-api'
 import Color from '../Color'
 import { MaterialType } from '../material/ExpeditionMaterial'
 import { LocationType } from '../material/ExpeditionLocations'
@@ -45,15 +45,19 @@ export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationTyp
           .filter((item) => item.id === arrowColor && (item.quantity ?? 0) > 0)
           .moves()
 
-        return targets.flatMap((t) => createMoveItemMove(
-          { type: MaterialType.Arrow, index: arrow.items[0][0] },
-          {
-            type: LocationType.Road,
-            id: t,
-            x: allArrows.search().location(LocationType.Road).filter(item => item.location.id[0] === t[0] && item.location.id[1] === t[1]).count()
-          },
-          node === t[1] ? { rotation: { z: 1 } } : undefined
-        ))
+        return targets.flatMap((t) => {
+          const item: MaterialItem<Color, LocationType> = {
+            location: {
+              type: LocationType.Road,
+              id: t,
+              x: allArrows.search().location(LocationType.Road).filter(item => item.location.id[0] === t[0] && item.location.id[1] === t[1]).count()
+            }
+          }
+          if (node === t[1]) {
+            item.rotation = { z: 1 }
+          }
+          return createMoveItemMove(MaterialType.Arrow, arrow.items[0][0], item)
+        })
       })
     )
 
@@ -63,8 +67,8 @@ export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationTyp
   play(move: MaterialRulesMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
     if (move.kind === MoveKind.MaterialMove && move.itemsType === MaterialType.Arrow && move.type === MaterialMoveType.Move) {
       const arrows = this.material(MaterialType.Arrow)
-      const item = arrows.items[move.item]
-      const location = move.location
+      const item = arrows.items[move.itemIndex]
+      const location = move.item.location!
 
       if (location.type === LocationType.Road) {
 
@@ -78,7 +82,7 @@ export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationTyp
           .filter((i) => i.id === item.id)
           .all()
 
-        expeditions[item.id!] = move.rotation?.z ? move.location.id[0] : move.location.id[1]
+        expeditions[item.id!] = move.item.rotation?.z ? move.item.location!.id[0] : move.item.location!.id[1]
         if (expeditionArrows.some((arrow) => arrow.location.id!.some((place: number) => expeditions[item.id!] === place))) {
           delete expeditions[item.id!]
         }

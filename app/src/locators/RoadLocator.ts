@@ -14,7 +14,7 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
   rotationUnit = 'rad'
 
   getParentItemLocations(): Location<Color, LocationType, Road>[] {
-    return roads.map(road => ({type: LocationType.Road, id: road}))
+    return roads.map(road => ({ type: LocationType.Road, id: road }))
   }
 
   getRotation(item: MaterialItem<Color, LocationType>): number {
@@ -27,7 +27,7 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
     const coordinates: [XYCoordinates, XYCoordinates] = [nodesCoordinates[road[0]], nodesCoordinates[road[1]]]
     // 3 red nodes are links between the left & right sides of the board
     if (coordinates[0].x > 50 && coordinates[1].x < 1) {
-      coordinates[1] = {x: 99.95, y: coordinates[1].y}
+      coordinates[1] = { x: 99.95, y: coordinates[1].y }
     }
     return coordinates
   }
@@ -45,7 +45,7 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
 
   getPositionOnParent(location: Location<Color, LocationType, Road>): XYCoordinates {
     const coordinates = this.getRoadCoordinates(location)
-    return {x: average(coordinates.map(c => c.x)), y: average(coordinates.map(c => c.y))}
+    return { x: average(coordinates.map(c => c.x)), y: average(coordinates.map(c => c.y)) }
   }
 
   place(item: MaterialItem<Color, LocationType>, context: PlaceItemContext<Color, MaterialType, LocationType>): string {
@@ -59,9 +59,13 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
     return place
   }
 
-  itemExtraCss(item: MaterialItem<Color, LocationType>, {legalMoves}: PlaceItemContext<Color, MaterialType, LocationType>): Interpolation<Theme> {
-    if (legalMoves.some(move => move.kind === MoveKind.MaterialMove && move.type === MaterialMoveType.Move && move.itemsType === MaterialType.Arrow
-      && equal(item.location.id, move.location.id))) {
+  itemExtraCss(item: MaterialItem<Color, LocationType>, { legalMoves }: PlaceItemContext<Color, MaterialType, LocationType>): Interpolation<Theme> {
+    if (legalMoves.some(move =>
+      move.kind === MoveKind.MaterialMove
+      && move.type === MaterialMoveType.Move
+      && move.itemsType === MaterialType.Arrow
+      && equal(item.location.id, move.item.location?.id)
+    )) {
       return css`pointer-events: none;`
     }
     return
