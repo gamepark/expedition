@@ -1,12 +1,12 @@
-import {ItemLocator, PlaceItemContext} from '@gamepark/react-components'
-import {Coordinates, Location, MaterialItem, MaterialMoveType, MoveKind, XYCoordinates} from '@gamepark/rules-api'
+import { ItemLocator, PlaceItemContext } from '@gamepark/react-components'
+import { Location, MaterialItem, MaterialMoveType, MoveKind, XYCoordinates } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
-import {MaterialType} from '@gamepark/expedition/material/ExpeditionMaterial'
-import {LocationType} from '@gamepark/expedition/material/ExpeditionLocations'
-import {Road, roads} from '@gamepark/expedition/material/Road'
-import {css, Interpolation, Theme} from '@emotion/react'
-import {nodesCoordinates} from './PlaceLocator'
-import {boardRatio} from '../material/BoardDescription'
+import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
+import { LocationType } from '@gamepark/expedition/material/ExpeditionLocations'
+import { Road, roads } from '@gamepark/expedition/material/Road'
+import { css, Interpolation, Theme } from '@emotion/react'
+import { nodesCoordinates } from './PlaceLocator'
+import { boardRatio } from '../material/BoardDescription'
 import equal from 'fast-deep-equal'
 
 export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> {
@@ -17,9 +17,9 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
     return roads.map(road => ({type: LocationType.Road, id: road}))
   }
 
-  getRotation(item: MaterialItem<Color, LocationType>): Partial<Coordinates> {
+  getRotation(item: MaterialItem<Color, LocationType>): number {
     const roadCoordinates = this.getRoadCoordinates(item.location)
-    return {z: this.getAngle(item.rotation?.z ? [roadCoordinates[1], roadCoordinates[0]] : roadCoordinates)}
+    return this.getAngle(item.rotation?.z ? [roadCoordinates[1], roadCoordinates[0]] : roadCoordinates)
   }
 
   getRoadCoordinates(location: Location<Color, LocationType, Road>): [XYCoordinates, XYCoordinates] {
