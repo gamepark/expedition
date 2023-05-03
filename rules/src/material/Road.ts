@@ -266,7 +266,7 @@ export const roads: Road[] = [
   [Place.Tasmania, BlueNode.Perth_South],
   [BlueNode.IndienOcean_SouthWest_SouthEast, BlueNode.GrahamLand_East],
   [RedNode.TierraDelFuego_West, BlueNode.RapaNui_South_SouthEast],
-  [RedNode.RapaNui_South, Place.FiordlandNationalPark]
+  [Place.FiordlandNationalPark, RedNode.RapaNui_South]
 ]
 
 export const redNodes = Object.values(RedNode).filter<RedNode>(isEnumValue)
