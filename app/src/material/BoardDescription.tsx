@@ -1,11 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import board from '../images/board.jpg'
-import {BoardMaterialDescription, linkButtonCss, MaterialComponentType} from '@gamepark/react-components'
-import {TFunction} from 'i18next'
-import {Trans} from 'react-i18next'
-import {PlayMoveButton} from '@gamepark/react-client'
-import {displayMaterialRules} from '@gamepark/rules-api'
-import {MaterialType} from '@gamepark/expedition/material/ExpeditionMaterial'
+import { BoardMaterialDescription, linkButtonCss, MaterialComponentType, PlayMoveButton } from '@gamepark/react-components'
+import { TFunction } from 'i18next'
+import { Trans } from 'react-i18next'
+import { displayMaterialRules } from '@gamepark/rules-api'
+import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 
 export const boardRatio = 2053 / 1554
 
