@@ -80,14 +80,9 @@ import Uluru from '../images/cards/77-Uluru.jpg'
 import Perth from '../images/cards/78-Perth.jpg'
 import Tasmania from '../images/cards/79-Tasmania.jpg'
 import FiordlandNationalPark from '../images/cards/80-FiordlandNationalPark.jpg'
-import { CardMaterialDescription, MaterialComponentType, MaterialRulesContext, PlayMoveButton } from '@gamepark/react-components'
+import { CardMaterialDescription, MaterialComponentType, MaterialRulesProps } from '@gamepark/react-components'
 import { Place } from '@gamepark/expedition/material/Place'
-import { TFunction } from 'i18next'
-import { LocationType } from '@gamepark/expedition/material/ExpeditionLocations'
-import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
-import { Trans } from 'react-i18next'
-import { ExpeditionRules } from '@gamepark/expedition'
-import { getPlayerName } from '@gamepark/expedition/ExpeditionOptions'
+import { CardRules } from './CardRules'
 
 export const CardsDescription: CardMaterialDescription = {
   type: MaterialComponentType.Card,
@@ -182,36 +177,5 @@ export const CardsDescription: CardMaterialDescription = {
       }
     }
   },
-  rules: (t: TFunction, { item, game, player }: MaterialRulesContext) => {
-    const rules = new ExpeditionRules(game)
-    const deck = item.location?.type === LocationType.CardsDeck
-    const hand = item.location?.type === LocationType.Hand
-    const common = item.location?.type === LocationType.CommonPlacesArea
-    const scored = item.location?.type === LocationType.PlayerPlacesArea
-    const mine = player !== undefined && hand && item.location?.player === player
-    const tokens = rules.material(MaterialType.Token)
-    const isRevealed = mine && tokens.search().location(LocationType.Place)
-      .filter(token => token.id === player && token.location?.id === item.id).all().length > 0
-    return <>
-      <h2>{t('rules.card.title')}</h2>
-      <p>{t('rules.card.purpose')}</p>
-      {deck && <p>{t('rules.card.deck', { number: rules.material(MaterialType.Card).search().location(LocationType.CardsDeck).all().length })}</p>}
-      {hand && mine && !isRevealed && <p>{t('rules.card.hand.private')}</p>}
-      {hand && mine && isRevealed && <p>{t('rules.card.hand.revealed')}</p>}
-      {hand && mine && !isRevealed && game.rule?.id === 0 && game?.rule.player === player &&
-        <Trans defaults="rules.card.hand.place.token" components={[
-          <PlayMoveButton
-            move={tokens.search().location(LocationType.TokenArea).player(player).moves().moveTo(LocationType.Place, () => ({ id: item.id }))[0]}/>
-        ]}/>
-      }
-      {hand && !mine && <p>{t('rules.card.hand.other', { player: getPlayerName(item.location!.player!, t) })}</p>}
-      {common && <p>{t('rules.card.common')}</p>}
-      {scored && mine && <p>{t('rules.card.scored')}</p>}
-      {scored && !mine && <p>{t('rules.card.scored.other')}</p>}
-      {/* TODO: add cards texts with translation:
-      <h3><em>Babylone</em></h3>
-      <p><em><strong>Irak</strong> - Asie</em></p>
-      <p><em>Le Lion de babylone...</em></p>*/}
-    </>
-  }
+  rules: (props: MaterialRulesProps) => <CardRules {...props}/>
 }
