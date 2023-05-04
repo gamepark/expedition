@@ -1,4 +1,5 @@
-import {ItemLocator} from '@gamepark/react-components'
+/** @jsxImportSource @emotion/react */
+import { ItemLocator, LocationRulesProps } from '@gamepark/react-components'
 import {Location, Material, XYCoordinates} from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import {MaterialType} from '@gamepark/expedition/material/ExpeditionMaterial'
@@ -7,6 +8,8 @@ import {Place} from '@gamepark/expedition/material/Place'
 import {css} from '@emotion/react'
 import {BlueNode, isGreenNode, Node, nodes, RedNode, StartNode} from '@gamepark/expedition/material/Road'
 import {ExpeditionRules} from '@gamepark/expedition/ExpeditionRules'
+import { ReactNode } from 'react'
+import { PlaceRules } from './PlaceRules'
 
 export class PlaceLocator extends ItemLocator<Color, MaterialType, LocationType> {
   parentItemType = MaterialType.Board
@@ -36,6 +39,10 @@ export class PlaceLocator extends ItemLocator<Color, MaterialType, LocationType>
 
   getPositionOnParent(location: Location<Color, LocationType, Place>): XYCoordinates {
     return nodesCoordinates[location.id!]
+  }
+
+  getLocationRules(props: LocationRulesProps<Color, MaterialType, LocationType>): ReactNode {
+    return <PlaceRules {...props}/>
   }
 }
 

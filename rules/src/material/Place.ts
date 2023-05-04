@@ -1,4 +1,4 @@
-import {isEnumValue} from '@gamepark/rules-api'
+import { isEnumValue } from '@gamepark/rules-api'
 
 export enum Place {
   Svalbard = 1,
@@ -80,7 +80,7 @@ export enum Place {
   MachuPicchu,
   RapaNui,
   Tasmania,
-  FiordlandNationalPark,
+  FiordlandNationalPark
 }
 
 export const places = Object.values(Place).filter<Place>(isEnumValue)
