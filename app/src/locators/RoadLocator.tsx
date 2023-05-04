@@ -1,4 +1,5 @@
-import { ItemLocator, PlaceItemContext } from '@gamepark/react-components'
+/** @jsxImportSource @emotion/react */
+import { ItemLocator, LocationRulesProps, PlaceItemContext } from '@gamepark/react-components'
 import { Location, MaterialItem, MaterialMoveType, MoveKind, XYCoordinates } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
@@ -8,6 +9,8 @@ import { css, Interpolation, Theme } from '@emotion/react'
 import { nodesCoordinates } from './PlaceLocator'
 import { boardRatio } from '../material/BoardDescription'
 import equal from 'fast-deep-equal'
+import { ReactNode } from 'react'
+import { RoadRules } from './RoadRules'
 
 export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> {
   parentItemType = MaterialType.Board
@@ -69,6 +72,10 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
       return css`pointer-events: none;`
     }
     return
+  }
+
+  getLocationRules(props: LocationRulesProps<Color, MaterialType, LocationType>): ReactNode {
+    return <RoadRules {...props}/>
   }
 }
 
