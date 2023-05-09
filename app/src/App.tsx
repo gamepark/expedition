@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { FailuresDialog } from '@gamepark/react-client'
-import { FullscreenDialog, Header, LoadingScreen, Menu, useGame } from '@gamepark/react-game'
+import { FailuresDialog, FullscreenDialog, Header, LoadingScreen, Menu, useGame } from '@gamepark/react-game'
 import { useEffect, useState } from 'react'
 import { DndProvider } from 'react-dnd-multi-backend'
 import HTML5ToTouch from 'react-dnd-multi-backend/dist/cjs/HTML5toTouch'
