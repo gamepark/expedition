@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialRulesProps, PlayMoveButton } from '@gamepark/react-components'
+import { MaterialRulesProps, PlayMoveButton } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { getPlayerName } from '@gamepark/expedition/ExpeditionOptions'
 import { Trans, useTranslation } from 'react-i18next'

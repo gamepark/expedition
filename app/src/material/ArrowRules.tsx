@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialRulesProps } from '@gamepark/react-components'
+import { MaterialRulesProps } from '@gamepark/react-game'
 import { ArrowColor } from '@gamepark/expedition/material/ArrowColor'
 import { TFunction } from 'i18next'
 import { Trans, useTranslation } from 'react-i18next'

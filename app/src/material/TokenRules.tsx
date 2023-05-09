@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialRulesProps } from '@gamepark/react-components'
+import { MaterialRulesProps } from '@gamepark/react-game'
 import { Trans, useTranslation } from 'react-i18next'
 import { getPlayerName } from '@gamepark/expedition/ExpeditionOptions'
 

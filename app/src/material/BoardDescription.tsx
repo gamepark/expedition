@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import board from '../images/board.jpg'
-import { BoardMaterialDescription, MaterialComponentType } from '@gamepark/react-components'
+import { BoardMaterialDescription, MaterialComponentType } from '@gamepark/react-game'
 import { BoardRules } from './BoardRules'
 
 export const boardRatio = 2053 / 1554

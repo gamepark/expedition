@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import ticket from '../images/ticket.jpg'
-import { MaterialComponentType, MaterialRulesProps, TokenMaterialDescription } from '@gamepark/react-components'
+import { MaterialComponentType, MaterialRulesProps, TokenMaterialDescription } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { TicketRules } from './TicketRules'
 

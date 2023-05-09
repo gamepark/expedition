@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { linkButtonCss, LocationRulesProps, MaterialComponent, PlayMoveButton } from '@gamepark/react-components'
+import { linkButtonCss, LocationRulesProps, MaterialComponent, PlayMoveButton } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/ExpeditionLocations'

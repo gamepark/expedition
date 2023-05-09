@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import {FailuresDialog, FullscreenDialog, Menu, useGame} from '@gamepark/react-client'
-import {Header, LoadingScreen} from '@gamepark/react-components'
-import {useEffect, useState} from 'react'
-import {DndProvider} from 'react-dnd-multi-backend'
+import { FailuresDialog, FullscreenDialog, Menu, useGame } from '@gamepark/react-client'
+import { Header, LoadingScreen } from '@gamepark/react-game'
+import { useEffect, useState } from 'react'
+import { DndProvider } from 'react-dnd-multi-backend'
 import HTML5ToTouch from 'react-dnd-multi-backend/dist/cjs/HTML5toTouch'
-import {GameDisplay} from './GameDisplay'
+import { GameDisplay } from './GameDisplay'
 import HeaderText from './HeaderText'
-import {MaterialGame} from '@gamepark/rules-api'
+import { MaterialGame } from '@gamepark/rules-api'
 
 export default function App() {
   const game = useGame<MaterialGame>()

@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { ItemLocator, LocationRulesProps, PlaceItemContext } from '@gamepark/react-components'
+import { ItemLocator, LocationRulesProps, PlaceItemContext } from '@gamepark/react-game'
 import { Location, MaterialItem, MaterialMoveType, MoveKind, XYCoordinates } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'

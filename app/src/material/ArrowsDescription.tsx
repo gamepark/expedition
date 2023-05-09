@@ -2,7 +2,7 @@
 import red from '../images/arrows/red-arrow.png'
 import blue from '../images/arrows/blue-arrow.png'
 import yellow from '../images/arrows/yellow-arrow.png'
-import { MaterialComponentType, MaterialRulesProps, TokenMaterialDescription } from '@gamepark/react-components'
+import { MaterialComponentType, MaterialRulesProps, TokenMaterialDescription } from '@gamepark/react-game'
 import { ArrowColor } from '@gamepark/expedition/material/ArrowColor'
 import { ArrowRules } from './ArrowRules'
 

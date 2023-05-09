@@ -1,4 +1,4 @@
-import { DeckLocator } from '@gamepark/react-components'
+import { DeckLocator } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/ExpeditionLocations'
