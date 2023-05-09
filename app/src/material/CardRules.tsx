@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialRulesProps, PlayMoveButton } from '@gamepark/react-game'
+import { MaterialRulesProps, PlayMoveButton, useLegalMoves, useRules } from '@gamepark/react-game'
 import { LocationType } from '@gamepark/expedition/material/ExpeditionLocations'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { Trans, useTranslation } from 'react-i18next'
 import { ExpeditionRules } from '@gamepark/expedition'
 import { getPlayerName } from '@gamepark/expedition/ExpeditionOptions'
-import { useLegalMoves, usePlayerId, useRules } from '@gamepark/react-client'
+import { usePlayerId } from '@gamepark/react-client'
 import Color from '@gamepark/expedition/Color'
 import { isMoveItem, MaterialItem, MaterialRulesMove } from '@gamepark/rules-api'
 

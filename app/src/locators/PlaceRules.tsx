@@ -1,11 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import { linkButtonCss, LocationRulesProps, MaterialComponent, PlayMoveButton } from '@gamepark/react-game'
+import { linkButtonCss, LocationRulesProps, MaterialComponent, PlayMoveButton, useLegalMoves, useRules } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/ExpeditionLocations'
 import { Trans, useTranslation } from 'react-i18next'
 import { isBlueNode, isGreenNode, isRedNode, isRoadToNode, Node } from '@gamepark/expedition/material/Road'
-import { useLegalMoves, useRules } from '@gamepark/react-client'
 import { TFunction } from 'i18next'
 import { displayMaterialRules, isMoveItem, MaterialRulesMove, MoveItem } from '@gamepark/rules-api'
 import { arrowColors } from '@gamepark/expedition/material/ArrowColor'

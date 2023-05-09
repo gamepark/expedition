@@ -1,10 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { LocationRulesProps, MaterialComponent, PlayMoveButton } from '@gamepark/react-game'
+import { LocationRulesProps, MaterialComponent, PlayMoveButton, useRules } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/ExpeditionLocations'
 import { useTranslation } from 'react-i18next'
-import { useRules } from '@gamepark/react-client'
 import { MoveItem } from '@gamepark/rules-api'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { ArrowsDescription } from '../material/ArrowsDescription'
