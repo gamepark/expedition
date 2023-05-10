@@ -1,14 +1,16 @@
-import {css, Global} from '@emotion/react'
-import {ExpeditionOptionsSpec} from '@gamepark/expedition/ExpeditionOptions'
-import {ExpeditionRules} from '@gamepark/expedition/ExpeditionRules'
-import {GameProvider, setupTranslation} from '@gamepark/react-client'
+/** @jsxImportSource @emotion/react */
+import { css, Global } from '@emotion/react'
+import { ExpeditionOptionsSpec } from '@gamepark/expedition/ExpeditionOptions'
+import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
+import { setupTranslation } from '@gamepark/react-client'
+import { GameProvider } from '@gamepark/react-game'
 import normalize from 'emotion-normalize'
-import {StrictMode} from 'react'
+import { StrictMode } from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import translations from './translations.json'
 
-setupTranslation(translations, {debug: false})
+setupTranslation(translations, { debug: false })
 
 const style = css`
   html {
