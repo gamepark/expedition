@@ -1,9 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialRulesProps, PlayMoveButton } from '@gamepark/react-game'
+import { MaterialRulesProps, PlayMoveButton, usePlayerId } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { getPlayerName } from '@gamepark/expedition/ExpeditionOptions'
 import { Trans, useTranslation } from 'react-i18next'
-import { usePlayerId } from '@gamepark/react-client'
 
 export const TicketRules = ({ item, legalMoves }: MaterialRulesProps) => {
   const { t } = useTranslation()
