@@ -5,14 +5,14 @@ import { places } from './material/Place'
 import { hideItemId, hideItemIdToOthers, MaterialGame, SecretMaterialRules, Undo } from '@gamepark/rules-api'
 import { ExpeditionOptions } from './ExpeditionOptions'
 import { ArrowColor, arrowColors } from './material/ArrowColor'
-import { SetupKeyPlaces } from './rules/SetupKeyPlaces'
-import { PlayerTurn } from './rules/PlayerTurn'
-import { TicketEffect } from './rules/TicketEffect'
 import { StartNode } from './material/Road'
 import Move from './moves/Move'
+import { RulesStep, rulesSteps } from './rules/RulesStep'
 
 export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, LocationType>
   implements Undo<MaterialGame<Color, MaterialType, LocationType>, Move, Color> {
+
+  rulesSteps = rulesSteps
 
   hidingStrategies = {
     [MaterialType.Card]: {
@@ -84,10 +84,6 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
       }
     })
 
-    this.start(SetupKeyPlaces, this.game.players[0])
-  }
-
-  getRulesSteps() {
-    return [SetupKeyPlaces, PlayerTurn, TicketEffect]
+    this.start(RulesStep.SetupKeyPlaces, this.game.players[0])
   }
 }

@@ -2,8 +2,8 @@ import Color from '../Color'
 import { MaterialType } from '../material/ExpeditionMaterial'
 import { LocationType } from '../material/ExpeditionLocations'
 import { MaterialRulesMove, MoveKind, PlayerRulesStep } from '@gamepark/rules-api'
-import { PlayerTurn } from './PlayerTurn'
 import { MainGameData } from '../types/MainGameData'
+import { RulesStep } from './RulesStep'
 
 export class SetupKeyPlaces extends PlayerRulesStep<
   Color,
@@ -53,7 +53,7 @@ export class SetupKeyPlaces extends PlayerRulesStep<
         .location(LocationType.TokenArea)
         .all()
 
-      const nextStep = remainingTokens.length ? SetupKeyPlaces : PlayerTurn
+      const nextStep = remainingTokens.length ? RulesStep.SetupKeyPlaces : RulesStep.PlayerTurn
       return [this.rulesMoves().nextStep(nextStep, this.nextPlayer(), this.getData<MainGameData>())]
     }
 

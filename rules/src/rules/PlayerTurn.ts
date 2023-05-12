@@ -6,6 +6,7 @@ import { MainGameData } from '../types/MainGameData'
 import { Node, roads } from '../material/Road'
 import isEqual from 'lodash/isEqual'
 import { ArrowColor } from '../material/ArrowColor'
+import { RulesStep } from './RulesStep'
 
 export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationType> {
   getPlayerMoves() {
@@ -95,7 +96,7 @@ export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationTyp
 
   onMovePlayed(move: MaterialRulesMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
     if (move.kind === MoveKind.MaterialMove && move.itemsType === MaterialType.Arrow && move.type === MaterialMoveType.Move) {
-      return [this.rulesMoves().nextStep(PlayerTurn, this.nextPlayer(), this.getData<MainGameData>())]
+      return [this.rulesMoves().nextStep(RulesStep.PlayerTurn, this.nextPlayer(), this.getData<MainGameData>())]
     }
 
     return []
