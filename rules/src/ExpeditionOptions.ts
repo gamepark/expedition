@@ -1,7 +1,6 @@
-import {OptionsSpec} from '@gamepark/rules-api'
-import {TFunction} from 'i18next'
-import Game from './Game'
-import Color, {playerColors} from './Color'
+import { OptionsSpec } from '@gamepark/rules-api'
+import { TFunction } from 'i18next'
+import Color, { playerColors } from './Color'
 
 /**
  * This is the options for each player in the game.
@@ -14,15 +13,6 @@ type ExpeditionPlayerOptions = { id: Color }
  */
 export type ExpeditionOptions = {
   players: ExpeditionPlayerOptions[]
-}
-
-/**
- * Typeguard to help Typescript distinguish between a GameState and new game's options, for you main class constructor.
- * @param arg GameState or Game options
- * @return true if arg is a Game options
- */
-export function isGameOptions(arg: Game | ExpeditionOptions): arg is ExpeditionOptions {
-  return typeof (arg as Game).round === 'undefined'
 }
 
 /**

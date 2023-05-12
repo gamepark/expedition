@@ -4,8 +4,7 @@ import { LocationType } from './material/ExpeditionLocations'
 import { places } from './material/Place'
 import { hideItemId, hideItemIdToOthers, MaterialGame, SecretMaterialRules, Undo } from '@gamepark/rules-api'
 import { ExpeditionOptions } from './ExpeditionOptions'
-import { ArrowColor, arrowColors } from './material/ArrowColor'
-import { StartNode } from './material/Road'
+import { arrowColors } from './material/ArrowColor'
 import Move from './moves/Move'
 import { RulesStep, rulesSteps } from './rules/RulesStep'
 
@@ -75,14 +74,6 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
         location: { type: LocationType.ArrowsStock }
       }))
     )
-
-    this.setData({
-      expeditions: {
-        [ArrowColor.Red]: StartNode,
-        [ArrowColor.Blue]: StartNode,
-        [ArrowColor.Yellow]: StartNode
-      }
-    })
 
     this.start(RulesStep.SetupKeyPlaces, this.game.players[0])
   }
