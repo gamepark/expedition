@@ -13,21 +13,28 @@ import { ArrowsDescription } from '../material/ArrowsDescription'
 import { css } from '@emotion/react'
 import { Place } from '@gamepark/expedition/material/Place'
 
-export const PlaceRules = ({ location }: LocationRulesProps<Color, MaterialType, LocationType>) => {
+export const PlaceRules = ({ location, legalMoves, close }: LocationRulesProps<Color, MaterialType, LocationType>) => {
   const { t } = useTranslation()
   const rules = useRules<ExpeditionRules>()
-  const legalMoves = useLegalMoves<MaterialRulesMove, MoveItem>(
+  const arrowMoves = useLegalMoves<MaterialRulesMove, MoveItem>(
     move => isMoveItem(move) && move.item.location !== undefined && isRoadToNode(location.id, move.item.location, move.item.rotation?.z === 1)
   )
   return <>
     <h2>{getPlaceTitle(t, location.id)}</h2>
     <p>{getPlaceText(t, location.id)}</p>
     {isGreenNode(location.id) && <GreenPlaceDetails place={location.id}/>}
-    {legalMoves.length > 0 && arrowColors.map(color => {
-      const move = legalMoves.find(move => rules?.material(MaterialType.Arrow).items[move.itemIndex].id === color)
+    {legalMoves.length > 0 &&
+      <p>
+        <PlayMoveButton move={legalMoves[0]} onPlay={close}>
+          {t('rules.place.token')}
+        </PlayMoveButton>
+      </p>
+    }
+    {arrowMoves.length > 0 && arrowColors.map(color => {
+      const move = arrowMoves.find(move => rules?.material(MaterialType.Arrow).items[move.itemIndex].id === color)
       return move ?
-        <p>
-          <PlayMoveButton move={move} css={placeArrowButton}>
+        <p key={color}>
+          <PlayMoveButton move={move} css={placeArrowButton} onPlay={close}>
             <MaterialComponent description={ArrowsDescription} itemId={color} css={buttonArrowCss}/>
             {t('rules.place.arrow', { color })}
           </PlayMoveButton>

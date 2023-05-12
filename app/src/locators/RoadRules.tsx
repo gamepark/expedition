@@ -9,7 +9,7 @@ import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { ArrowsDescription } from '../material/ArrowsDescription'
 import { css } from '@emotion/react'
 
-export const RoadRules = ({ legalMoves }: LocationRulesProps<Color, MaterialType, LocationType>) => {
+export const RoadRules = ({ legalMoves, close }: LocationRulesProps<Color, MaterialType, LocationType>) => {
   const { t } = useTranslation()
   const rules = useRules<ExpeditionRules>()
   return <>
@@ -18,8 +18,8 @@ export const RoadRules = ({ legalMoves }: LocationRulesProps<Color, MaterialType
     {legalMoves.map(move => {
       const color = rules?.material(MaterialType.Arrow).items[(move as MoveItem).itemIndex].id
       return (
-        <p>
-          <PlayMoveButton move={move} css={placeArrowButton}>
+        <p key={color}>
+          <PlayMoveButton move={move} css={placeArrowButton} onPlay={close}>
             <MaterialComponent description={ArrowsDescription} itemId={color} css={buttonArrowCss}/>
             {t('rules.road.placeArrow', { color })}
           </PlayMoveButton>

@@ -13,6 +13,6 @@ export const BoardDescription: BoardMaterialDescription = {
     ratio: boardRatio
   },
   items: [{ position: { x: -10, y: -5, z: 0 } }],
-  rules: () => <BoardRules/>
+  rules: BoardRules
 }
 

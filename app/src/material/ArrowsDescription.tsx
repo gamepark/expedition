@@ -2,7 +2,7 @@
 import red from '../images/arrows/red-arrow.png'
 import blue from '../images/arrows/blue-arrow.png'
 import yellow from '../images/arrows/yellow-arrow.png'
-import { MaterialComponentType, MaterialRulesProps, TokenMaterialDescription } from '@gamepark/react-game'
+import { MaterialComponentType, TokenMaterialDescription } from '@gamepark/react-game'
 import { ArrowColor } from '@gamepark/expedition/material/ArrowColor'
 import { ArrowRules } from './ArrowRules'
 
@@ -17,5 +17,5 @@ export const ArrowsDescription: TokenMaterialDescription<ArrowColor> = {
     height: 4.5,
     ratio: 135 / 500
   },
-  rules: (props: MaterialRulesProps) => <ArrowRules {...props}/>
+  rules: ArrowRules
 }

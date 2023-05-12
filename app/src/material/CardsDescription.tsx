@@ -80,7 +80,7 @@ import Uluru from '../images/cards/77-Uluru.jpg'
 import Perth from '../images/cards/78-Perth.jpg'
 import Tasmania from '../images/cards/79-Tasmania.jpg'
 import FiordlandNationalPark from '../images/cards/80-FiordlandNationalPark.jpg'
-import { CardMaterialDescription, MaterialComponentType, MaterialRulesProps } from '@gamepark/react-game'
+import { CardMaterialDescription, MaterialComponentType } from '@gamepark/react-game'
 import { Place } from '@gamepark/expedition/material/Place'
 import { CardRules } from './CardRules'
 
@@ -177,5 +177,5 @@ export const CardsDescription: CardMaterialDescription = {
       }
     }
   },
-  rules: (props: MaterialRulesProps) => <CardRules {...props}/>
+  rules: CardRules
 }

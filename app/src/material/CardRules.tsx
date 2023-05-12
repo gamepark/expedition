@@ -6,9 +6,10 @@ import { Trans, useTranslation } from 'react-i18next'
 import { ExpeditionRules } from '@gamepark/expedition'
 import { getPlayerName } from '@gamepark/expedition/ExpeditionOptions'
 import Color from '@gamepark/expedition/Color'
-import { isMoveItem, MaterialItem, MaterialRulesMove } from '@gamepark/rules-api'
+import { isMoveItem, MaterialRulesMove } from '@gamepark/rules-api'
 
-export const CardRules = ({ item }: MaterialRulesProps) => {
+export const CardRules = (props: MaterialRulesProps) => {
+  const { item } = props
   const { t } = useTranslation()
   const rules = useRules<ExpeditionRules>()!
   const player = usePlayerId<Color>()
@@ -20,7 +21,7 @@ export const CardRules = ({ item }: MaterialRulesProps) => {
     <h2>{t('rules.card.title')}</h2>
     <p>{t('rules.card.purpose')}</p>
     {deck && <p>{t('rules.card.deck', { number: rules.material(MaterialType.Card).search().location(LocationType.CardsDeck).all().length })}</p>}
-    {hand && <HandCardRules item={item}/>}
+    {hand && <HandCardRules {...props}/>}
     {common && <p>{t('rules.card.common')}</p>}
     {scored && item.location?.player === player && <p>{t('rules.card.scored')}</p>}
     {scored && item.location?.player !== player && <p>{t('rules.card.scored.other')}</p>}
@@ -31,7 +32,7 @@ export const CardRules = ({ item }: MaterialRulesProps) => {
   </>
 }
 
-const HandCardRules = ({ item }: { item: Partial<MaterialItem> }) => {
+const HandCardRules = ({ item, close }: MaterialRulesProps) => {
   const { t } = useTranslation()
   const player = usePlayerId<Color>()
   const rules = useRules<ExpeditionRules>()!
@@ -46,7 +47,7 @@ const HandCardRules = ({ item }: { item: Partial<MaterialItem> }) => {
     {mine && isRevealed && <p>{t('rules.card.hand.revealed')}</p>}
     {placeTokenMove &&
       <Trans defaults="rules.card.hand.place.token" components={[
-        <PlayMoveButton move={placeTokenMove}/>
+        <PlayMoveButton move={placeTokenMove} onPlay={close}/>
       ]}/>
     }
     {!mine && <p>{t('rules.card.hand.other', { player: getPlayerName(item.location!.player!, t) })}</p>}

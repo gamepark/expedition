@@ -4,7 +4,7 @@ import Color from '@gamepark/expedition/Color'
 import { getPlayerName } from '@gamepark/expedition/ExpeditionOptions'
 import { Trans, useTranslation } from 'react-i18next'
 
-export const TicketRules = ({ item, legalMoves }: MaterialRulesProps) => {
+export const TicketRules = ({ item, legalMoves, close }: MaterialRulesProps) => {
   const { t } = useTranslation()
   const player = usePlayerId<Color>()
   const owner = item.location?.player
@@ -12,7 +12,11 @@ export const TicketRules = ({ item, legalMoves }: MaterialRulesProps) => {
   return <>
     <h2>{t('rules.ticket.title')}</h2>
     {mine && <p>{t('rules.ticket.mine', { number: item.quantity })}</p>}
-    {mine && legalMoves.length === 1 && <PlayMoveButton move={legalMoves[0]}>{t('rules.ticket.spend')}</PlayMoveButton>}
+    {mine && legalMoves.length === 1 &&
+      <PlayMoveButton move={legalMoves[0]} onPlay={close}>
+        {t('rules.ticket.spend')}
+      </PlayMoveButton>
+    }
     {owner !== undefined && !mine && <p>{t('rules.ticket.other', { number: item.quantity, player: getPlayerName(owner, t) })}</p>}
     <hr/>
     <p><Trans defaults="rules.ticket.purpose" components={[<strong/>]}/></p>
