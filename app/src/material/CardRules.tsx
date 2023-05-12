@@ -20,7 +20,7 @@ export const CardRules = (props: MaterialRulesProps) => {
   return <>
     <h2>{t('rules.card.title')}</h2>
     <p>{t('rules.card.purpose')}</p>
-    {deck && <p>{t('rules.card.deck', { number: rules.material(MaterialType.Card).search().location(LocationType.CardsDeck).all().length })}</p>}
+    {deck && <p>{t('rules.card.deck', { number: rules.material(MaterialType.Card).location(LocationType.CardsDeck).length })}</p>}
     {hand && <HandCardRules {...props}/>}
     {common && <p>{t('rules.card.common')}</p>}
     {scored && item.location?.player === player && <p>{t('rules.card.scored')}</p>}
@@ -40,8 +40,7 @@ const HandCardRules = ({ item, close }: MaterialRulesProps) => {
   const legalMoves = useLegalMoves<MaterialRulesMove>()
   const placeTokenMove = legalMoves.find(move => isMoveItem(move) && move.itemsType === MaterialType.Token && move.item.location?.id === item.id)
   const tokens = rules.material(MaterialType.Token)
-  const isRevealed = mine && tokens.search().location(LocationType.Place)
-    .filter(token => token.id === player && token.location?.id === item.id).all().length > 0
+  const isRevealed = mine && tokens.location(LocationType.Place).locationId(item.id).length > 0
   return <>
     {mine && !isRevealed && <p>{t('rules.card.hand.private')}</p>}
     {mine && isRevealed && <p>{t('rules.card.hand.revealed')}</p>}

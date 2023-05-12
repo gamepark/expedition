@@ -16,7 +16,7 @@ export const RoadRules = ({ legalMoves, close }: LocationRulesProps<Color, Mater
     <h2>{t('rules.road.title')}</h2>
     <p>{t('rules.board.road')}</p>
     {legalMoves.map(move => {
-      const color = rules?.material(MaterialType.Arrow).items[(move as MoveItem).itemIndex].id
+      const color = rules?.items(MaterialType.Arrow)[(move as MoveItem).itemIndex].id
       return (
         <p key={color}>
           <PlayMoveButton move={move} css={placeArrowButton} onPlay={close}>

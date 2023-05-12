@@ -25,7 +25,7 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
   }
 
   setup(options: ExpeditionOptions) {
-    const cards = this.material(MaterialType.Card)
+    const cards = this.materialOperations(MaterialType.Card)
     cards
       .create(
         places.map((place, i) => ({
@@ -54,19 +54,19 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
       card.location = { type: LocationType.CommonPlacesArea, x: i }
     }
 
-    const tokens = this.material(MaterialType.Token)
+    const tokens = this.materialOperations(MaterialType.Token)
     tokens.create(options.players.map(player => ({
       id: player.id,
       quantity: 4,
       location: { type: LocationType.TokenArea, player: player.id }
     })))
 
-    const tickets = this.material(MaterialType.Ticket)
+    const tickets = this.materialOperations(MaterialType.Ticket)
     tickets.create(options.players.map(player => ({
       quantity: 3, location: { type: LocationType.TicketArea, player: player.id }
     })))
 
-    const arrows = this.material(MaterialType.Arrow)
+    const arrows = this.materialOperations(MaterialType.Arrow)
     arrows.create(
       arrowColors.map((arrow) => ({
         id: arrow,

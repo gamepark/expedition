@@ -31,7 +31,7 @@ export const PlaceRules = ({ location, legalMoves, close }: LocationRulesProps<C
       </p>
     }
     {arrowMoves.length > 0 && arrowColors.map(color => {
-      const move = arrowMoves.find(move => rules?.material(MaterialType.Arrow).items[move.itemIndex].id === color)
+      const move = arrowMoves.find(move => rules?.items(MaterialType.Arrow)[move.itemIndex].id === color)
       return move ?
         <p key={color}>
           <PlayMoveButton move={move} css={placeArrowButton} onPlay={close}>
@@ -47,7 +47,7 @@ export const PlaceRules = ({ location, legalMoves, close }: LocationRulesProps<C
 const GreenPlaceDetails = ({ place }: { place: Place }) => {
   const { t } = useTranslation()
   const rules = useRules<ExpeditionRules>()
-  const card = rules?.material(MaterialType.Card).items.find(card => card.id === place)
+  const card = rules?.material(MaterialType.Card).id(place).getItem()
   switch (card?.location.type) {
     case LocationType.CommonPlacesArea:
       return <p>{t('rules.place.common')}</p>

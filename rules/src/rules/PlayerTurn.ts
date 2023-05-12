@@ -1,4 +1,4 @@
-import { createMoveItemMove, MaterialItem, MaterialMoveType, MaterialRulesMove, MoveKind, PlayerRulesStep } from '@gamepark/rules-api'
+import { MaterialMoveType, MaterialRulesMove, MoveKind, PlayerRulesStep } from '@gamepark/rules-api'
 import Color from '../Color'
 import { MaterialType } from '../material/ExpeditionMaterial'
 import { LocationType } from '../material/ExpeditionLocations'
@@ -16,20 +16,16 @@ export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationTyp
   }
 
   getArrowMoves(color: ArrowColor): MaterialRulesMove<Color, MaterialType, LocationType>[] {
-    const arrowMaterial = this.material(MaterialType.Arrow)
-    const stockItemIndex = arrowMaterial.items.findIndex(arrow =>
-      arrow.id === color && arrow.location.type === LocationType.ArrowsStock && arrow.quantity
-    )
-    if (stockItemIndex === -1) return []
-    const arrowsOnBoard = arrowMaterial.items.filter(arrow => arrow.id === color && arrow.location.type === LocationType.Road)
-    return getNextArrowOrigin(arrowsOnBoard).flatMap(node =>
+    const arrows = this.material(MaterialType.Arrow)
+    const stockArrows = arrows.location(LocationType.ArrowsStock).id(color)
+    if (!stockArrows.length) return []
+    const expeditionArrows = arrows.id(color).location(LocationType.Road).getItems()
+    return getNextArrowOrigin(expeditionArrows).flatMap(node =>
       roads.filter(road =>
-        (road[0] === node || road[1] === node) && !arrowsOnBoard.some(arrow => isSameRoad(road, arrow.location.id))
+        (road[0] === node || road[1] === node) && !expeditionArrows.some(arrow => isSameRoad(road, arrow.location.id))
       ).map(road => {
-          const x = arrowMaterial.search().location(LocationType.Road).filter(item => isSameRoad(road, item.location.id)).count()
-          const item: MaterialItem = { location: { type: LocationType.Road, id: road, x } }
-          if (road[1] === node) item.rotation = { z: 1 }
-          return createMoveItemMove(MaterialType.Arrow, stockItemIndex, item)
+          const x = arrows.location(LocationType.Road).locationId(road).length
+          return stockArrows.moveItem(LocationType.Road, { id: road, x }, road[1] === node && { z: 1 })
         }
       )
     )
@@ -37,7 +33,7 @@ export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationTyp
 
   onMovePlayed(move: MaterialRulesMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
     if (move.kind === MoveKind.MaterialMove && move.itemsType === MaterialType.Arrow && move.type === MaterialMoveType.Move) {
-      return [this.rulesMoves().nextStep(RulesStep.PlayerTurn, this.nextPlayer())]
+      return [this.rulesMoves().nextStep(RulesStep.PlayerTurn, this.nextPlayer)]
     }
 
     return []
