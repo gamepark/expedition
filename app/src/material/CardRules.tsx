@@ -7,6 +7,8 @@ import { ExpeditionRules } from '@gamepark/expedition'
 import { getPlayerName } from '@gamepark/expedition/ExpeditionOptions'
 import Color from '@gamepark/expedition/Color'
 import { isMoveItem, MaterialRulesMove } from '@gamepark/rules-api'
+import { RulesStep } from '@gamepark/expedition/rules/RulesStep'
+import { places2StepsFromStart } from '@gamepark/expedition/material/Place'
 
 export const CardRules = (props: MaterialRulesProps) => {
   const { item } = props
@@ -48,6 +50,9 @@ const HandCardRules = ({ item, close }: MaterialRulesProps) => {
       <Trans defaults="rules.card.hand.place.token" components={[
         <PlayMoveButton move={placeTokenMove} onPlay={close}/>
       ]}/>
+    }
+    {rules.game.rule?.id === RulesStep.SetupKeyPlaces && rules.game.rule.player === player && places2StepsFromStart.includes(item.id) &&
+      <p>{t('rules.place.token.forbidden')}</p>
     }
     {!mine && <p>{t('rules.card.hand.other', { player: getPlayerName(item.location!.player!, t) })}</p>}
   </>

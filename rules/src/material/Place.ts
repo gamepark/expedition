@@ -84,3 +84,18 @@ export enum Place {
 }
 
 export const places = Object.values(Place).filter<Place>(isEnumValue)
+
+export const places2StepsFromStart = [
+  Place.Svalbard,
+  Place.Athens,
+  Place.Rome,
+  Place.Stonehenge,
+  Place.Thingvellir,
+  Place.Zagorsk,
+  Place.CaspianSea,
+  Place.Petra,
+  Place.Gizeh,
+  Place.Timgad,
+  Place.Newfoundland,
+  Place.Greenland
+]

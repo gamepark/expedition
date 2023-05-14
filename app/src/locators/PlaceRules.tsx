@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { linkButtonCss, LocationRulesProps, MaterialComponent, PlayMoveButton, useLegalMoves, useRules } from '@gamepark/react-game'
+import { linkButtonCss, LocationRulesProps, MaterialComponent, PlayMoveButton, useLegalMoves, usePlayerId, useRules } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/ExpeditionLocations'
@@ -11,10 +11,12 @@ import { arrowColors } from '@gamepark/expedition/material/ArrowColor'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { ArrowsDescription } from '../material/ArrowsDescription'
 import { css } from '@emotion/react'
-import { Place } from '@gamepark/expedition/material/Place'
+import { Place, places2StepsFromStart } from '@gamepark/expedition/material/Place'
+import { RulesStep } from '@gamepark/expedition/rules/RulesStep'
 
 export const PlaceRules = ({ location, legalMoves, close }: LocationRulesProps<Color, MaterialType, LocationType>) => {
   const { t } = useTranslation()
+  const player = usePlayerId()
   const rules = useRules<ExpeditionRules>()
   const arrowMoves = useLegalMoves<MaterialRulesMove, MoveItem>(
     move => isMoveItem(move) && move.item.location !== undefined && isRoadToNode(location.id, move.item.location, move.item.rotation?.z === 1)
@@ -29,6 +31,9 @@ export const PlaceRules = ({ location, legalMoves, close }: LocationRulesProps<C
           {t('rules.place.token')}
         </PlayMoveButton>
       </p>
+    }
+    {rules.game.rule?.id === RulesStep.SetupKeyPlaces && rules.game.rule.player === player && places2StepsFromStart.includes(location.id) &&
+      <p>{t('rules.place.token.forbidden')}</p>
     }
     {arrowMoves.length > 0 && arrowColors.map(color => {
       const move = arrowMoves.find(move => rules?.items(MaterialType.Arrow)[move.itemIndex].id === color)

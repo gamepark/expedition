@@ -3,14 +3,16 @@ import { MaterialType } from '../material/ExpeditionMaterial'
 import { LocationType } from '../material/ExpeditionLocations'
 import { MaterialRulesMove, MoveKind, PlayerRulesStep } from '@gamepark/rules-api'
 import { RulesStep } from './RulesStep'
-import { Place } from '../material/Place'
+import { Place, places2StepsFromStart } from '../material/Place'
 
 export class SetupKeyPlaces extends PlayerRulesStep<Color, MaterialType, LocationType> {
   getPlayerMoves() {
     const playerTokens = this.material(MaterialType.Token).id(this.player)
     const playerCards = this.material(MaterialType.Card).location(LocationType.Hand).player(this.player)
     const placesWithToken = playerTokens.location(LocationType.Place).getItems<Place>(token => token.location.id)
-    const legalPlaces = playerCards.getItems<Place>(card => card.id).filter(place => !placesWithToken.includes(place))
+    const legalPlaces = playerCards.getItems<Place>(card => card.id).filter(place =>
+      !placesWithToken.includes(place) && !places2StepsFromStart.includes(place)
+    )
     return legalPlaces.map(place =>
       playerTokens.location(LocationType.TokenArea).moveItem(LocationType.Place, { id: place })
     )
