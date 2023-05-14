@@ -23,7 +23,7 @@ export class SetupKeyPlaces extends PlayerRulesStep<Color, MaterialType, Locatio
       const nextPlayer = this.nextPlayer
       const hasTokensLeft = this.material(MaterialType.Token).player(nextPlayer).location(LocationType.TokenArea).length > 0
       const nextStep = hasTokensLeft ? RulesStep.SetupKeyPlaces : RulesStep.PlayerTurn
-      return [this.rulesMoves().nextStep(nextStep, nextPlayer)]
+      return [this.rulesMoves().nextStep(nextStep, nextPlayer, { arrowsLeft: 1, ticketsPlayed: 0, loopsCreated: [] })]
     }
     return []
   }

@@ -279,24 +279,4 @@ export const isRoadToNode = (node: Node, location: Location, backwards: boolean)
   else return location.id[1] === node
 }
 
-export const arrowOrigin = (arrow: MaterialItem): Node => {
-  return arrow.rotation?.z ? arrow.location.id[1] : arrow.location.id[0]
-}
-
-export const arrowDestination = (arrow: MaterialItem): Node => {
-  return arrow.rotation?.z ? arrow.location.id[0] : arrow.location.id[1]
-}
-
-export const getNextArrowOrigin = (arrows: MaterialItem[]): Node[] => {
-  const lastArrow = arrows.find(arrow => {
-    const destination = arrowDestination(arrow)
-    return !arrows.some(otherArrow => arrowOrigin(otherArrow) === destination)
-  })
-  if (lastArrow) {
-    return [arrowDestination(lastArrow)]
-  } else {
-    return [...new Set(arrows.map(arrowDestination).concat(StartNode))]
-  }
-}
-
-export const isSameRoad = (road1: Road, road2: Road): boolean => road1[0] === road2[0] && road1[1] === road2[1]
+export const arrowRoad = (arrow: MaterialItem): Road => arrow.rotation?.z ? [arrow.location.id[1], arrow.location.id[0]] : arrow.location.id

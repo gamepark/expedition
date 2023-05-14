@@ -9,7 +9,7 @@ import { TicketEffect } from './TicketEffect'
 export enum RulesStep {
   SetupKeyPlaces = 1,
   PlayerTurn,
-  TicketEffect
+  TicketEffect,
 }
 
 export const rulesSteps: Record<RulesStep, MaterialRulesStepCreator<Color, MaterialType, LocationType>> = {

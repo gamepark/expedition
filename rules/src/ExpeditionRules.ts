@@ -75,6 +75,6 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
       }))
     )
 
-    this.start(RulesStep.SetupKeyPlaces, this.game.players[0])
+    this.start(RulesStep.SetupKeyPlaces, this.game.players[0], { arrowsLeft: 1, ticketsPlayed: 0, loopsCreated: [] })
   }
 }

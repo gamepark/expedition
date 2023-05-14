@@ -4,7 +4,7 @@ import { Location, MaterialItem, MaterialMoveType, MoveKind, XYCoordinates } fro
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/ExpeditionLocations'
-import { Road, roads } from '@gamepark/expedition/material/Road'
+import { arrowRoad, Road, roads } from '@gamepark/expedition/material/Road'
 import { css, Interpolation, Theme } from '@emotion/react'
 import { nodesCoordinates } from './PlaceLocator'
 import { boardRatio } from '../material/BoardDescription'
@@ -21,12 +21,10 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
   }
 
   getRotation(item: MaterialItem<Color, LocationType>): number {
-    const roadCoordinates = this.getRoadCoordinates(item.location)
-    return this.getAngle(item.rotation?.z ? [roadCoordinates[1], roadCoordinates[0]] : roadCoordinates)
+    return this.getAngle(this.getRoadCoordinates(arrowRoad(item)))
   }
 
-  getRoadCoordinates(location: Location<Color, LocationType, Road>): [XYCoordinates, XYCoordinates] {
-    const road = location.id!
+  getRoadCoordinates(road: Road): [XYCoordinates, XYCoordinates] {
     const coordinates: [XYCoordinates, XYCoordinates] = [nodesCoordinates[road[0]], nodesCoordinates[road[1]]]
     // 3 red nodes are links between the left & right sides of the board
     if (coordinates[0].x > 50 && coordinates[1].x < 1) {
@@ -40,14 +38,14 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
   }
 
   getLocationCss(location: Location<Color, LocationType, Road>) {
-    const coordinates = this.getRoadCoordinates(location)
+    const coordinates = this.getRoadCoordinates(location.id!)
     const angle = this.getAngle(coordinates)
     const distance = Math.hypot((coordinates[1].x - coordinates[0].x) * boardRatio, (coordinates[1].y - coordinates[0].y))
     return locationCss(distance, angle)
   }
 
   getPositionOnParent(location: Location<Color, LocationType, Road>): XYCoordinates {
-    const coordinates = this.getRoadCoordinates(location)
+    const coordinates = this.getRoadCoordinates(location.id!)
     return { x: average(coordinates.map(c => c.x)), y: average(coordinates.map(c => c.y)) }
   }
 
