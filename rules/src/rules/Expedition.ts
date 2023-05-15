@@ -9,12 +9,10 @@ import { ArrowColor } from '../material/ArrowColor'
 export class Expedition {
   color: ArrowColor
   arrows: Material
-  allArrowsOnBoard: Material
 
   constructor(color: ArrowColor, arrows: Material) {
     this.color = color
     this.arrows = arrows.id(color)
-    this.allArrowsOnBoard = arrows.location(LocationType.Road)
   }
 
   get started(): boolean {
@@ -35,8 +33,7 @@ export class Expedition {
         && !expeditionArrows.some(arrow => equal(arrow.location.id, road))
         && (loopsAllowed || !expeditionArrows.some(arrow => arrow.location.id[0] === (road[0] === node ? road[1] : road[0])))
       ).map(road => {
-        const x = this.allArrowsOnBoard.locationId(road).length
-        return stockArrows.moveItem(LocationType.Road, { id: road, x }, road[1] === node && { z: 1 })
+        return stockArrows.moveItem(LocationType.Road, { id: road }, road[1] === node && { z: 1 })
       })
     )
   }

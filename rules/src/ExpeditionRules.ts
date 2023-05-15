@@ -2,7 +2,7 @@ import Color from './Color'
 import { MaterialType } from './material/ExpeditionMaterial'
 import { LocationType } from './material/LocationType'
 import { places } from './material/Place'
-import { hideItemId, hideItemIdToOthers, MaterialGame, SecretMaterialRules, Undo } from '@gamepark/rules-api'
+import { hideItemId, hideItemIdToOthers, MaterialGame, PositiveSequenceStrategy, SecretMaterialRules, Undo } from '@gamepark/rules-api'
 import { ExpeditionOptions } from './ExpeditionOptions'
 import { arrowColors } from './material/ArrowColor'
 import Move from './moves/Move'
@@ -20,6 +20,19 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
     }
   }
 
+  getLocationsStrategies() {
+    return {
+      [MaterialType.Card]: {
+        [LocationType.Deck]: new PositiveSequenceStrategy(),
+        [LocationType.Hand]: new PositiveSequenceStrategy(),
+        [LocationType.PlayerArea]: new PositiveSequenceStrategy()
+      },
+      [MaterialType.Arrow]: {
+        [LocationType.Road]: new PositiveSequenceStrategy()
+      }
+    }
+  }
+
   canUndo(): boolean {
     return true
   }
@@ -28,7 +41,7 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
     const cards = this.materialOperations(MaterialType.Card)
     for (let x = 0; x < places.length; x++) {
       const place = places[x]
-      cards.create({ id: place, location: { type: LocationType.Deck, x } })
+      cards.create({ id: place, location: { type: LocationType.Deck } })
     }
     cards.shuffle()
 

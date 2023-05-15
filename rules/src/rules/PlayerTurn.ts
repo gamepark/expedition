@@ -51,7 +51,11 @@ export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationTyp
       }
       const destination = arrowRoad(move.item)[1]
       if (isGreenNode(destination)) {
-        // TODO: is it an objective?
+        const card = this.material(MaterialType.Card).id(destination)
+        const item = card.getItem()
+        if (item?.location.type === LocationType.CommonObjectives || item?.location.type === LocationType.Hand) {
+          consequences.push(card.moveItem(LocationType.PlayerArea, { player: item.location.player ?? this.player }))
+        }
       } else if (isBlueNode(destination)) {
         data.arrowsLeft++
       } else if (isRedNode(destination)) {
