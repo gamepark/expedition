@@ -64,7 +64,7 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
     if (legalMoves.some(move =>
       move.kind === MoveKind.MaterialMove
       && move.type === MaterialMoveType.Move
-      && move.itemsType === MaterialType.Arrow
+      && move.itemType === MaterialType.Arrow
       && equal(item.location.id, move.item.location?.id)
     )) {
       return css`pointer-events: none;`

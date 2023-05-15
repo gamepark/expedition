@@ -19,7 +19,7 @@ export class SetupKeyPlaces extends PlayerRulesStep<Color, MaterialType, Locatio
   }
 
   onMovePlayed(move: MaterialRulesMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
-    if (move.kind === MoveKind.MaterialMove && move.itemsType === MaterialType.Token) {
+    if (move.kind === MoveKind.MaterialMove && move.itemType === MaterialType.Token) {
       const nextPlayer = this.nextPlayer
       const hasTokensLeft = this.material(MaterialType.Token).player(nextPlayer).location(LocationType.TokenArea).length > 0
       const nextStep = hasTokensLeft ? RulesStep.SetupKeyPlaces : RulesStep.PlayerTurn

@@ -24,20 +24,17 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
     return true
   }
 
-  setup(options: ExpeditionOptions) {
+  setup({ players }: ExpeditionOptions) {
     const cards = this.materialOperations(MaterialType.Card)
-    cards
-      .create(
-        places.map((place, i) => ({
-          id: place,
-          location: { type: LocationType.CardsDeck, x: i }
-        }))
-      )
-      .shuffle()
+    for (let x = 0; x < places.length; x++) {
+      const place = places[x]
+      cards.create({ id: place, location: { type: LocationType.CardsDeck, x } })
+    }
+    cards.shuffle()
 
-    const deal = options.players.length <= 3 ? 12 : 9
+    const deal = players.length <= 3 ? 12 : 9
     const cardDeck = cards.search().location(LocationType.CardsDeck)
-    for (const player of options.players) {
+    for (const player of players) {
       for (let i = 0; i < deal; i++) {
         const card = cardDeck.maxBy((location) => location.x)
         card!.location = { type: LocationType.Hand, player: player.id, x: i }
@@ -55,25 +52,29 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
     }
 
     const tokens = this.materialOperations(MaterialType.Token)
-    tokens.create(options.players.map(player => ({
-      id: player.id,
-      quantity: 4,
-      location: { type: LocationType.TokenArea, player: player.id }
-    })))
-
     const tickets = this.materialOperations(MaterialType.Ticket)
-    tickets.create(options.players.map(player => ({
-      quantity: 3, location: { type: LocationType.TicketArea, player: player.id }
-    })))
+
+    for (const player of players) {
+      tokens.create({
+        id: player.id,
+        quantity: 4,
+        location: { type: LocationType.TokenArea, player: player.id }
+      })
+      tickets.create({
+        quantity: 3,
+        location: { type: LocationType.TicketArea, player: player.id }
+      })
+    }
+
 
     const arrows = this.materialOperations(MaterialType.Arrow)
-    arrows.create(
-      arrowColors.map((arrow) => ({
-        id: arrow,
+    for (const arrowColor of arrowColors) {
+      arrows.create({
+        id: arrowColor,
         quantity: 45,
         location: { type: LocationType.ArrowsStock }
-      }))
-    )
+      })
+    }
 
     this.start(RulesStep.SetupKeyPlaces, this.game.players[0], { arrowsLeft: 1, ticketsPlayed: 0, loopsCreated: [] })
   }

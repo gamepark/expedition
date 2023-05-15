@@ -40,7 +40,7 @@ const HandCardRules = ({ item, close }: MaterialRulesProps) => {
   const rules = useRules<ExpeditionRules>()!
   const mine = player !== undefined && item.location?.player === player
   const legalMoves = useLegalMoves<MaterialRulesMove>()
-  const placeTokenMove = legalMoves.find(move => isMoveItem(move) && move.itemsType === MaterialType.Token && move.item.location?.id === item.id)
+  const placeTokenMove = legalMoves.find(move => isMoveItem(move) && move.itemType === MaterialType.Token && move.item.location?.id === item.id)
   const tokens = rules.material(MaterialType.Token)
   const isRevealed = mine && tokens.location(LocationType.Place).locationId(item.id).length > 0
   return <>

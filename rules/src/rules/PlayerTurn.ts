@@ -42,7 +42,8 @@ export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationTyp
   }
 
   onMovePlayed(move: MaterialRulesMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
-    if (move.kind === MoveKind.MaterialMove && move.itemsType === MaterialType.Arrow && move.type === MaterialMoveType.Move && isItemWithLocation(move.item)) {
+    const consequences: MaterialRulesMove<Color, MaterialType, LocationType>[] = []
+    if (move.kind === MoveKind.MaterialMove && move.itemType === MaterialType.Arrow && move.type === MaterialMoveType.Move && isItemWithLocation(move.item)) {
       const data = this.getData<PlayerTurnData>()
       data.arrowPlaced = true
       if (!data.loopColor) {
@@ -54,7 +55,7 @@ export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationTyp
       } else if (isBlueNode(destination)) {
         data.arrowsLeft++
       } else if (isRedNode(destination)) {
-        // TODO: take ticket
+        consequences.push(this.material(MaterialType.Ticket).createItem({ quantity: 1, location: { type: LocationType.TicketArea, player: this.player } }))
       }
       const arrows = this.material(MaterialType.Arrow)
       const color = arrows.getItem(move.itemIndex)!.id
@@ -67,6 +68,6 @@ export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationTyp
       }
     }
 
-    return []
+    return consequences
   }
 }
