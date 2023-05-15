@@ -2,7 +2,7 @@
 import { linkButtonCss, LocationRulesProps, MaterialComponent, PlayMoveButton, useLegalMoves, usePlayerId, useRules } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
-import { LocationType } from '@gamepark/expedition/material/ExpeditionLocations'
+import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { Trans, useTranslation } from 'react-i18next'
 import { isBlueNode, isGreenNode, isRedNode, isRoadToNode, Node } from '@gamepark/expedition/material/Road'
 import { TFunction } from 'i18next'
@@ -54,7 +54,7 @@ const GreenPlaceDetails = ({ place }: { place: Place }) => {
   const rules = useRules<ExpeditionRules>()
   const card = rules?.material(MaterialType.Card).id(place).getItem()
   switch (card?.location.type) {
-    case LocationType.CommonPlacesArea:
+    case LocationType.CommonObjectives:
       return <p>{t('rules.place.common')}</p>
     case LocationType.Hand:
       return <p>{t('rules.place.hand')}</p>

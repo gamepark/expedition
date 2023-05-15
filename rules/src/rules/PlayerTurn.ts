@@ -1,7 +1,7 @@
 import { isItemWithLocation, MaterialMoveType, MaterialRulesMove, MoveKind, PlayerRulesStep } from '@gamepark/rules-api'
 import Color from '../Color'
 import { MaterialType } from '../material/ExpeditionMaterial'
-import { LocationType } from '../material/ExpeditionLocations'
+import { LocationType } from '../material/LocationType'
 import { ArrowColor, arrowColors } from '../material/ArrowColor'
 import { RulesStep } from './RulesStep'
 import { Expedition } from './Expedition'
@@ -32,7 +32,7 @@ export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationTyp
         }
       }
       if (ticketsPlayed < 2) {
-        const playerTickets = this.material(MaterialType.Ticket).location(LocationType.TicketArea).player(this.player)
+        const playerTickets = this.material(MaterialType.Ticket).location(LocationType.PlayerArea).player(this.player)
         if (playerTickets.length) {
           // moves.push(playerTickets.deleteItem(1))
         }
@@ -55,7 +55,7 @@ export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationTyp
       } else if (isBlueNode(destination)) {
         data.arrowsLeft++
       } else if (isRedNode(destination)) {
-        consequences.push(this.material(MaterialType.Ticket).createItem({ quantity: 1, location: { type: LocationType.TicketArea, player: this.player } }))
+        consequences.push(this.material(MaterialType.Ticket).createItem({ quantity: 1, location: { type: LocationType.PlayerArea, player: this.player } }))
       }
       const arrows = this.material(MaterialType.Arrow)
       const color = arrows.getItem(move.itemIndex)!.id

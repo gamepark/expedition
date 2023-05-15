@@ -1,9 +1,9 @@
 import { LineLocator } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
-import { LocationType } from '@gamepark/expedition/material/ExpeditionLocations'
+import { LocationType } from '@gamepark/expedition/material/LocationType'
 
-export class CommonPlaceAreaLocator extends LineLocator<Color, MaterialType, LocationType> {
+export class CommonObjectivesLocator extends LineLocator<Color, MaterialType, LocationType> {
   getCoordinates() {
     return { x: -51, y: -28.5, z: 0 }
   }

@@ -3,7 +3,7 @@ import { ItemLocator, LocationRulesProps, PlaceItemContext } from '@gamepark/rea
 import { Location, MaterialItem, MaterialMoveType, MoveKind, XYCoordinates } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
-import { LocationType } from '@gamepark/expedition/material/ExpeditionLocations'
+import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { arrowRoad, Road, roads } from '@gamepark/expedition/material/Road'
 import { css, Interpolation, Theme } from '@emotion/react'
 import { nodesCoordinates } from './PlaceLocator'

@@ -1,6 +1,6 @@
 import Color from '../Color'
 import { MaterialType } from '../material/ExpeditionMaterial'
-import { LocationType } from '../material/ExpeditionLocations'
+import { LocationType } from '../material/LocationType'
 import { MaterialRulesStepCreator } from '@gamepark/rules-api'
 import { SetupKeyPlaces } from './SetupKeyPlaces'
 import { PlayerTurn } from './PlayerTurn'

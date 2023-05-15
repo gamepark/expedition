@@ -1,6 +1,6 @@
 import Color from '../Color'
 import { MaterialType } from '../material/ExpeditionMaterial'
-import { LocationType } from '../material/ExpeditionLocations'
+import { LocationType } from '../material/LocationType'
 import { MaterialRulesMove, MoveKind, PlayerRulesStep } from '@gamepark/rules-api'
 import { RulesStep } from './RulesStep'
 import { Place, places2StepsFromStart } from '../material/Place'
@@ -14,14 +14,14 @@ export class SetupKeyPlaces extends PlayerRulesStep<Color, MaterialType, Locatio
       !placesWithToken.includes(place) && !places2StepsFromStart.includes(place)
     )
     return legalPlaces.map(place =>
-      playerTokens.location(LocationType.TokenArea).moveItem(LocationType.Place, { id: place })
+      playerTokens.location(LocationType.PlayerArea).moveItem(LocationType.Place, { id: place })
     )
   }
 
   onMovePlayed(move: MaterialRulesMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
     if (move.kind === MoveKind.MaterialMove && move.itemType === MaterialType.Token) {
       const nextPlayer = this.nextPlayer
-      const hasTokensLeft = this.material(MaterialType.Token).player(nextPlayer).location(LocationType.TokenArea).length > 0
+      const hasTokensLeft = this.material(MaterialType.Token).player(nextPlayer).location(LocationType.PlayerArea).length > 0
       const nextStep = hasTokensLeft ? RulesStep.SetupKeyPlaces : RulesStep.PlayerTurn
       return [this.rulesMoves().nextStep(nextStep, nextPlayer, { arrowsLeft: 1, ticketsPlayed: 0, loopsCreated: [] })]
     }

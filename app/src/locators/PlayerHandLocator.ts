@@ -2,7 +2,7 @@ import { HandLocator, PlaceItemContext } from '@gamepark/react-game'
 import { Location, MaterialItem } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
-import { LocationType } from '@gamepark/expedition/material/ExpeditionLocations'
+import { LocationType } from '@gamepark/expedition/material/LocationType'
 
 export class PlayerHandLocator extends HandLocator<Color, MaterialType, LocationType> {
   isHidden(item: MaterialItem<Color, LocationType>, context: PlaceItemContext<Color, MaterialType, LocationType>): boolean {

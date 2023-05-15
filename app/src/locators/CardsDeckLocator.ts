@@ -1,10 +1,10 @@
 import { DeckLocator } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
-import { LocationType } from '@gamepark/expedition/material/ExpeditionLocations'
+import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { Coordinates } from '../../../../workshop/packages/rules-api'
 
-export class PlaceDeckLocator extends DeckLocator<Color, MaterialType, LocationType> {
+export class CardsDeckLocator extends DeckLocator<Color, MaterialType, LocationType> {
   getCoordinates() {
     return { x: -58, y: -28.5, z: 0 }
   }

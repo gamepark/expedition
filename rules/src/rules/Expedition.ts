@@ -1,7 +1,7 @@
 import { Material, MaterialItem, MaterialRulesMove } from '@gamepark/rules-api'
 import Color from '../Color'
 import { MaterialType } from '../material/ExpeditionMaterial'
-import { LocationType } from '../material/ExpeditionLocations'
+import { LocationType } from '../material/LocationType'
 import { arrowRoad, Node, roads, StartNode } from '../material/Road'
 import equal from 'fast-deep-equal'
 import { ArrowColor } from '../material/ArrowColor'

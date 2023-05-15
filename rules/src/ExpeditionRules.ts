@@ -1,6 +1,6 @@
 import Color from './Color'
 import { MaterialType } from './material/ExpeditionMaterial'
-import { LocationType } from './material/ExpeditionLocations'
+import { LocationType } from './material/LocationType'
 import { places } from './material/Place'
 import { hideItemId, hideItemIdToOthers, MaterialGame, SecretMaterialRules, Undo } from '@gamepark/rules-api'
 import { ExpeditionOptions } from './ExpeditionOptions'
@@ -15,7 +15,7 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
 
   hidingStrategies = {
     [MaterialType.Card]: {
-      [LocationType.CardsDeck]: hideItemId,
+      [LocationType.Deck]: hideItemId,
       [LocationType.Hand]: hideItemIdToOthers
     }
   }
@@ -28,12 +28,12 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
     const cards = this.materialOperations(MaterialType.Card)
     for (let x = 0; x < places.length; x++) {
       const place = places[x]
-      cards.create({ id: place, location: { type: LocationType.CardsDeck, x } })
+      cards.create({ id: place, location: { type: LocationType.Deck, x } })
     }
     cards.shuffle()
 
     const deal = players.length <= 3 ? 12 : 9
-    const cardDeck = cards.search().location(LocationType.CardsDeck)
+    const cardDeck = cards.search().location(LocationType.Deck)
     for (const player of players) {
       for (let i = 0; i < deal; i++) {
         const card = cardDeck.maxBy((location) => location.x)
@@ -45,10 +45,10 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
     for (let i = 0; i < 6; i++) {
       const card = cards
         .search()
-        .location(LocationType.CardsDeck)
+        .location(LocationType.Deck)
         .maxBy((location) => location.x)!
       // TODO: put card at the bottom of the deck & draw another one if it is not 3 nodes away from the start
-      card.location = { type: LocationType.CommonPlacesArea, x: i }
+      card.location = { type: LocationType.CommonObjectives, x: i }
     }
 
     const tokens = this.materialOperations(MaterialType.Token)
@@ -58,11 +58,11 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
       tokens.create({
         id: player.id,
         quantity: 4,
-        location: { type: LocationType.TokenArea, player: player.id }
+        location: { type: LocationType.PlayerArea, player: player.id }
       })
       tickets.create({
         quantity: 3,
-        location: { type: LocationType.TicketArea, player: player.id }
+        location: { type: LocationType.PlayerArea, player: player.id }
       })
     }
 

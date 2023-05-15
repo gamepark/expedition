@@ -3,7 +3,7 @@ import { MaterialRulesProps } from '@gamepark/react-game'
 import { ArrowColor } from '@gamepark/expedition/material/ArrowColor'
 import { TFunction } from 'i18next'
 import { Trans, useTranslation } from 'react-i18next'
-import { LocationType } from '@gamepark/expedition/material/ExpeditionLocations'
+import { LocationType } from '@gamepark/expedition/material/LocationType'
 
 export const ArrowRules = ({ item }: MaterialRulesProps) => {
   const { t } = useTranslation()

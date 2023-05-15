@@ -3,7 +3,7 @@ import { ItemLocator, LocationRulesProps } from '@gamepark/react-game'
 import { Location, Material, XYCoordinates } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
-import { LocationType } from '@gamepark/expedition/material/ExpeditionLocations'
+import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { Place } from '@gamepark/expedition/material/Place'
 import { css } from '@emotion/react'
 import { BlueNode, isGreenNode, Node, nodes, RedNode, StartNode } from '@gamepark/expedition/material/Road'
@@ -25,7 +25,7 @@ export class PlaceLocator extends ItemLocator<Color, MaterialType, LocationType>
 
   getObjectiveColor(cards: Material, place?: Node) {
     if (!place || !isGreenNode(place)) return
-    const commonObjectives = cards.location(LocationType.CommonPlacesArea).getItems<Place>(card => card.id)
+    const commonObjectives = cards.location(LocationType.CommonObjectives).getItems<Place>(card => card.id)
     if (commonObjectives.includes(place)) return 'purple'
     if (!this.player) return
     const playerObjectives = cards.location(LocationType.Hand).player(this.player).getItems<Place>(card => card.id)

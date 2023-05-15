@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { MaterialRulesProps, PlayMoveButton, useLegalMoves, usePlayerId, useRules } from '@gamepark/react-game'
-import { LocationType } from '@gamepark/expedition/material/ExpeditionLocations'
+import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { Trans, useTranslation } from 'react-i18next'
 import { ExpeditionRules } from '@gamepark/expedition'
@@ -15,14 +15,14 @@ export const CardRules = (props: MaterialRulesProps) => {
   const { t } = useTranslation()
   const rules = useRules<ExpeditionRules>()!
   const player = usePlayerId<Color>()
-  const deck = item.location?.type === LocationType.CardsDeck
+  const deck = item.location?.type === LocationType.Deck
   const hand = item.location?.type === LocationType.Hand
-  const common = item.location?.type === LocationType.CommonPlacesArea
-  const scored = item.location?.type === LocationType.PlayerPlacesArea
+  const common = item.location?.type === LocationType.CommonObjectives
+  const scored = item.location?.type === LocationType.PlayerArea
   return <>
     <h2>{t('rules.card.title')}</h2>
     <p>{t('rules.card.purpose')}</p>
-    {deck && <p>{t('rules.card.deck', { number: rules.material(MaterialType.Card).location(LocationType.CardsDeck).length })}</p>}
+    {deck && <p>{t('rules.card.deck', { number: rules.material(MaterialType.Card).location(LocationType.Deck).length })}</p>}
     {hand && <HandCardRules {...props}/>}
     {common && <p>{t('rules.card.common')}</p>}
     {scored && item.location?.player === player && <p>{t('rules.card.scored')}</p>}
