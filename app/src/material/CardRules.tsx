@@ -26,7 +26,7 @@ export const CardRules = (props: MaterialRulesProps) => {
     {hand && <HandCardRules {...props}/>}
     {common && <p>{t('rules.card.common')}</p>}
     {scored && item.location?.player === player && <p>{t('rules.card.scored')}</p>}
-    {scored && item.location?.player !== player && <p>{t('rules.card.scored.other')}</p>}
+    {scored && item.location?.player !== player && <p>{t('rules.card.scored.other', {player: getPlayerName(item.location!.player!, t)})}</p>}
     {/* TODO: add cards texts with translation:
       <h3><em>Babylone</em></h3>
       <p><em><strong>Irak</strong> - Asie</em></p>

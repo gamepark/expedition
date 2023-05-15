@@ -54,7 +54,12 @@ export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationTyp
         const card = this.material(MaterialType.Card).id(destination)
         const item = card.getItem()
         if (item?.location.type === LocationType.CommonObjectives || item?.location.type === LocationType.Hand) {
-          consequences.push(card.moveItem(LocationType.PlayerArea, { player: item.location.player ?? this.player }))
+          const player = item.location.player ?? this.player
+          consequences.push(card.moveItem(LocationType.PlayerArea, { player }))
+          const token = this.material(MaterialType.Token).id(player).location(LocationType.Place).locationId(destination)
+          if (token.length) {
+            consequences.push(token.moveItem(LocationType.Card, { parent: destination }))
+          }
         }
       } else if (isBlueNode(destination)) {
         data.arrowsLeft++
