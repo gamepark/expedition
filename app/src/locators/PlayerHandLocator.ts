@@ -14,7 +14,8 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
       const count = this.countItems(location, context)
       return { x: -46 + count * 3, y: 28, z: 10 }
     } else {
-      return { x: 45, y: -28, z: 10 }
+      const index = this.getRelativePlayerIndex(context, location.player!)
+      return { x: 45, y: -40 + index * 13, z: 10 }
     }
   }
 
