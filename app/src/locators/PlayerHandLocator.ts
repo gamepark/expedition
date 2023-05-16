@@ -9,8 +9,13 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
     return item.location.player !== context.player
   }
 
-  getCoordinates(location: Location<Color, LocationType>) {
-    return location.player === this.player ? { x: -15, y: 27.5, z: 0 } : { x: 45, y: -28, z: 0 }
+  getCoordinates(location: Location<Color, LocationType>, context: PlaceItemContext<Color, MaterialType, LocationType>) {
+    if (location.player === this.player) {
+      const count = this.countItems(location, context)
+      return { x: -46 + count * 3, y: 28, z: 10 }
+    } else {
+      return { x: 45, y: -28, z: 10 }
+    }
   }
 
   getBaseAngle(item: MaterialItem<Color, LocationType>): number {

@@ -8,14 +8,14 @@ import { Place, places2StepsFromStart } from '../material/Place'
 export class SetupKeyPlaces extends PlayerRulesStep<Color, MaterialType, LocationType> {
   getPlayerMoves() {
     const playerTokens = this.material(MaterialType.Token).id(this.player)
+    const tokenStock = playerTokens.location(LocationType.PlayerArea)
+    if (!tokenStock.length) return []
     const playerCards = this.material(MaterialType.Card).location(LocationType.Hand).player(this.player)
     const placesWithToken = playerTokens.location(LocationType.Place).getItems<Place>(token => token.location.id)
     const legalPlaces = playerCards.getItems<Place>(card => card.id).filter(place =>
       !placesWithToken.includes(place) && !places2StepsFromStart.includes(place)
     )
-    return legalPlaces.map(place =>
-      playerTokens.location(LocationType.PlayerArea).moveItem(LocationType.Place, { id: place })
-    )
+    return legalPlaces.map(place => tokenStock.moveItem(LocationType.Place, { id: place }))
   }
 
   onMovePlayed(move: MaterialRulesMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
