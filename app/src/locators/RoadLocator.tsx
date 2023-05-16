@@ -29,6 +29,8 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
     // 3 red nodes are links between the left & right sides of the board
     if (coordinates[0].x > 50 && coordinates[1].x < 1) {
       coordinates[1] = { x: 99.95, y: coordinates[1].y }
+    } else if (coordinates[1].x > 50 && coordinates[0].x < 1) {
+      coordinates[0] = { x: 99.95, y: coordinates[0].y }
     }
     return coordinates
   }
