@@ -52,7 +52,7 @@ export const StartNode = 0
 
 export type Node = typeof StartNode | Place | BlueNode | RedNode
 
-export const isGreenNode = (node: Node): node is Place => node < 100
+export const isGreenNode = (node: Node): node is Place => node > 0 && node < 100
 
 export const isBlueNode = (node: Node): node is BlueNode => node >= 100 && node < 200
 
