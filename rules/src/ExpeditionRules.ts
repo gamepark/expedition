@@ -2,14 +2,15 @@ import Color from './Color'
 import { MaterialType } from './material/ExpeditionMaterial'
 import { LocationType } from './material/LocationType'
 import { places } from './material/Place'
-import { hideItemId, hideItemIdToOthers, MaterialGame, PositiveSequenceStrategy, SecretMaterialRules, Undo } from '@gamepark/rules-api'
+import { Competitive, hideItemId, hideItemIdToOthers, MaterialGame, PositiveSequenceStrategy, SecretMaterialRules, Undo } from '@gamepark/rules-api'
 import { ExpeditionOptions } from './ExpeditionOptions'
 import { arrowColors } from './material/ArrowColor'
 import Move from './moves/Move'
 import { RulesStep, rulesSteps } from './rules/RulesStep'
 
 export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, LocationType>
-  implements Undo<MaterialGame<Color, MaterialType, LocationType>, Move, Color> {
+  implements Undo<MaterialGame<Color, MaterialType, LocationType>, Move, Color>,
+    Competitive<MaterialGame<Color, MaterialType, LocationType>, Move, Color> {
 
   rulesSteps = rulesSteps
 
@@ -90,5 +91,24 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
     }
 
     this.start(RulesStep.SetupKeyPlaces, this.game.players[0], { arrowsLeft: 1, ticketsPlayed: 0, loopsCreated: [] })
+  }
+
+  rankPlayers(playerA: Color, playerB: Color): number {
+    const scoreA = this.getScore(playerA)
+    const scoreB = this.getScore(playerB)
+    if (scoreA !== scoreB) return scoreB - scoreA
+    const ticketsA = this.material(MaterialType.Ticket).player(playerA).getItem()?.quantity ?? 0
+    const ticketsB = this.material(MaterialType.Ticket).player(playerB).getItem()?.quantity ?? 0
+    return ticketsB - ticketsA
+  }
+
+  getScore(playerId: Color): number {
+    const cards = this.material(MaterialType.Card).player(playerId)
+    const tokens = this.material(MaterialType.Token).player(playerId)
+    const cardsInFrontOfPlayer = cards.location(LocationType.PlayerArea).length
+    const tokensCollected = tokens.location(LocationType.Card).length
+    const cardsInHand = cards.location(LocationType.Hand).length
+    const tokensOnBoard = tokens.location(LocationType.Place).length
+    return cardsInFrontOfPlayer + tokensCollected - cardsInHand - tokensOnBoard
   }
 }
