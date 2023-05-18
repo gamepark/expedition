@@ -28,6 +28,17 @@ export class PlayerAreaLocator extends LineLocator<Color, MaterialType, Location
     }
   }
 
+  getDeltaMax({ location }: MaterialItem<Color, LocationType>, { type }: PlaceItemContext<Color, MaterialType, LocationType>): Partial<Coordinates> {
+    switch (type) {
+      case MaterialType.Ticket:
+        return { y: 6 }
+      case MaterialType.Card:
+        return location.player === this.player ? { x: 71.5 } : { y: 4 }
+      default:
+        return {}
+    }
+  }
+
   getRotation({ location }: MaterialItem<Color, LocationType>, { type }: PlaceItemContext<Color, MaterialType, LocationType>): number {
     return type === MaterialType.Card && location.player !== this.player ? -90 : 0
   }
