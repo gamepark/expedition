@@ -9,11 +9,11 @@ export class PlayerAreaLocator extends LineLocator<Color, MaterialType, Location
     const index = this.getRelativePlayerIndex(context, location.player!)
     switch (context.type) {
       case MaterialType.Token:
-        return location.player === this.player ? { x: -56, y: 30, z: 0 } : { x: 30, y: -43 + index * 13, z: 0 }
+        return location.player === this.player ? { x: -56, y: 30, z: 0 } : { x: 30, y: -19 + index * 10.9, z: 0 }
       case MaterialType.Ticket:
-        return location.player === this.player ? { x: -53, y: 25, z: 0 } : { x: 38.5, y: -43 + index * 13, z: 0 }
+        return location.player === this.player ? { x: -53, y: 25, z: 0 } : { x: 38.5, y: -19 + index * 10.9, z: 0 }
       default:
-        return location.player === this.player ? { x: 24, y: 28, z: 0 } : { x: 32, y: -42.5 + index * 13, z: 0 }
+        return location.player === this.player ? { x: 24, y: 28, z: 0 } : { x: 32, y: -18.5 + index * 10.9, z: 0 }
     }
   }
 
