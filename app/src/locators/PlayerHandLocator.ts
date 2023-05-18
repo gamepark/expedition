@@ -15,7 +15,9 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
       return { x: -46 + count * 3, y: 28, z: 10 }
     } else {
       const index = this.getRelativePlayerIndex(context, location.player!)
-      return { x: 45, y: -16.5 + index * 10.9, z: 10 }
+      const players = context.game.players.length
+      const baseLocation = (index + players - 1) % players * 54.5 / (players - 1)
+      return { x: 45, y: -27 + baseLocation, z: 10 }
     }
   }
 
@@ -28,7 +30,7 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
   }
 
   getMaxAngle(item: MaterialItem<Color, LocationType>): number {
-    return item.location.player === this.player ? 15 : 2.4
+    return item.location.player === this.player ? 15 : 2.3
   }
 
   getRadius(item: MaterialItem<Color, LocationType>): number {

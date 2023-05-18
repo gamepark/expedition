@@ -12,15 +12,15 @@ export const GameDisplay = () => {
                xMin={-63} xMax={50} yMin={-34} yMax={34}
                zoomMin={1.4} zoomMax={5} margin={{ top: 7, left: 0, right: 20, bottom: 0 }}/>
     {players.map((player, index) =>
-      <PlayerPanel key={player.id} playerId={player.id} color={playerColorCode[player.id]} css={panelPosition(index)}/>
+      <PlayerPanel key={player.id} playerId={player.id} color={playerColorCode[player.id]} css={panelPosition(index, players.length)}/>
     )}
   </>
 }
 
-const panelPosition = (index: number) => css`
+const panelPosition = (index: number, players: number) => css`
   position: absolute;
   right: 1em;
-  top: ${8 + index * 15.3}em;
+  top: ${8.5 + ((index || players) - 1) * 76.5 / (players - 1)}em;
   width: 25em;
   height: 14em;
 `
