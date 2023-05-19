@@ -26,7 +26,7 @@ export const PlayerTurnHeader = () => {
       return <>{t('header.turn.arrow')}</>
     }
   } else if (loopColor) {
-    return <Trans defaults="header.turn.loop" components={[<PlayMoveButton move={passMove}/>]}/>
+    return <Trans defaults="header.turn.loop" components={[<PlayMoveButton move={passMove}/>]} values={{arrow: loopColor}}/>
   } else if (arrowsLeft) {
     if (playTicket) {
       return <Trans defaults="header.turn.extraArrowTicket" components={[<PlayMoveButton move={playTicket}/>, <PlayMoveButton move={passMove}/>]}/>
