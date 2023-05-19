@@ -34,10 +34,6 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
     }
   }
 
-  canUndo(): boolean {
-    return true
-  }
-
   setup({ players }: ExpeditionOptions) {
     const cards = this.materialOperations(MaterialType.Card)
     for (let x = 0; x < places.length; x++) {
