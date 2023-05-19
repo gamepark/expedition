@@ -10,15 +10,16 @@ export const TicketRules = ({ item, legalMoves, close }: MaterialRulesProps) => 
   const owner = item.location?.player
   const mine = owner !== undefined && owner === player
   return <>
-    <h2>{t('rules.ticket.title')}</h2>
-    {mine && <p>{t('rules.ticket.mine', { number: item.quantity })}</p>}
-    {mine && legalMoves.length === 1 &&
-      <PlayMoveButton move={legalMoves[0]} onPlay={close}>
-        {t('rules.ticket.spend')}
-      </PlayMoveButton>
+    <h2>{ t('rules.ticket.title') }</h2>
+    { mine && <p>{ t('rules.ticket.mine', { number: item.quantity }) }</p> }
+    { mine && legalMoves.length === 1 &&
+        <PlayMoveButton move={ legalMoves[0] } onPlay={ close }>
+          { t('rules.ticket.spend') }
+        </PlayMoveButton>
     }
-    {owner !== undefined && !mine && <p>{t('rules.ticket.other', { number: item.quantity, player: getPlayerName(owner, t) })}</p>}
+    { owner !== undefined && !mine &&
+        <p>{ t('rules.ticket.other', { number: item.quantity, player: getPlayerName(owner, t) }) }</p> }
     <hr/>
-    <p><Trans defaults="rules.ticket.purpose" components={[<strong/>]}/></p>
+    <p><Trans defaults="rules.ticket.purpose" components={ [<strong/>] }/></p>
   </>
 }

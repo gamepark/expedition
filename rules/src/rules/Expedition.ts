@@ -1,10 +1,11 @@
-import { Material, MaterialItem, MaterialRulesMove } from '@gamepark/rules-api'
+import { Material, MaterialItem, MaterialRulesMove, PlayerRulesStep } from '@gamepark/rules-api'
 import Color from '../Color'
 import { MaterialType } from '../material/ExpeditionMaterial'
 import { LocationType } from '../material/LocationType'
-import { arrowRoad, Node, roads, StartNode } from '../material/Road'
+import { arrowRoad, isBlueNode, isGreenNode, isRedNode, Node, roads, StartNode } from '../material/Road'
 import equal from 'fast-deep-equal'
 import { ArrowColor } from '../material/ArrowColor'
+import { PlayerTurnData } from './PlayerTurn'
 
 export class Expedition {
   color: ArrowColor
@@ -42,6 +43,42 @@ export class Expedition {
     const arrows = this.arrows.location(LocationType.Road).getItems()
     const lastArrow = this.lastArrow
     return lastArrow ? [arrowRoad(lastArrow)[1]] : [...new Set(arrows.map(arrow => arrowRoad(arrow)[1]).concat(StartNode))]
+  }
+
+  onReachDestination(
+    rules: PlayerRulesStep<Color, MaterialType, LocationType>,
+    node: Node
+  ) {
+    const consequences: MaterialRulesMove<Color, MaterialType, LocationType>[] = []
+    const data = rules.getData<PlayerTurnData>()
+    if (isGreenNode(node)) {
+      const card = rules.material(MaterialType.Card).id(node)
+      const item = card.getItem()
+      if (item?.location.type === LocationType.CommonObjectives || item?.location.type === LocationType.Hand) {
+        consequences.push(card.moveItem(LocationType.PlayerArea, { player: item.location.player ?? rules.player }))
+        if (item.location.type === LocationType.Hand) {
+          const token = rules.material(MaterialType.Token).id(item.location.player).location(LocationType.Place).locationId(node)
+          if (token.length) {
+            consequences.push(token.moveItem(LocationType.Card, { parent: node }))
+          }
+        } else {
+          const topDeckCard = rules.material(MaterialType.Card).location(LocationType.Deck).maxBy(item => item.location.x!)
+          if (topDeckCard.length > 0) {
+            consequences.push(topDeckCard.moveItem(LocationType.CommonObjectives, { x: item.location.x }))
+          }
+        }
+      }
+    } else if (isBlueNode(node)) {
+      data.arrowsLeft++
+    } else if (isRedNode(node)) {
+      consequences.push(rules.material(MaterialType.Ticket).createItem({
+        quantity: 1,
+        location: { type: LocationType.PlayerArea, player: rules.player }
+      }))
+    }
+
+    return consequences
+
   }
 
   get lastArrow(): MaterialItem | undefined {

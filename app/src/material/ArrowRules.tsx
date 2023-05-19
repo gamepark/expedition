@@ -1,18 +1,22 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialRulesProps } from '@gamepark/react-game'
+import { MaterialRulesProps, PlayMoveButton } from '@gamepark/react-game'
 import { ArrowColor } from '@gamepark/expedition/material/ArrowColor'
 import { TFunction } from 'i18next'
 import { Trans, useTranslation } from 'react-i18next'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 
-export const ArrowRules = ({ item }: MaterialRulesProps) => {
+export const ArrowRules = ({ item, legalMoves, close }: MaterialRulesProps) => {
   const { t } = useTranslation()
   return <>
-    <h2>{arrowTitle[item.id!](t)}</h2>
-    {item.location?.type === LocationType.ArrowsStock && <p>{arrowStock[item.id!](t, item.quantity)}</p>}
-    {/* TODO: if this arrow can be removed using a ticket, add a button to play the ticket and a button to remove the arrow */}
+    <h2>{ arrowTitle[item.id!](t) }</h2>
+    { item.location?.type === LocationType.ArrowsStock && <p>{ arrowStock[item.id!](t, item.quantity) }</p> }
+    { legalMoves.length === 1 &&
+        <PlayMoveButton move={ legalMoves[0] } onPlay={ close }>
+          { t('rules.arrow.remove') }
+        </PlayMoveButton>
+    }
     <hr/>
-    <p><Trans defaults="rules.arrow.purpose" components={[<strong/>]}/></p>
+    <p><Trans defaults="rules.arrow.purpose" components={ [<strong/>] }/></p>
   </>
 }
 
