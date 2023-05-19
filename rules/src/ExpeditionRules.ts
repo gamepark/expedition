@@ -2,15 +2,14 @@ import Color from './Color'
 import { MaterialType } from './material/ExpeditionMaterial'
 import { LocationType } from './material/LocationType'
 import { places } from './material/Place'
-import { Competitive, hideItemId, hideItemIdToOthers, MaterialGame, PositiveSequenceStrategy, SecretMaterialRules, Undo } from '@gamepark/rules-api'
+import { Competitive, hideItemId, hideItemIdToOthers, MaterialGame, PositiveSequenceStrategy, SecretMaterialRules } from '@gamepark/rules-api'
 import { ExpeditionOptions } from './ExpeditionOptions'
 import { arrowColors } from './material/ArrowColor'
 import Move from './moves/Move'
 import { RulesStep, rulesSteps } from './rules/RulesStep'
 
 export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, LocationType>
-  implements Undo<MaterialGame<Color, MaterialType, LocationType>, Move, Color>,
-    Competitive<MaterialGame<Color, MaterialType, LocationType>, Move, Color> {
+  implements Competitive<MaterialGame<Color, MaterialType, LocationType>, Move, Color> {
 
   rulesSteps = rulesSteps
 
