@@ -5,11 +5,13 @@ import { MaterialDescription } from '@gamepark/react-game'
 import { TokensDescription } from './TokensDescription'
 import { TicketDescription } from './TicketDescription'
 import { ArrowsDescription } from './ArrowsDescription'
+import { LargeTokensDescription } from './LargeTokensDescription'
 
 export const MaterialsDescription: Record<MaterialType, MaterialDescription> = {
   [MaterialType.Board]: BoardDescription,
   [MaterialType.Card]: CardsDescription,
   [MaterialType.Token]: TokensDescription,
   [MaterialType.Arrow]: ArrowsDescription,
-  [MaterialType.Ticket]: TicketDescription
+  [MaterialType.Ticket]: TicketDescription,
+  [MaterialType.LargeToken]: LargeTokensDescription
 }

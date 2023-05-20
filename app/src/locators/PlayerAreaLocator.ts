@@ -11,9 +11,9 @@ export class PlayerAreaLocator extends LineLocator<Color, MaterialType, Location
     const baseLocation = (index + players - 1) % players * 54.5 / (players - 1)
     switch (context.type) {
       case MaterialType.Token:
-        return location.player === this.player ? { x: -56, y: 30, z: 0 } : { x: 30, y: -30 + baseLocation, z: 0 }
+        return location.player === this.player ? { x: -53.3, y: 30, z: 0 } : { x: 30, y: -30 + baseLocation, z: 0 }
       case MaterialType.Ticket:
-        return location.player === this.player ? { x: -53, y: 25, z: 0 } : { x: 38.5, y: -30 + baseLocation, z: 0 }
+        return location.player === this.player ? { x: -51, y: 25, z: 0 } : { x: 38.5, y: -27.2 + baseLocation, z: 0 }
       default:
         return location.player === this.player ? { x: 24, y: 28, z: 0 } : { x: 32, y: -29 + baseLocation, z: 0 }
     }
@@ -33,7 +33,7 @@ export class PlayerAreaLocator extends LineLocator<Color, MaterialType, Location
   getDeltaMax({ location }: MaterialItem<Color, LocationType>, { type }: PlaceItemContext<Color, MaterialType, LocationType>): Partial<Coordinates> {
     switch (type) {
       case MaterialType.Ticket:
-        return { y: 6 }
+        return { y: 5 }
       case MaterialType.Card:
         return location.player === this.player ? { x: 71.5 } : { y: 4 }
       default:
