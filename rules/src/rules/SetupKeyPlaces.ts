@@ -18,7 +18,7 @@ export class SetupKeyPlaces extends PlayerRulesStep<Color, MaterialType, Locatio
     return legalPlaces.map(place => tokenStock.moveItem(LocationType.Place, { id: place }))
   }
 
-  onMovePlayed(move: MaterialRulesMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
+  afterPlay(move: MaterialRulesMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
     if (move.kind === MoveKind.MaterialMove && move.itemType === MaterialType.Token) {
       const nextPlayer = this.nextPlayer
       const hasTokensLeft = this.material(MaterialType.Token).player(nextPlayer).location(LocationType.PlayerArea).length > 0
