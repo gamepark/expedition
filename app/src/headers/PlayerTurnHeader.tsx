@@ -18,7 +18,8 @@ export const PlayerTurnHeader = () => {
   }
   const passMove = legalMoves.find(move => move.kind === MoveKind.RulesMove && move.step === RulesStep.PlayerTurn)
   const playTicket = legalMoves.find(move => move.kind === MoveKind.MaterialMove && move.itemType === MaterialType.Ticket)
-  const { arrowsLeft, loopColor } = game.rule!.data as PlayerTurnData
+  const canPlaceArrow = legalMoves.some(move => move.kind === MoveKind.MaterialMove && move.itemType === MaterialType.Arrow)
+  const { loopColor } = game.rule!.data as PlayerTurnData
   if (!passMove) {
     if (playTicket) {
       return <Trans defaults="header.turn.arrowTicket" components={[<PlayMoveButton move={playTicket}/>]}/>
@@ -26,8 +27,8 @@ export const PlayerTurnHeader = () => {
       return <>{t('header.turn.arrow')}</>
     }
   } else if (loopColor) {
-    return <Trans defaults="header.turn.loop" components={[<PlayMoveButton move={passMove}/>]} values={{arrow: loopColor}}/>
-  } else if (arrowsLeft) {
+    return <Trans defaults="header.turn.loop" components={[<PlayMoveButton move={passMove}/>]} values={{ arrow: loopColor }}/>
+  } else if (canPlaceArrow) {
     if (playTicket) {
       return <Trans defaults="header.turn.extraArrowTicket" components={[<PlayMoveButton move={playTicket}/>, <PlayMoveButton move={passMove}/>]}/>
     } else {

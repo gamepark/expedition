@@ -1,12 +1,4 @@
-import {
-  isItemWithLocation,
-  MaterialItem,
-  MaterialMoveType,
-  MaterialRulesMove,
-  MoveItem,
-  MoveKind,
-  PlayerRulesStep
-} from '@gamepark/rules-api'
+import { isItemWithLocation, MaterialItem, MaterialMoveType, MaterialRulesMove, MoveItem, MoveKind, PlayerRulesStep } from '@gamepark/rules-api'
 import Color from '../Color'
 import { MaterialType } from '../material/ExpeditionMaterial'
 import { LocationType } from '../material/LocationType'
@@ -46,7 +38,8 @@ export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationTyp
       arrowPlaced,
       playTicket
     } = this.getData<PlayerTurnData>()
-    if (arrowPlaced) {
+    const noArrowLeft = this.material(MaterialType.Arrow).location(LocationType.ArrowsStock).length === 0
+    if (arrowPlaced || noArrowLeft) {
       moves.push(this.rulesMoves().nextStep(RulesStep.PlayerTurn, this.nextPlayer, {
         arrowsLeft: 1,
         ticketsPlayed: 0,
