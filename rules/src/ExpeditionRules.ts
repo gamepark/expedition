@@ -2,15 +2,23 @@ import Color from './Color'
 import { MaterialType } from './material/ExpeditionMaterial'
 import { LocationType } from './material/LocationType'
 import { places } from './material/Place'
-import { Competitive, hideItemId, hideItemIdToOthers, MaterialGame, PositiveSequenceStrategy, SecretMaterialRules, TimeLimit } from '@gamepark/rules-api'
+import {
+  Competitive,
+  hideItemId,
+  hideItemIdToOthers,
+  MaterialGame,
+  MaterialRulesMove,
+  PositiveSequenceStrategy,
+  SecretMaterialRules,
+  TimeLimit
+} from '@gamepark/rules-api'
 import { ExpeditionOptions } from './ExpeditionOptions'
 import { arrowColors } from './material/ArrowColor'
-import Move from './moves/Move'
-import { RulesStep, rulesSteps } from './rules/RulesStep'
+import { RuleId, rulesSteps } from './rules/RuleId'
 
 export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, LocationType>
-  implements Competitive<MaterialGame<Color, MaterialType, LocationType>, Move, Color>,
-    TimeLimit<MaterialGame<Color, MaterialType, LocationType>, Move, Color> {
+  implements Competitive<MaterialGame<Color, MaterialType, LocationType>, MaterialRulesMove<Color, MaterialType, LocationType>, Color>,
+    TimeLimit<MaterialGame<Color, MaterialType, LocationType>, MaterialRulesMove<Color, MaterialType, LocationType>, Color> {
 
   rulesSteps = rulesSteps
 
@@ -86,7 +94,7 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
       })
     }
 
-    this.start(RulesStep.SetupKeyPlaces, this.game.players[0], { arrowsLeft: 1, ticketsPlayed: 0, loopsCreated: [] })
+    this.start(RuleId.SetupKeyPlaces, this.game.players[0], { arrowsLeft: 1, ticketsPlayed: 0, loopsCreated: [] })
   }
 
   giveTime(): number {

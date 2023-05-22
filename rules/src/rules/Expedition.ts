@@ -1,4 +1,4 @@
-import { Material, MaterialItem, MaterialRulesMove, PlayerRulesStep } from '@gamepark/rules-api'
+import { Material, MaterialItem, MaterialRulesMove, PlayerTurnRule } from '@gamepark/rules-api'
 import Color from '../Color'
 import { MaterialType } from '../material/ExpeditionMaterial'
 import { LocationType } from '../material/LocationType'
@@ -46,7 +46,7 @@ export class Expedition {
   }
 
   onReachDestination(
-    rules: PlayerRulesStep<Color, MaterialType, LocationType>,
+    rules: PlayerTurnRule<Color, MaterialType, LocationType>,
     node: Node
   ) {
     const consequences: MaterialRulesMove<Color, MaterialType, LocationType>[] = []

@@ -1,4 +1,4 @@
-import { MaterialRulesMove, PlayerRulesStep } from '@gamepark/rules-api'
+import { MaterialRulesMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { MaterialType } from '../material/ExpeditionMaterial'
 import { LocationType } from '../material/LocationType'
 import Color from '../Color'
@@ -11,7 +11,7 @@ export type TicketEffectData = PlayerTurnData & {
   arrowRemoved?: boolean
 }
 
-export class TicketEffect extends PlayerRulesStep<Color, MaterialType, LocationType> {
+export class TicketEffect extends PlayerTurnRule<Color, MaterialType, LocationType> {
   getPlayerMoves() {
     const moves: MaterialRulesMove<Color, MaterialType, LocationType>[] = []
     const arrowsOnBoard = this.material(MaterialType.Arrow).location(LocationType.Road)

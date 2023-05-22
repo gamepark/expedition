@@ -1,9 +1,9 @@
-import { isItemWithLocation, MaterialItem, MaterialMoveType, MaterialRulesMove, MoveItem, MoveKind, PlayerRulesStep } from '@gamepark/rules-api'
+import { isItemWithLocation, MaterialItem, MaterialMoveType, MaterialRulesMove, MoveItem, MoveKind, PlayerTurnRule } from '@gamepark/rules-api'
 import Color from '../Color'
 import { MaterialType } from '../material/ExpeditionMaterial'
 import { LocationType } from '../material/LocationType'
 import { ArrowColor, arrowColors } from '../material/ArrowColor'
-import { RulesStep } from './RulesStep'
+import { RuleId } from './RuleId'
 import { Expedition } from './Expedition'
 import { arrowRoad, isBlueNode, isGreenNode, isRedNode, Node } from '../material/Road'
 import { TicketEffect, TicketEffectData } from './TicketEffect'
@@ -17,9 +17,9 @@ export type PlayerTurnData = {
   playTicket?: boolean
 }
 
-export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationType> {
+export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType> {
 
-  delegate(): PlayerRulesStep<Color, MaterialType, LocationType> | undefined {
+  delegate(): PlayerTurnRule<Color, MaterialType, LocationType> | undefined {
     const { playTicket } = this.getData<PlayerTurnData>()
     if (playTicket) {
       return new TicketEffect(this.game)
@@ -40,7 +40,7 @@ export class PlayerTurn extends PlayerRulesStep<Color, MaterialType, LocationTyp
     } = this.getData<PlayerTurnData>()
     const noArrowLeft = this.material(MaterialType.Arrow).location(LocationType.ArrowsStock).length === 0
     if (arrowPlaced || noArrowLeft) {
-      moves.push(this.rulesMoves().nextStep(RulesStep.PlayerTurn, this.nextPlayer, {
+      moves.push(this.rules().startPlayerTurn(RuleId.PlayerTurn, this.nextPlayer, {
         arrowsLeft: 1,
         ticketsPlayed: 0,
         loopsCreated: []

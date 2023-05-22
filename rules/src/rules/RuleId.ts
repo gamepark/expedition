@@ -6,14 +6,14 @@ import { SetupKeyPlaces } from './SetupKeyPlaces'
 import { PlayerTurn } from './PlayerTurn'
 import { TicketEffect } from './TicketEffect'
 
-export enum RulesStep {
+export enum RuleId {
   SetupKeyPlaces = 1,
   PlayerTurn,
   TicketEffect,
 }
 
-export const rulesSteps: Record<RulesStep, MaterialRulesStepCreator<Color, MaterialType, LocationType>> = {
-  [RulesStep.SetupKeyPlaces]: SetupKeyPlaces,
-  [RulesStep.PlayerTurn]: PlayerTurn,
-  [RulesStep.TicketEffect]: TicketEffect
+export const rulesSteps: Record<RuleId, MaterialRulesStepCreator<Color, MaterialType, LocationType>> = {
+  [RuleId.SetupKeyPlaces]: SetupKeyPlaces,
+  [RuleId.PlayerTurn]: PlayerTurn,
+  [RuleId.TicketEffect]: TicketEffect
 }

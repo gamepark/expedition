@@ -6,7 +6,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { getPlayerName } from '@gamepark/expedition/ExpeditionOptions'
 import Color from '@gamepark/expedition/Color'
 import { isMoveItem, MaterialRulesMove } from '@gamepark/rules-api'
-import { RulesStep } from '@gamepark/expedition/rules/RulesStep'
+import { RuleId } from '@gamepark/expedition/rules/RuleId'
 import { places2StepsFromStart } from '@gamepark/expedition/material/Place'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 
@@ -53,7 +53,7 @@ const HandCardRules = ({ item, close }: MaterialRulesProps) => {
           <PlayMoveButton move={ placeTokenMove } onPlay={ close }/>
         ] }/>
     }
-    { rules.game.rule?.id === RulesStep.SetupKeyPlaces && rules.game.rule.player === player && places2StepsFromStart.includes(item.id) &&
+    { rules.game.rule?.id === RuleId.SetupKeyPlaces && rules.game.rule.player === player && places2StepsFromStart.includes(item.id) &&
         <p>{ t('rules.place.token.forbidden') }</p>
     }
     { !mine && <p>{ t('rules.card.hand.other', { player: getPlayerName(item.location!.player!, t) }) }</p> }

@@ -12,7 +12,7 @@ import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { ArrowsDescription } from '../material/ArrowsDescription'
 import { css } from '@emotion/react'
 import { Place, places2StepsFromStart } from '@gamepark/expedition/material/Place'
-import { RulesStep } from '@gamepark/expedition/rules/RulesStep'
+import { RuleId } from '@gamepark/expedition/rules/RuleId'
 
 export const PlaceRules = ({ location, legalMoves, close }: LocationRulesProps<Color, MaterialType, LocationType>) => {
   const { t } = useTranslation()
@@ -32,7 +32,7 @@ export const PlaceRules = ({ location, legalMoves, close }: LocationRulesProps<C
         </PlayMoveButton>
       </p>
     }
-    {rules.game.rule?.id === RulesStep.SetupKeyPlaces && rules.game.rule.player === player && places2StepsFromStart.includes(location.id) &&
+    {rules.game.rule?.id === RuleId.SetupKeyPlaces && rules.game.rule.player === player && places2StepsFromStart.includes(location.id) &&
       <p>{t('rules.place.token.forbidden')}</p>
     }
     {arrowMoves.length > 0 && arrowColors.map(color => {
