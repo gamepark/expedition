@@ -20,7 +20,7 @@ export type PlayerTurnData = {
 export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType> {
 
   delegate(): PlayerTurnRule<Color, MaterialType, LocationType> | undefined {
-    const { playTicket } = this.getData<PlayerTurnData>()
+    const { playTicket } = this.getMemory<PlayerTurnData>()
     if (playTicket) {
       return new TicketEffect(this.game)
     }
@@ -37,7 +37,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
       loopColor,
       arrowPlaced,
       playTicket
-    } = this.getData<PlayerTurnData>()
+    } = this.getMemory<PlayerTurnData>()
     const noArrowLeft = this.material(MaterialType.Arrow).location(LocationType.ArrowsStock).length === 0
     if (arrowPlaced || noArrowLeft) {
       moves.push(this.rules().startPlayerTurn(RuleId.PlayerTurn, this.nextPlayer, {
@@ -46,7 +46,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
         loopsCreated: []
       }))
     }
-    if (loopColor !== undefined) {
+    if (!!loopColor) {
       moves.push(...new Expedition(loopColor, this.material(MaterialType.Arrow)).getLegalMoves(false))
     } else {
       if (arrowsLeft > 0 || playTicket) {
@@ -93,12 +93,12 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
       )
     }
 
-    delete this.getData<TicketEffectData>().playTicket
 
     if (move.itemType === MaterialType.Ticket && move.type === MaterialMoveType.Delete) {
-      const stepState = this.getData<PlayerTurnData>()
-      stepState.ticketsPlayed = stepState.ticketsPlayed + 1
-      stepState.playTicket = true
+      const { ticketsPlayed } = this.getMemory<PlayerTurnData>()
+      consequences.push(this.rules().memorize({ ticketsPlayed: ticketsPlayed + 1, playTicket: true }))
+    } else if (this.getMemory<TicketEffectData>().playTicket) {
+      consequences.push(this.rules().memorize({ playTicket: false }))
     }
 
     return consequences
@@ -106,13 +106,10 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
 
   onArrowPlaced(move: MoveItem<Color, MaterialType, LocationType>, item: MaterialItem<Color, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
     const consequences: MaterialRulesMove<Color, MaterialType, LocationType>[] = []
-    const data = this.getData<PlayerTurnData>()
+    const { arrowPlaced, loopsCreated } = this.getMemory<PlayerTurnData>()
 
-    if (!data.playTicket) {
-      data.arrowPlaced = true
-      if (!data.loopColor) {
-        data.arrowsLeft--
-      }
+    if (!arrowPlaced) {
+      consequences.push(this.rules().memorize({ arrowPlaced: true }))
     }
 
     const destination = arrowRoad(item)[move.item.location!.type === LocationType.ArrowsStock ? 0 : 1]
@@ -125,20 +122,17 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
     )
 
     if (expedition.loop) {
-      data.loopColor = color
-      data.loopsCreated.push(color)
+      consequences.push(this.rules().memorize({ loopColor: color, loopsCreated: [...loopsCreated, color] }))
     } else {
-      delete data.loopColor
+      consequences.push(this.rules().memorize({ loopColor: 0 }))
     }
 
     return consequences
   }
 
-  onReachDestination(
-    node: Node
-  ) {
+  onReachDestination(node: Node) {
     const consequences: MaterialRulesMove<Color, MaterialType, LocationType>[] = []
-    const data = this.getData<PlayerTurnData>()
+    const { playTicket, loopColor, arrowsLeft } = this.getMemory<PlayerTurnData>()
     if (isGreenNode(node)) {
       const card = this.material(MaterialType.Card).id(node)
       const item = card.getItem()
@@ -156,13 +150,16 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
           }
         }
       }
-    } else if (isBlueNode(node)) {
-      data.arrowsLeft++
     } else if (isRedNode(node)) {
       consequences.push(this.material(MaterialType.Ticket).createItem({
         quantity: 1,
         location: { type: LocationType.PlayerArea, player: this.player }
       }))
+    }
+    if ((playTicket || loopColor) && isBlueNode(node)) {
+      consequences.push(this.rules().memorize({ arrowsLeft: arrowsLeft + 1 }))
+    } else if (!playTicket && !loopColor && !isBlueNode(node)) {
+      consequences.push(this.rules().memorize({ arrowsLeft: arrowsLeft - 1 }))
     }
 
     return consequences
