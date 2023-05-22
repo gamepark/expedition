@@ -1,4 +1,4 @@
-import { isItemWithLocation, MaterialItem, MaterialMoveType, MaterialRulesMove, MoveItem, MoveKind, PlayerTurnRule } from '@gamepark/rules-api'
+import { isItemWithLocation, MaterialItem, MaterialMove, MaterialMoveType, MaterialRulesMove, MoveItem, PlayerTurnRule } from '@gamepark/rules-api'
 import Color from '../Color'
 import { MaterialType } from '../material/ExpeditionMaterial'
 import { LocationType } from '../material/LocationType'
@@ -73,12 +73,8 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
     return moves
   }
 
-  beforePlay(move: MaterialRulesMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
-    if (move.kind === MoveKind.MaterialMove
-      && move.itemType === MaterialType.Arrow
-      && move.type === MaterialMoveType.Move
-      && isItemWithLocation(move.item)
-      && move.item.location.type === LocationType.ArrowsStock) {
+  beforeMaterialMove(move: MaterialMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
+    if (move.itemType === MaterialType.Arrow && move.type === MaterialMoveType.Move && move.item.location?.type === LocationType.ArrowsStock) {
       const item = this.material(MaterialType.Arrow).getItem(move.itemIndex)!
       return this.onArrowPlaced(move, item)
     }
@@ -86,10 +82,9 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
     return []
   }
 
-  afterPlay(move: MaterialRulesMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
+  afterMaterialMove(move: MaterialMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
     const consequences: MaterialRulesMove<Color, MaterialType, LocationType>[] = []
-    if (move.kind === MoveKind.MaterialMove
-      && move.itemType === MaterialType.Arrow
+    if (move.itemType === MaterialType.Arrow
       && move.type === MaterialMoveType.Move
       && isItemWithLocation(move.item)
       && move.item.location.type === LocationType.Road) {
@@ -98,11 +93,9 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
       )
     }
 
-    if (move.kind === MoveKind.MaterialMove) {
-      delete this.getData<TicketEffectData>().playTicket
-    }
+    delete this.getData<TicketEffectData>().playTicket
 
-    if (move.kind === MoveKind.MaterialMove && move.itemType === MaterialType.Ticket && move.type === MaterialMoveType.Delete) {
+    if (move.itemType === MaterialType.Ticket && move.type === MaterialMoveType.Delete) {
       const stepState = this.getData<PlayerTurnData>()
       stepState.ticketsPlayed = stepState.ticketsPlayed + 1
       stepState.playTicket = true

@@ -1,7 +1,7 @@
 import Color from '../Color'
 import { MaterialType } from '../material/ExpeditionMaterial'
 import { LocationType } from '../material/LocationType'
-import { MaterialRulesMove, MoveKind, PlayerTurnRule } from '@gamepark/rules-api'
+import { MaterialMove, MaterialRulesMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { RuleId } from './RuleId'
 import { Place, places2StepsFromStart } from '../material/Place'
 
@@ -18,8 +18,8 @@ export class SetupKeyPlaces extends PlayerTurnRule<Color, MaterialType, Location
     return legalPlaces.map(place => tokenStock.moveItem(LocationType.Place, { id: place }))
   }
 
-  afterPlay(move: MaterialRulesMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
-    if (move.kind === MoveKind.MaterialMove && move.itemType === MaterialType.Token) {
+  afterMaterialMove(move: MaterialMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
+    if (move.itemType === MaterialType.Token) {
       const nextPlayer = this.nextPlayer
       const hasTokensLeft = this.material(MaterialType.Token).player(nextPlayer).location(LocationType.PlayerArea).length > 0
       const nextStep = hasTokensLeft ? RuleId.SetupKeyPlaces : RuleId.PlayerTurn
