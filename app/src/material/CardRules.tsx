@@ -11,7 +11,7 @@ import { places2StepsFromStart } from '@gamepark/expedition/material/Place'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 
 export const CardRules = (props: MaterialRulesProps) => {
-  const { item } = props
+  const { item, legalMoves, close } = props
   const { t } = useTranslation()
   const rules = useRules<ExpeditionRules>()!
   const player = usePlayerId<Color>()
@@ -29,6 +29,11 @@ export const CardRules = (props: MaterialRulesProps) => {
     { scored && item.location?.player === player && <p>{ t('rules.card.scored') }</p> }
     { scored && item.location?.player !== player &&
         <p>{ t('rules.card.scored.other', { player: getPlayerName(item.location!.player!, t) }) }</p> }
+    { legalMoves.length === 1 &&
+        <PlayMoveButton move={ legalMoves[0] } onPlay={ close }>
+          { t('rules.card.draw') }
+        </PlayMoveButton>
+    }
     {/* TODO: add cards texts with translation:
       <h3><em>Babylone</em></h3>
       <p><em><strong>Irak</strong> - Asie</em></p>

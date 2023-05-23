@@ -1,4 +1,13 @@
-import { isItemWithLocation, MaterialItem, MaterialMove, MaterialMoveType, MaterialRulesMove, MoveItem, PlayerTurnRule } from '@gamepark/rules-api'
+import {
+  isItemWithLocation,
+  MaterialItem,
+  MaterialMove,
+  MaterialMoveType,
+  MaterialRulesMove,
+  MoveItem,
+  PlayerTurnRule,
+  CustomMove
+} from '@gamepark/rules-api'
 import Color from '../Color'
 import { MaterialType } from '../material/ExpeditionMaterial'
 import { LocationType } from '../material/LocationType'
@@ -31,6 +40,15 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
 
   get noArrowLeft() {
     return this.material(MaterialType.Arrow).location(LocationType.ArrowsStock).length === 0
+  }
+
+  onCustomMove(move: CustomMove): MaterialRulesMove<Color, MaterialType, LocationType>[] {
+    const delegate = this.delegate()
+    if (delegate) {
+      return delegate.onCustomMove(move)
+    }
+
+    return this.onCustomMove(move)
   }
 
   getPlayerMoves() {
@@ -89,7 +107,15 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
       return this.onArrowPlaced(move, item)
     }
 
-    return []
+    const consequences: MaterialRulesMove<Color, MaterialType, LocationType>[] = []
+    const delegate = this.delegate()
+    if (delegate) {
+      consequences.push(
+        ...delegate.beforeMaterialMove(move)
+      )
+    }
+
+    return consequences
   }
 
   afterMaterialMove(move: MaterialMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
@@ -117,6 +143,13 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
           consequences.push(this.rules().memorizeOnGame({ lastTurn: true }))
         }
       }
+    }
+
+    const delegate = this.delegate()
+    if (delegate) {
+      consequences.push(
+        ...delegate.afterMaterialMove(move)
+      )
     }
 
     return consequences
