@@ -9,7 +9,7 @@ import Color from '@gamepark/expedition/Color'
 
 export const SetupKeyPlacesHeader = () => {
   const { t } = useTranslation()
-  const game = useGame<MaterialGame<Color, MaterialType, LocationType>>()
+  const game = useGame<MaterialGame<Color, MaterialType, LocationType>>()!
   const currentPlayer = game.rule!.player!
   const me = usePlayerId<Color>()
   return <>{

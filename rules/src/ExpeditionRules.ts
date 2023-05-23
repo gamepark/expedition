@@ -112,7 +112,7 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
 
   getScore(playerId: Color): number {
     const cards = this.material(MaterialType.Card).player(playerId)
-    const tokens = this.material(MaterialType.Token).player(playerId)
+    const tokens = this.material(MaterialType.Token).id(playerId)
     const cardsInFrontOfPlayer = cards.location(LocationType.PlayerArea).length
     const tokensCollected = tokens.location(LocationType.Card).length
     const cardsInHand = cards.location(LocationType.Hand).length

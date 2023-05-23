@@ -32,7 +32,7 @@ export const PlaceRules = ({ location, legalMoves, close }: LocationRulesProps<C
         </PlayMoveButton>
       </p>
     }
-    {rules.game.rule?.id === RuleId.SetupKeyPlaces && rules.game.rule.player === player && places2StepsFromStart.includes(location.id) &&
+    {rules?.game.rule?.id === RuleId.SetupKeyPlaces && rules.game.rule.player === player && places2StepsFromStart.includes(location.id) &&
       <p>{t('rules.place.token.forbidden')}</p>
     }
     {arrowMoves.length > 0 && arrowColors.map(color => {

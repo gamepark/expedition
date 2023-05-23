@@ -15,6 +15,7 @@ export type PlayerTurnData = {
   loopColor?: ArrowColor
   arrowPlaced?: boolean
   playTicket?: boolean
+  lastTurn?: boolean
 }
 
 export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType> {
@@ -28,6 +29,10 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
     return
   }
 
+  get noArrowLeft() {
+    return this.material(MaterialType.Arrow).location(LocationType.ArrowsStock).length === 0
+  }
+
   getPlayerMoves() {
     const moves: MaterialRulesMove[] = []
     const {
@@ -36,15 +41,20 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
       loopsCreated,
       loopColor,
       arrowPlaced,
-      playTicket
+      playTicket,
+      lastTurn
     } = this.getMemory<PlayerTurnData>()
-    const noArrowLeft = this.material(MaterialType.Arrow).location(LocationType.ArrowsStock).length === 0
-    if (arrowPlaced || noArrowLeft) {
-      moves.push(this.rules().startPlayerTurn(RuleId.PlayerTurn, this.nextPlayer, {
-        arrowsLeft: 1,
-        ticketsPlayed: 0,
-        loopsCreated: []
-      }))
+    if (arrowPlaced || this.noArrowLeft) {
+      const nextPlayer = this.nextPlayer
+      if (!lastTurn || nextPlayer !== this.game.players[0]) {
+        moves.push(this.rules().startPlayerTurn(RuleId.PlayerTurn, nextPlayer, {
+          arrowsLeft: 1,
+          ticketsPlayed: 0,
+          loopsCreated: []
+        }))
+      } else {
+        moves.push(this.rules().endGame())
+      }
     }
     if (!!loopColor) {
       moves.push(...new Expedition(loopColor, this.material(MaterialType.Arrow)).getLegalMoves(false))
@@ -101,12 +111,20 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
       consequences.push(this.rules().memorize({ playTicket: false }))
     }
 
+    if (move.itemType === MaterialType.Card && move.type === MaterialMoveType.Move && move.item.location?.type === LocationType.PlayerArea) {
+      if (!this.getMemory<PlayerTurnData>().lastTurn) {
+        if (this.material(MaterialType.Card).location(LocationType.Hand).player(move.item.location.player).length === 0) {
+          consequences.push(this.rules().memorizeOnGame({ lastTurn: true }))
+        }
+      }
+    }
+
     return consequences
   }
 
   onArrowPlaced(move: MoveItem<Color, MaterialType, LocationType>, item: MaterialItem<Color, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
     const consequences: MaterialRulesMove<Color, MaterialType, LocationType>[] = []
-    const { arrowPlaced, loopsCreated } = this.getMemory<PlayerTurnData>()
+    const { arrowPlaced, loopsCreated, lastTurn } = this.getMemory<PlayerTurnData>()
 
     if (!arrowPlaced) {
       consequences.push(this.rules().memorize({ arrowPlaced: true }))
@@ -125,6 +143,10 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
       consequences.push(this.rules().memorize({ loopColor: color, loopsCreated: [...loopsCreated, color] }))
     } else {
       consequences.push(this.rules().memorize({ loopColor: 0 }))
+    }
+
+    if (!lastTurn && this.noArrowLeft) {
+      consequences.push(this.rules().memorizeOnGame({ lastTurn: true }))
     }
 
     return consequences

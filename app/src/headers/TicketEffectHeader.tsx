@@ -9,7 +9,7 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 
 export const TicketEffectHeader = () => {
   const { t } = useTranslation()
-  const game = useGame<MaterialGame<Color, MaterialType, LocationType>>()
+  const game = useGame<MaterialGame<Color, MaterialType, LocationType>>()!
   const currentPlayer = game.rule!.player!
   const me = usePlayerId<Color>()
   return <>{
