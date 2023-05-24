@@ -1,7 +1,7 @@
 import Color from './Color'
 import { MaterialType } from './material/ExpeditionMaterial'
 import { LocationType } from './material/LocationType'
-import { places } from './material/Place'
+import { places, places2StepsFromStart } from './material/Place'
 import {
   Competitive,
   hideItemId,
@@ -60,13 +60,18 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
       // TODO: if player does not have at least 4 places 3 nodes away from the start, discard hand under the deck and draw again
     }
 
-    for (let i = 0; i < 6; i++) {
+    let commonObjectives = 0
+    while (commonObjectives < 6) {
       const card = cards
         .search()
         .location(LocationType.Deck)
         .maxBy((location) => location.x)!
-      // TODO: put card at the bottom of the deck & draw another one if it is not 3 nodes away from the start
-      card.location = { type: LocationType.CommonObjectives, x: i }
+      if (places2StepsFromStart.includes(card.id)) {
+        cards.move(cards.items.indexOf(card), { location: { type: LocationType.Deck, x: 0 } })
+      } else {
+        cards.move(cards.items.indexOf(card), { location: { type: LocationType.CommonObjectives, x: commonObjectives } })
+        commonObjectives++
+      }
     }
 
     const tokens = this.materialOperations(MaterialType.Token)
