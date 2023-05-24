@@ -10,7 +10,7 @@ export const GameOverHeader = () => {
   const player = usePlayerId()
   const bestScore = rules ? Math.max(...rules.game.players.map(player => rules.getScore(player))) : 0
   const winners = rules?.game.players.filter(player => rules.getScore(player) === bestScore) ?? []
-  const winnerName = usePlayerName(winners[0]) ?? getPlayerName(winners[0], t)
+  const winnerName = usePlayerName(winners[0]) || getPlayerName(winners[0], t)
   if (winners.length === 1) {
     if (winners[0] !== player) {
       return <>{t('game.over', { winner: winnerName, score: bestScore })}</>

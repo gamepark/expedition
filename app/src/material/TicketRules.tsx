@@ -9,7 +9,7 @@ export const TicketRules = ({ item, legalMoves, close }: MaterialRulesProps) => 
   const player = usePlayerId<Color>()
   const owner = item.location?.player
   const mine = owner !== undefined && owner === player
-  const playerName = usePlayerName(owner) ?? getPlayerName(owner!, t)
+  const playerName = usePlayerName(owner) || getPlayerName(owner!, t)
   return <>
     <h2>{t('rules.ticket.title')}</h2>
     {mine && <p>{t('rules.ticket.mine', { number: item.quantity })}</p>}

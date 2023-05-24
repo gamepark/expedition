@@ -11,7 +11,7 @@ export const PlayerTurnHeader = () => {
   const { t } = useTranslation()
   const game = useGame<MaterialGame<Color, MaterialType, LocationType>>()!
   const legalMoves = useLegalMoves<MaterialRulesMove<Color, MaterialType, LocationType>>()
-  const playerName = usePlayerName(game.rule!.player!) ?? getPlayerName(game.rule!.player!, t)
+  const playerName = usePlayerName(game.rule!.player!) || getPlayerName(game.rule!.player!, t)
   if (!legalMoves.length) {
     return <>{t('header.turn', { player: playerName })}</>
   }

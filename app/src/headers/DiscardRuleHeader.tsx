@@ -12,7 +12,7 @@ export const DiscardRuleHeader = () => {
   const game = useGame<MaterialGame<Color, MaterialType, LocationType>>()!
   const currentPlayer = game.rule!.player!
   const me = usePlayerId<Color>()
-  const playerName = usePlayerName(currentPlayer) ?? getPlayerName(currentPlayer, t)
+  const playerName = usePlayerName(currentPlayer) || getPlayerName(currentPlayer, t)
   return <>{
     currentPlayer === me
       ? t('header.discard.me')

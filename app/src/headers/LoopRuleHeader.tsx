@@ -13,7 +13,7 @@ export const LoopRuleHeader = () => {
   const rule = useGame<MaterialGame<Color, MaterialType, LocationType>>()!.rule!
   const legalMoves = useLegalMoves<MaterialRulesMove<Color, MaterialType, LocationType>>()
   const { loopColor } = rule.memory as LoopRuleMemory
-  const playerName = usePlayerName(rule.player!) ?? getPlayerName(rule.player!, t)
+  const playerName = usePlayerName(rule.player!) || getPlayerName(rule.player!, t)
   if (!legalMoves.length) {
     return <>{t('header.loop', { player: playerName, arrow: loopColor })}</>
   }
