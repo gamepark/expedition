@@ -32,7 +32,7 @@ export const CardRules = (props: MaterialRulesProps) => {
       <p>{t('rules.card.scored.other', { player: playerName })}</p>}
     {legalMoves.length === 1 &&
       <PlayMoveButton move={legalMoves[0]} onPlay={close}>
-        {t('rules.card.draw')}
+        {deck ? t('rules.card.draw') : t('rules.card.discard')}
       </PlayMoveButton>
     }
     {/* TODO: add cards texts with translation:
