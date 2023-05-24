@@ -7,14 +7,14 @@ import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 
-export const TicketEffectHeader = () => {
+export const DiscardRuleHeader = () => {
   const { t } = useTranslation()
   const game = useGame<MaterialGame<Color, MaterialType, LocationType>>()!
   const currentPlayer = game.rule!.player!
   const me = usePlayerId<Color>()
   return <>{
     currentPlayer === me
-      ? t('header.ticket.me')
-      : t('header.ticket', { player: getPlayerName(currentPlayer, t) })
+      ? t('header.discard.me')
+      : t('header.discard', { player: getPlayerName(currentPlayer, t) })
   }</>
 }

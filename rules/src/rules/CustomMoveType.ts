@@ -1,3 +1,3 @@
 export enum CustomMoveType {
-  DrawCards
+  ExchangeCard
 }

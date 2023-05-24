@@ -8,9 +8,12 @@ import { MaterialGame } from '@gamepark/rules-api'
 import { RuleId } from '@gamepark/expedition/rules/RuleId'
 import { SetupKeyPlacesHeader } from './headers/SetupKeyPlacesHeader'
 import { PlayerTurnHeader } from './headers/PlayerTurnHeader'
-import { TicketEffectHeader } from './headers/TicketEffectHeader'
+import { TicketRuleHeader } from './headers/TicketRuleHeader'
 import { GameOverHeader } from './headers/GameOverHeader'
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace'
+import { LoopRuleHeader } from './headers/LoopRuleHeader'
+import { ChooseCardRuleHeader } from './headers/ChooseCardRuleHeader'
+import { DiscardRuleHeader } from './headers/DiscardRuleHeader'
 
 export default function App() {
   const game = useGame<MaterialGame>()
@@ -34,5 +37,8 @@ export default function App() {
 const RulesHeaders: Record<RuleId, () => ReactJSXElement> = {
   [RuleId.SetupKeyPlaces]: SetupKeyPlacesHeader,
   [RuleId.PlayerTurn]: PlayerTurnHeader,
-  [RuleId.TicketEffect]: TicketEffectHeader
+  [RuleId.LoopRule]: LoopRuleHeader,
+  [RuleId.TicketRule]: TicketRuleHeader,
+  [RuleId.ChooseCardRule]: ChooseCardRuleHeader,
+  [RuleId.DiscardRule]: DiscardRuleHeader
 }

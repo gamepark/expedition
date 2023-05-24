@@ -4,16 +4,25 @@ import { LocationType } from '../material/LocationType'
 import { MaterialRulesStepCreator } from '@gamepark/rules-api'
 import { SetupKeyPlaces } from './SetupKeyPlaces'
 import { PlayerTurn } from './PlayerTurn'
-import { TicketEffect } from './TicketEffect'
+import { TicketRule } from './TicketRule'
+import { LoopRule } from './LoopRule'
+import { ChooseCardRule } from './ChooseCardRule'
+import { DiscardRule } from './DiscardRule'
 
 export enum RuleId {
   SetupKeyPlaces = 1,
   PlayerTurn,
-  TicketEffect,
+  LoopRule,
+  TicketRule,
+  ChooseCardRule,
+  DiscardRule
 }
 
 export const rulesSteps: Record<RuleId, MaterialRulesStepCreator<Color, MaterialType, LocationType>> = {
   [RuleId.SetupKeyPlaces]: SetupKeyPlaces,
   [RuleId.PlayerTurn]: PlayerTurn,
-  [RuleId.TicketEffect]: TicketEffect
+  [RuleId.TicketRule]: TicketRule,
+  [RuleId.LoopRule]: LoopRule,
+  [RuleId.ChooseCardRule]: ChooseCardRule,
+  [RuleId.DiscardRule]: DiscardRule
 }

@@ -23,7 +23,7 @@ export class SetupKeyPlaces extends PlayerTurnRule<Color, MaterialType, Location
       const nextPlayer = this.nextPlayer
       const hasTokensLeft = this.material(MaterialType.Token).player(nextPlayer).location(LocationType.PlayerArea).length > 0
       const nextStep = hasTokensLeft ? RuleId.SetupKeyPlaces : RuleId.PlayerTurn
-      return [this.rules().startPlayerTurn(nextStep, nextPlayer, { arrowsLeft: 1, ticketsPlayed: 0, loopsCreated: [] })]
+      return [this.rules().startPlayerTurn(nextStep, nextPlayer)]
     }
     return []
   }

@@ -1,4 +1,4 @@
-import { Material, MaterialItem, MaterialRulesMove } from '@gamepark/rules-api'
+import { Material, MaterialRulesMove } from '@gamepark/rules-api'
 import Color from '../Color'
 import { MaterialType } from '../material/ExpeditionMaterial'
 import { LocationType } from '../material/LocationType'
@@ -40,19 +40,19 @@ export class Expedition {
 
   getNextArrowOrigin(): Node[] {
     const arrows = this.arrows.location(LocationType.Road).getItems()
-    const lastArrow = this.lastArrow
+    const lastArrow = this.lastArrow.getItem()
     return lastArrow ? [arrowRoad(lastArrow)[1]] : [...new Set(arrows.map(arrow => arrowRoad(arrow)[1]).concat(StartNode))]
   }
 
-  get lastArrow(): MaterialItem | undefined {
+  get lastArrow(): Material {
     const arrows = this.arrows.location(LocationType.Road).getItems()
-    return arrows.find(arrow => {
+    return this.arrows.location(LocationType.Road).filter(arrow => {
       const destination = arrowRoad(arrow)[1]
       return !arrows.some(otherArrow => arrowRoad(otherArrow)[0] === destination)
     })
   }
 
   get loop(): boolean {
-    return this.started && !this.isOver && !this.lastArrow
+    return this.started && !this.isOver && !this.lastArrow.length
   }
 }
