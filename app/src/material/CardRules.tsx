@@ -19,7 +19,7 @@ export const CardRules = (props: MaterialRulesProps) => {
   const hand = item.location?.type === LocationType.Hand
   const common = item.location?.type === LocationType.CommonObjectives
   const scored = item.location?.type === LocationType.PlayerArea
-  const playerName = item.location?.player ? usePlayerName(item.location!.player!) ?? getPlayerName(item.location!.player!, t) : ''
+  const playerName = usePlayerName(item.location!.player!) ?? getPlayerName(item.location!.player!, t)
   return <>
     <h2>{t('rules.card.title')}</h2>
     <p>{t('rules.card.purpose')}</p>
@@ -51,7 +51,7 @@ const HandCardRules = ({ item, close }: MaterialRulesProps) => {
   const placeTokenMove = legalMoves.find(move => isMoveItem(move) && move.itemType === MaterialType.Token && move.item.location?.id === item.id)
   const tokens = rules.material(MaterialType.Token)
   const isRevealed = mine && tokens.location(LocationType.Place).locationId(item.id).length > 0
-  const playerName = item.location?.player ? usePlayerName(item.location!.player!) ?? getPlayerName(item.location!.player!, t) : ''
+  const playerName = usePlayerName(item.location!.player!) ?? getPlayerName(item.location!.player!, t)
   return <>
     {mine && !isRevealed && <p>{t('rules.card.hand.private')}</p>}
     {mine && isRevealed && <p>{t('rules.card.hand.revealed')}</p>}
