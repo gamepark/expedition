@@ -22,6 +22,7 @@ const style = css`
     -webkit-box-sizing: inherit;
     -moz-box-sizing: inherit;
     box-sizing: inherit;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
