@@ -62,12 +62,16 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
     return place
   }
 
-  itemExtraCss(item: MaterialItem<Color, LocationType>, { legalMoves }: PlaceItemContext<Color, MaterialType, LocationType>): Interpolation<Theme> {
+  itemExtraCss(item: MaterialItem<Color, LocationType>, { legalMoves, itemIndex }: PlaceItemContext<Color, MaterialType, LocationType>): Interpolation<Theme> {
     if (legalMoves.some(move =>
       move.kind === MoveKind.MaterialMove
       && move.type === MaterialMoveType.Move
       && move.itemType === MaterialType.Arrow
       && equal(item.location.id, move.item.location?.id)
+    ) && !legalMoves.some(move =>
+      move.kind === MoveKind.MaterialMove
+      && move.type === MaterialMoveType.Move
+      && move.itemIndex === itemIndex
     )) {
       return css`pointer-events: none;`
     }

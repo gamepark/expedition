@@ -13,7 +13,7 @@ export const GameOverHeader = () => {
   const winnerName = usePlayerName(winners[0]) || getPlayerName(winners[0], t)
   if (winners.length === 1) {
     if (winners[0] !== player) {
-      return <>{t('game.over', { winner: winnerName, score: bestScore })}</>
+      return <>{t('game.over', { player: winnerName, score: bestScore })}</>
     } else {
       return <>{t('game.over.win', { score: bestScore })}</>
     }
