@@ -32,9 +32,8 @@ export const LargeTokensDescription: TokenMaterialDescription<Color, Color, Mate
 }
 
 const getColorTokenPosition = (color: Color, players: Color[], player?: Color): Coordinates => {
-  if (color === player) {
-    return { x: -57, y: 27, z: 0 }
-  }
-  const index = (players.indexOf(color) + (player !== undefined ? players.indexOf(player) : 0)) % players.length
-  return { x: 38.5, y: -30.5 + (index + players.length - 1) % players.length * 54.5 / (players.length - 1), z: 0 }
+  const colorIndex = players.indexOf(color)
+  const playerIndex = player !== undefined ? players.indexOf(player) : players.length - 1
+  const index = (colorIndex - playerIndex - 1 + players.length) % players.length
+  return { x: 38.5, y: -30.5 + (index % players.length) * 54.5 / (players.length - 1), z: 0 }
 }

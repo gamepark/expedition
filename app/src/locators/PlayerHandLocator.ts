@@ -5,6 +5,15 @@ import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 
 export class PlayerHandLocator extends HandLocator<Color, MaterialType, LocationType> {
+  getDisplayIndex(player: Color, context: PlaceItemContext<Color, MaterialType, LocationType>) {
+    if (context.player === undefined) {
+      return this.getRelativePlayerIndex(context, player)
+    } else {
+      const players = context.game.players.length
+      return (this.getRelativePlayerIndex(context, player) + players - 1) % players
+    }
+  }
+
   isHidden(item: MaterialItem<Color, LocationType>, context: PlaceItemContext<Color, MaterialType, LocationType>): boolean {
     return item.location.player !== context.player
   }
@@ -12,11 +21,10 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
   getCoordinates(location: Location<Color, LocationType>, context: PlaceItemContext<Color, MaterialType, LocationType>) {
     if (location.player === this.player) {
       const count = this.countItems(location, context)
-      return { x: -46 + count * 3, y: 28, z: 10 }
+      return { x: -55 + count * 3, y: 28, z: 10 }
     } else {
-      const index = this.getRelativePlayerIndex(context, location.player!)
-      const players = context.game.players.length
-      const baseLocation = (index + players - 1) % players * 54.5 / (players - 1)
+      const index = this.getDisplayIndex(location.player!, context)
+      const baseLocation = index * 54.5 / (context.game.players.length - 1)
       return { x: 45, y: -27 + baseLocation, z: 10 }
     }
   }

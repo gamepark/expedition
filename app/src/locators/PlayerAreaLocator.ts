@@ -5,15 +5,23 @@ import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 
 export class PlayerAreaLocator extends LineLocator<Color, MaterialType, LocationType> {
+  getDisplayIndex(player: Color, context: PlaceItemContext<Color, MaterialType, LocationType>) {
+    if (context.player === undefined) {
+      return this.getRelativePlayerIndex(context, player)
+    } else {
+      const players = context.game.players.length
+      return (this.getRelativePlayerIndex(context, player) + players - 1) % players
+    }
+  }
+
   getCoordinates({ location }: MaterialItem<Color, LocationType>, context: PlaceItemContext<Color, MaterialType, LocationType>): Coordinates {
-    const index = this.getRelativePlayerIndex(context, location.player!)
-    const players = context.game.players.length
-    const baseLocation = (index + players - 1) % players * 54.5 / (players - 1)
+    const index = this.getDisplayIndex(location.player!, context)
+    const baseLocation = index * 54.5 / (context.game.players.length - 1)
     switch (context.type) {
       case MaterialType.Token:
-        return location.player === this.player ? { x: -53.3, y: 30, z: 0 } : { x: 30, y: -30 + baseLocation, z: 0 }
+        return { x: 30, y: -30 + baseLocation, z: 0 }
       case MaterialType.Ticket:
-        return location.player === this.player ? { x: -51, y: 25, z: 0 } : { x: 38.5, y: -27.2 + baseLocation, z: 0 }
+        return { x: 38.5, y: -27.2 + baseLocation, z: 0 }
       default:
         return location.player === this.player ? { x: 24, y: 28, z: 0 } : { x: 32, y: -29 + baseLocation, z: 0 }
     }
@@ -22,11 +30,11 @@ export class PlayerAreaLocator extends LineLocator<Color, MaterialType, Location
   getDelta({ location }: MaterialItem<Color, LocationType>, { type }: PlaceItemContext<Color, MaterialType, LocationType>): Partial<Coordinates> {
     switch (type) {
       case MaterialType.Token:
-        return location.player === this.player ? { x: 1.5 } : { y: 1.5 }
+        return { y: 1.5 }
       case MaterialType.Ticket:
         return { x: 0, y: 1.3, z: 0 }
       default:
-        return location.player === this.player ? { x: -3, z: 0.05 } : { y: 1, z: 0.05 }
+        return location.player === this.player ? { x: -3, z: 0.01 } : { y: 1, z: 0.01 }
     }
   }
 
