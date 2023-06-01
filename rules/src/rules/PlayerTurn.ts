@@ -137,7 +137,6 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
       this.getMemory<PlayerTurnMemory>().arrowsLeft++
     } else if (isRedNode(node)) {
       consequences.push(this.material(MaterialType.Ticket).createItem({
-        quantity: 1,
         location: { type: LocationType.PlayerArea, player: this.player }
       }))
     }
