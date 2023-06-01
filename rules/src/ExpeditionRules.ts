@@ -59,11 +59,11 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
   }
 
   private createDeck() {
-    const cards = this.materialOperations(MaterialType.Card)
+    const cards = this.setupMaterial(MaterialType.Card)
     for (const place of places) {
-      cards.create({ id: place, location: { type: LocationType.Deck } })
+      cards.createItem({ id: place, location: { type: LocationType.Deck } })
     }
-    cards.shuffle()
+    this.setupMaterial(MaterialType.Card).shuffle()
   }
 
   private dealCards() {
@@ -78,30 +78,30 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
   }
 
   private dealPlayerCards(player: Color, quantity: number) {
-    this.material(MaterialType.Card).location(LocationType.Deck)
+    this.setupMaterial(MaterialType.Card).location(LocationType.Deck)
       .sort(item => -item.location.x!).limit(quantity)
-      .moveItems(LocationType.Hand, { player }).forEach(move => this.play(move))
+      .moveItems(LocationType.Hand, { player })
   }
 
   private hasEnoughCards2StepsFromStart(player: Color) {
-    return this.material(MaterialType.Card).location(LocationType.Hand).player(player)
+    return this.setupMaterial(MaterialType.Card).location(LocationType.Hand).player(player)
       .id<Place>(place => !places2StepsFromStart.includes(place!)).length >= TOKENS_PER_PLAYER
   }
 
   private discardCards(player: Color) {
-    this.material(MaterialType.Card).location(LocationType.Hand).player(player)
-      .moveItems(LocationType.Deck, { x: 0 }).forEach(move => this.play(move))
+    this.setupMaterial(MaterialType.Card).location(LocationType.Hand).player(player)
+      .moveItems(LocationType.Deck, { x: 0 })
   }
 
   private revealCommonObjectives() {
-    const cards = this.material(MaterialType.Card)
+    const cards = this.setupMaterial(MaterialType.Card)
     const deck = cards.location(LocationType.Deck).sort(item => -item.location.x!)
-    deck.limit(COMMON_OBJECTIVES).moveItems(LocationType.CommonObjectives).forEach(move => this.play(move))
+    deck.limit(COMMON_OBJECTIVES).moveItems(LocationType.CommonObjectives)
     while (true) {
       const cardsToReplace = cards.location(LocationType.CommonObjectives).id<Place>(place => places2StepsFromStart.includes(place!))
       if (cardsToReplace.length > 0) {
-        cardsToReplace.moveItems(LocationType.Deck, { x: 0 }).forEach(move => this.play(move))
-        deck.limit(cardsToReplace.length).moveItems(LocationType.CommonObjectives).forEach(move => this.play(move))
+        cardsToReplace.moveItems(LocationType.Deck, { x: 0 })
+        deck.limit(cardsToReplace.length).moveItems(LocationType.CommonObjectives)
       } else {
         return
       }
@@ -109,23 +109,23 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
   }
 
   private createTokens() {
-    const tokens = this.materialOperations(MaterialType.Token)
+    const tokens = this.setupMaterial(MaterialType.Token)
     for (const player of this.game.players) {
-      tokens.create({ id: player, quantity: TOKENS_PER_PLAYER, location: { type: LocationType.PlayerArea, player } })
+      tokens.createItem({ id: player, quantity: TOKENS_PER_PLAYER, location: { type: LocationType.PlayerArea, player } })
     }
   }
 
   private giveStartTickets() {
-    const tickets = this.materialOperations(MaterialType.Ticket)
+    const tickets = this.setupMaterial(MaterialType.Ticket)
     for (const player of this.game.players) {
-      tickets.create({ quantity: START_TICKETS, location: { type: LocationType.PlayerArea, player } })
+      tickets.createItem({ quantity: START_TICKETS, location: { type: LocationType.PlayerArea, player } })
     }
   }
 
   private createArrows() {
-    const arrows = this.materialOperations(MaterialType.Arrow)
+    const arrows = this.setupMaterial(MaterialType.Arrow)
     for (const arrowColor of arrowColors) {
-      arrows.create({ id: arrowColor, quantity: ARROWS_PER_EXPEDITION, location: { type: LocationType.ArrowsStock } })
+      arrows.createItem({ id: arrowColor, quantity: ARROWS_PER_EXPEDITION, location: { type: LocationType.ArrowsStock } })
     }
   }
 
