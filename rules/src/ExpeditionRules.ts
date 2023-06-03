@@ -55,14 +55,11 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
     this.createTokens()
     this.giveStartTickets()
     this.createArrows()
-    this.start(RuleId.SetupKeyPlaces, this.game.players[0], { arrowsLeft: 1, ticketsPlayed: 0, loopsCreated: [] })
+    this.start(RuleId.SetupKeyPlaces, this.game.players[0])
   }
 
   private createDeck() {
-    const cards = this.setupMaterial(MaterialType.Card)
-    for (const place of places) {
-      cards.createItem({ id: place, location: { type: LocationType.Deck } })
-    }
+    this.setupMaterial(MaterialType.Card).createItems(places.map(id => ({ id, location: { type: LocationType.Deck } })))
     this.setupMaterial(MaterialType.Card).shuffle()
   }
 
@@ -85,48 +82,49 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
 
   private hasEnoughCards2StepsFromStart(player: Color) {
     return this.setupMaterial(MaterialType.Card).location(LocationType.Hand).player(player)
-      .id<Place>(place => !places2StepsFromStart.includes(place!)).length >= TOKENS_PER_PLAYER
+      .id<Place>(place => !places2StepsFromStart.includes(place!))
+      .length >= TOKENS_PER_PLAYER
   }
 
   private discardCards(player: Color) {
-    this.setupMaterial(MaterialType.Card).location(LocationType.Hand).player(player)
-      .moveItems(LocationType.Deck, { x: 0 })
+    this.setupMaterial(MaterialType.Card).location(LocationType.Hand).player(player).moveItems(LocationType.Deck, { x: 0 })
   }
 
   private revealCommonObjectives() {
-    const cards = this.setupMaterial(MaterialType.Card)
-    const deck = cards.location(LocationType.Deck).sort(item => -item.location.x!)
-    deck.limit(COMMON_OBJECTIVES).moveItems(LocationType.CommonObjectives)
-    while (true) {
-      const cardsToReplace = cards.location(LocationType.CommonObjectives).id<Place>(place => places2StepsFromStart.includes(place!))
-      if (cardsToReplace.length > 0) {
-        cardsToReplace.moveItems(LocationType.Deck, { x: 0 })
-        deck.limit(cardsToReplace.length).moveItems(LocationType.CommonObjectives)
-      } else {
-        return
-      }
+    this.drawCommonObjectives(COMMON_OBJECTIVES)
+    let cardsToReplace
+    while ((cardsToReplace = this.getCommonObjectives2StepsFromStart()).length > 0) {
+      cardsToReplace.moveItems(LocationType.Deck, { x: 0 })
+      this.drawCommonObjectives(cardsToReplace.length)
     }
+  }
+
+  private drawCommonObjectives(quantity: number) {
+    this.setupMaterial(MaterialType.Card).location(LocationType.Deck)
+      .sort(item => -item.location.x!).limit(quantity)
+      .moveItems(LocationType.CommonObjectives)
+  }
+
+  private getCommonObjectives2StepsFromStart() {
+    return this.setupMaterial(MaterialType.Card).location(LocationType.CommonObjectives).id<Place>(place => places2StepsFromStart.includes(place!))
   }
 
   private createTokens() {
-    const tokens = this.setupMaterial(MaterialType.Token)
-    for (const player of this.game.players) {
-      tokens.createItem({ id: player, quantity: TOKENS_PER_PLAYER, location: { type: LocationType.PlayerArea, player } })
-    }
+    this.setupMaterial(MaterialType.Token).createItems(this.game.players.map(player => (
+      { id: player, quantity: TOKENS_PER_PLAYER, location: { type: LocationType.PlayerArea, player } }
+    )))
   }
 
   private giveStartTickets() {
-    const tickets = this.setupMaterial(MaterialType.Ticket)
-    for (const player of this.game.players) {
-      tickets.createItem({ quantity: START_TICKETS, location: { type: LocationType.PlayerArea, player } })
-    }
+    this.setupMaterial(MaterialType.Ticket).createItems(this.game.players.map(player => (
+      { quantity: START_TICKETS, location: { type: LocationType.PlayerArea, player } }
+    )))
   }
 
   private createArrows() {
-    const arrows = this.setupMaterial(MaterialType.Arrow)
-    for (const arrowColor of arrowColors) {
-      arrows.createItem({ id: arrowColor, quantity: ARROWS_PER_EXPEDITION, location: { type: LocationType.ArrowsStock } })
-    }
+    this.setupMaterial(MaterialType.Arrow).createItems(arrowColors.map(id => (
+      { id, quantity: ARROWS_PER_EXPEDITION, location: { type: LocationType.ArrowsStock } }
+    )))
   }
 
   giveTime(): number {
