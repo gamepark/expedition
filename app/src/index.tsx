@@ -36,8 +36,8 @@ const style = css`
 
   #root {
     position: absolute;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     user-select: none;
     overflow: hidden;
     background-image: url(${process.env.PUBLIC_URL + '/cover-1920.jpg'});

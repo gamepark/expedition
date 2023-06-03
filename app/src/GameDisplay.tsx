@@ -11,7 +11,7 @@ export const GameDisplay = () => {
   return <>
     <GameTable material={MaterialsDescription} locators={Locators}
                xMin={-63} xMax={50} yMin={-34} yMax={34}
-               zoomMin={1.4} zoomMax={5} margin={{ top: 7, left: 0, right: 20, bottom: 0 }}/>
+               zoomMin={1.35} zoomMax={5} margin={{ top: 7, left: 0, right: 20, bottom: 0 }}/>
     {players.map((player, index) =>
       <PlayerPanel key={player.id} playerId={player.id} color={playerColorCode[player.id]} css={panelPosition(index, players.length, isSpectator)}/>
     )}
