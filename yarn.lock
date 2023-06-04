@@ -1300,10 +1300,10 @@
   dependencies:
     tslib "^2.1.0"
 
-"@gamepark/rules-api@~6.0.1-alpha.0":
-  version "6.0.1-alpha.0"
-  resolved "https://registry.yarnpkg.com/@gamepark/rules-api/-/rules-api-6.0.1-alpha.0.tgz#02fbded797f40858671ebbeace3ea945c094e53c"
-  integrity sha512-WmauQ/iBi5q0hEc4sVaIJxUXumDWupWbkpt+vH9I1aWLkcL5oYIAqHQgcQ+hkAfuZwJI8X7DBSQ9lrvQXWXeYg==
+"@gamepark/rules-api@~6.0.2-alpha.0":
+  version "6.0.2-alpha.0"
+  resolved "https://registry.yarnpkg.com/@gamepark/rules-api/-/rules-api-6.0.2-alpha.0.tgz#0fa5fcf555d3551d57ba87644193843e55f9fef4"
+  integrity sha512-4JJzLjSFaos/cbuoMR6EhE7rJoXiIe0UGVAgiiPg/+ZnbdX89ehNtLGrioZYjh9/6QIP0HdD1yxYLGnQo9fPiA==
   dependencies:
     fast-deep-equal "^3.1.3"
     lodash.mapvalues "^4.6.0"
