@@ -1,5 +1,5 @@
 import {
-  isItemWithLocation,
+  isMoveItemLocation,
   MaterialMove,
   MaterialMoveType,
   MaterialRulesMove,
@@ -104,8 +104,8 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
         }
         break
       case MaterialType.Card:
-        if (move.type === MaterialMoveType.Move && move.item.location?.type === LocationType.PlayerArea) {
-          if (this.material(MaterialType.Card).location(LocationType.Hand).player(move.item.location.player).length === 0) {
+        if (move.type === MaterialMoveType.Move && move.position.location?.type === LocationType.PlayerArea) {
+          if (this.material(MaterialType.Card).location(LocationType.Hand).player(move.position.location.player).length === 0) {
             this.memorizeOnGame({ lastTurn: true })
           }
         }
@@ -115,12 +115,12 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
 
   afterArrowMove(move: MoveItem<Color, MaterialType, LocationType>) {
     const consequences: MaterialRulesMove<Color, MaterialType, LocationType>[] = []
-    if (isItemWithLocation(move.item) && move.item.location.type === LocationType.Road) {
+    if (isMoveItemLocation(move) && move.position.location.type === LocationType.Road) {
       this.memorize({ arrowPlaced: true })
       if (!this.isFreeArrow) {
         this.getMemory<PlayerTurnMemory>().arrowsLeft--
       }
-      const destination = arrowRoad(move.item)[1]
+      const destination = arrowRoad(move.position)[1]
       consequences.push(...this.onReachNode(this.material(MaterialType.Arrow).getItem(move.itemIndex)!.id, destination))
       if (!this.arrowLeft) {
         this.memorizeOnGame({ lastTurn: true })
@@ -154,15 +154,15 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
     const card = this.material(MaterialType.Card).id(place)
     const cardLocation = card.getItem()?.location
     if (cardLocation?.type === LocationType.CommonObjectives || cardLocation?.type === LocationType.Hand) {
-      consequences.push(card.moveItem(LocationType.PlayerArea, { player: cardLocation.player ?? this.player }))
+      consequences.push(card.moveItem({ location: { type: LocationType.PlayerArea, player: cardLocation.player ?? this.player } }))
       if (cardLocation.type === LocationType.Hand) {
         const token = this.material(MaterialType.Token).id(cardLocation.player).location(LocationType.Place).locationId(place)
         if (token.length) {
-          consequences.push(token.moveItem(LocationType.Card, { parent: place }))
+          consequences.push(token.moveItem({ location: { type: LocationType.Card, parent: place } }))
         }
       } else if (this.deckHasCard) {
         const topDeckCard = this.material(MaterialType.Card).location(LocationType.Deck).maxBy(item => item.location.x!)
-        consequences.push(topDeckCard.moveItem(LocationType.CommonObjectives, { x: cardLocation.x }))
+        consequences.push(topDeckCard.moveItem({ location: { type: LocationType.CommonObjectives, x: cardLocation.x } }))
       }
     }
     return consequences

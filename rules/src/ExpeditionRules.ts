@@ -77,7 +77,7 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
   private dealPlayerCards(player: Color, quantity: number) {
     this.setupMaterial(MaterialType.Card).location(LocationType.Deck)
       .sort(item => -item.location.x!).limit(quantity)
-      .moveItems(LocationType.Hand, { player })
+      .moveItems({ location: { type: LocationType.Hand, player } })
   }
 
   private hasEnoughCards2StepsFromStart(player: Color) {
@@ -87,14 +87,14 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
   }
 
   private discardCards(player: Color) {
-    this.setupMaterial(MaterialType.Card).location(LocationType.Hand).player(player).moveItems(LocationType.Deck, { x: 0 })
+    this.setupMaterial(MaterialType.Card).location(LocationType.Hand).player(player).moveItems({ location: { type: LocationType.Deck, x: 0 } })
   }
 
   private revealCommonObjectives() {
     this.drawCommonObjectives(COMMON_OBJECTIVES)
     let cardsToReplace
     while ((cardsToReplace = this.getCommonObjectives2StepsFromStart()).length > 0) {
-      cardsToReplace.moveItems(LocationType.Deck, { x: 0 })
+      cardsToReplace.moveItems({ location: { type: LocationType.Deck, x: 0 } })
       this.drawCommonObjectives(cardsToReplace.length)
     }
   }
@@ -102,7 +102,7 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
   private drawCommonObjectives(quantity: number) {
     this.setupMaterial(MaterialType.Card).location(LocationType.Deck)
       .sort(item => -item.location.x!).limit(quantity)
-      .moveItems(LocationType.CommonObjectives)
+      .moveItems({ location: { type: LocationType.CommonObjectives } })
   }
 
   private getCommonObjectives2StepsFromStart() {

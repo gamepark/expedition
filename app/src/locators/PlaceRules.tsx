@@ -19,7 +19,7 @@ export const PlaceRules = ({ location, legalMoves, close }: LocationRulesProps<C
   const player = usePlayerId()
   const rules = useRules<ExpeditionRules>()
   const arrowMoves = useLegalMoves<MaterialRulesMove, MoveItem>(
-    move => isMoveItem(move) && move.item.location !== undefined && isRoadToNode(location.id, move.item.location, move.item.rotation?.z === 1)
+    move => isMoveItem(move) && !!move.position.location && isRoadToNode(location.id, move.position.location, move.position.rotation?.z === 1)
   )
   return <>
     <h2>{getPlaceTitle(t, location.id)}</h2>

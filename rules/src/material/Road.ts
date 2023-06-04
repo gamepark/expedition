@@ -1,5 +1,5 @@
 import { Place, places } from './Place'
-import { isEnumValue, Location, MaterialItem } from '@gamepark/rules-api'
+import { isEnumValue, ItemPosition, Location } from '@gamepark/rules-api'
 
 export enum BlueNode {
   StartNode_East = 100,
@@ -279,4 +279,4 @@ export const isRoadToNode = (node: Node, location: Location, backwards: boolean)
   else return location.id[1] === node
 }
 
-export const arrowRoad = (arrow: MaterialItem): Road => arrow.rotation?.z ? [arrow.location.id[1], arrow.location.id[0]] : arrow.location.id
+export const arrowRoad = ({ location, rotation }: ItemPosition): Road => rotation?.z ? [location.id[1], location.id[0]] : location.id

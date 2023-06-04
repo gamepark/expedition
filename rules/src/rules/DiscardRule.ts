@@ -8,7 +8,7 @@ import { RuleId } from './RuleId'
 export class DiscardRule extends PlayerTurn {
   getPlayerMoves(): MaterialRulesMove<Color, MaterialType, LocationType>[] {
     return this.material(MaterialType.Card).location(LocationType.Hand).player(this.player)
-      .moveItems(LocationType.Deck, { x: 0 })
+      .moveItems({ location: { type: LocationType.Deck, x: 0 } })
   }
 
   afterMaterialMove(move: MaterialMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {

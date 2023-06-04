@@ -19,7 +19,7 @@ export class TicketRule extends PlayerTurn {
     for (const arrowColor of arrowColors) {
       const lastArrow = new Expedition(arrowColor, arrows).lastArrow
       if (lastArrow.length) {
-        moves.push(lastArrow.moveItem(LocationType.ArrowsStock))
+        moves.push(lastArrow.moveItem({ location: { type: LocationType.ArrowsStock } }))
       }
     }
 
@@ -31,7 +31,7 @@ export class TicketRule extends PlayerTurn {
   }
 
   beforeMaterialMove(move: MaterialMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
-    if (move.type === MaterialMoveType.Move && move.itemType === MaterialType.Arrow && move.item.location?.type === LocationType.ArrowsStock) {
+    if (move.type === MaterialMoveType.Move && move.itemType === MaterialType.Arrow && move.position.location?.type === LocationType.ArrowsStock) {
       const arrow = this.material(MaterialType.Arrow).getItem(move.itemIndex)!
       return super.onReachNode(arrow.id, arrowRoad(arrow)[0])
     }
@@ -50,7 +50,7 @@ export class TicketRule extends PlayerTurn {
     if (move.type === CustomMoveType.ExchangeCard) {
       const cards = this.material(MaterialType.Card).location(LocationType.Deck).sort((item) => -item.location.x!).limit(2)
       return [
-        ...cards.moveItems(LocationType.Hand, { player: this.player }),
+        ...cards.moveItems({ location: { type: LocationType.Hand, player: this.player } }),
         this.rules().startRule(cards.length === 2 ? RuleId.ChooseCardRule : RuleId.DiscardRule)
       ]
     }

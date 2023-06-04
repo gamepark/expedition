@@ -15,7 +15,7 @@ export class SetupKeyPlaces extends PlayerTurnRule<Color, MaterialType, Location
     const legalPlaces = playerCards.getItems<Place>(card => card.id).filter(place =>
       !placesWithToken.includes(place) && !places2StepsFromStart.includes(place)
     )
-    return legalPlaces.map(place => tokenStock.moveItem(LocationType.Place, { id: place }))
+    return legalPlaces.map(place => tokenStock.moveItem({ location: { type: LocationType.Place, id: place } }))
   }
 
   afterMaterialMove(move: MaterialMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {

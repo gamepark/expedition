@@ -33,7 +33,7 @@ export class Expedition {
         && !expeditionArrows.some(arrow => equal(arrow.location.id, road))
         && (loopsAllowed || !expeditionArrows.some(arrow => arrowRoad(arrow)[0] === (road[0] === node ? road[1] : road[0])))
       ).map(road => {
-        return stockArrows.moveItem(LocationType.Road, { id: road }, road[1] === node && { z: 1 })
+        return stockArrows.moveItem({ location: { type: LocationType.Road, id: road }, rotation: { z: road[1] === node ? 1 : 0 } })
       })
     )
   }

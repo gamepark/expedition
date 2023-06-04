@@ -67,7 +67,7 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
       move.kind === MoveKind.MaterialMove
       && move.type === MaterialMoveType.Move
       && move.itemType === MaterialType.Arrow
-      && equal(item.location.id, move.item.location?.id)
+      && equal(item.location.id, move.position.location?.id)
     ) && !legalMoves.some(move =>
       move.kind === MoveKind.MaterialMove
       && move.type === MaterialMoveType.Move
