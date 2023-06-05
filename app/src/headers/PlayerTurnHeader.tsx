@@ -26,9 +26,11 @@ export const PlayerTurnHeader = () => {
     }
   } else if (canPlaceArrow) {
     if (playTicket) {
-      return <Trans defaults="header.turn.extraArrowTicket" components={[<PlayMoveButton move={playTicket}/>, <PlayMoveButton move={passMove}/>]}/>
+      return <Trans defaults="header.turn.extraArrowTicket" components={[<PlayMoveButton move={playTicket}/>,
+        <PlayMoveButton move={passMove} confirmation={{ text: t('header.turn.confirm-pass')! }}/>]}/>
     } else {
-      return <Trans defaults="header.turn.extraArrow" components={[<PlayMoveButton move={passMove}/>]}/>
+      return <Trans defaults="header.turn.extraArrow"
+                    components={[<PlayMoveButton move={passMove} confirmation={{ text: t('header.turn.confirm-pass')! }}/>]}/>
     }
   } else if (playTicket) {
     return <Trans defaults="header.turn.ticket"
