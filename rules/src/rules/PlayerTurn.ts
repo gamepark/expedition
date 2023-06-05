@@ -73,7 +73,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
     const { lastTurn } = this.getGameMemory<{ lastTurn?: boolean }>()
     const nextPlayer = this.nextPlayer
     if (!lastTurn || nextPlayer !== this.game.players[0]) {
-      return this.rules().startPlayerTurn(RuleId.PlayerTurn, nextPlayer, { arrowsLeft: 1, ticketsPlayed: 0, loopsCreated: [] })
+      return this.rules().startPlayerTurn(RuleId.PlayerTurn, nextPlayer)
     } else {
       return this.rules().endGame()
     }
