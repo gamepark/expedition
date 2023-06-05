@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { getPlayerName } from '@gamepark/expedition/ExpeditionOptions'
 import { Trans, useTranslation } from 'react-i18next'
-import { MaterialGame, MaterialRulesMove, MoveKind, RuleMoveType } from '@gamepark/rules-api'
+import { isDeleteItem, isEndGame, isMoveItem, isStartPlayerTurn, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { PlayMoveButton, useGame, useLegalMoves, usePlayerName } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
@@ -10,16 +10,14 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 export const PlayerTurnHeader = () => {
   const { t } = useTranslation()
   const game = useGame<MaterialGame<Color, MaterialType, LocationType>>()!
-  const legalMoves = useLegalMoves<MaterialRulesMove<Color, MaterialType, LocationType>>()
+  const legalMoves = useLegalMoves<MaterialMove>()
   const playerName = usePlayerName(game.rule!.player!) || getPlayerName(game.rule!.player!, t)
   if (!legalMoves.length) {
     return <>{t('header.turn', { player: playerName })}</>
   }
-  const passMove = legalMoves.find(move =>
-    move.kind === MoveKind.RulesMove && (move.type === RuleMoveType.StartPlayerTurn || move.type === RuleMoveType.EndGame)
-  )
-  const playTicket = legalMoves.find(move => move.kind === MoveKind.MaterialMove && move.itemType === MaterialType.Ticket)
-  const canPlaceArrow = legalMoves.some(move => move.kind === MoveKind.MaterialMove && move.itemType === MaterialType.Arrow)
+  const passMove = legalMoves.find(move => isStartPlayerTurn(move) || isEndGame(move))
+  const playTicket = legalMoves.find(move => isDeleteItem(move, MaterialType.Ticket))
+  const canPlaceArrow = legalMoves.some(move => isMoveItem(move, MaterialType.Arrow))
   if (!passMove) {
     if (playTicket) {
       return <Trans defaults="header.turn.arrowTicket" components={[<PlayMoveButton move={playTicket}/>]}/>

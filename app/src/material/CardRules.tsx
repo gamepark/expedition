@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialRulesProps, PlayMoveButton, useLegalMoves, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
+import { MaterialRulesProps, PlayMoveButton, useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { Trans, useTranslation } from 'react-i18next'
 import { getPlayerName } from '@gamepark/expedition/ExpeditionOptions'
 import Color from '@gamepark/expedition/Color'
-import { isMoveItem, MaterialRulesMove } from '@gamepark/rules-api'
+import { isMoveItemLocation, MoveItem } from '@gamepark/rules-api'
 import { RuleId } from '@gamepark/expedition/rules/RuleId'
 import { places2StepsFromStart } from '@gamepark/expedition/material/Place'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
@@ -47,8 +47,7 @@ const HandCardRules = ({ item, close }: MaterialRulesProps) => {
   const player = usePlayerId<Color>()
   const rules = useRules<ExpeditionRules>()!
   const mine = player !== undefined && item.location?.player === player
-  const legalMoves = useLegalMoves<MaterialRulesMove>()
-  const placeTokenMove = legalMoves.find(move => isMoveItem(move) && move.itemType === MaterialType.Token && move.position.location?.id === item.id)
+  const placeTokenMove = useLegalMove<MoveItem>(move => isMoveItemLocation(move, MaterialType.Token) && move.position.location.id === item.id)
   const tokens = rules.material(MaterialType.Token)
   const isRevealed = mine && tokens.location(LocationType.Place).locationId(item.id).length > 0
   const playerName = usePlayerName(item.location!.player!) || getPlayerName(item.location!.player!, t)

@@ -1,4 +1,4 @@
-import { CustomMove, MaterialMove, MaterialMoveType, MaterialRulesMove, MoveItem, MoveKind, RuleMoveType } from '@gamepark/rules-api'
+import { CustomMove, isStartRule, ItemMove, ItemMoveType, MaterialMove, MoveItem } from '@gamepark/rules-api'
 import { MaterialType } from '../material/ExpeditionMaterial'
 import { LocationType } from '../material/LocationType'
 import Color from '../Color'
@@ -13,7 +13,7 @@ export class TicketRule extends PlayerTurn {
   isFreeArrow = true
 
   getPlayerMoves() {
-    const moves: MaterialRulesMove<Color, MaterialType, LocationType>[] = this.placeArrowMoves
+    const moves: MaterialMove<Color, MaterialType, LocationType>[] = this.placeArrowMoves
 
     const arrows = this.material(MaterialType.Arrow)
     for (const arrowColor of arrowColors) {
@@ -30,23 +30,23 @@ export class TicketRule extends PlayerTurn {
     return moves
   }
 
-  beforeMaterialMove(move: MaterialMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
-    if (move.type === MaterialMoveType.Move && move.itemType === MaterialType.Arrow && move.position.location?.type === LocationType.ArrowsStock) {
+  beforeItemMove(move: ItemMove<Color, MaterialType, LocationType>) {
+    if (move.type === ItemMoveType.Move && move.itemType === MaterialType.Arrow && move.position.location?.type === LocationType.ArrowsStock) {
       const arrow = this.material(MaterialType.Arrow).getItem(move.itemIndex)!
       return super.onReachNode(arrow.id, arrowRoad(arrow)[0])
     }
     return []
   }
 
-  afterArrowMove(move: MoveItem<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
+  afterArrowMove(move: MoveItem<Color, MaterialType, LocationType>) {
     const consequences = super.afterArrowMove(move)
-    if (!consequences.some(move => move.kind === MoveKind.RulesMove && move.type === RuleMoveType.StartRule)) {
+    if (!consequences.some(move => isStartRule(move))) {
       consequences.push(this.rules().startRule(RuleId.PlayerTurn))
     }
     return consequences
   }
 
-  onCustomMove(move: CustomMove): MaterialRulesMove<Color, MaterialType, LocationType>[] {
+  onCustomMove(move: CustomMove) {
     if (move.type === CustomMoveType.ExchangeCard) {
       const cards = this.material(MaterialType.Card).location(LocationType.Deck).sort((item) => -item.location.x!).limit(2)
       return [

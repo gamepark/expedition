@@ -1,6 +1,4 @@
-import { Material, MaterialRulesMove } from '@gamepark/rules-api'
-import Color from '../Color'
-import { MaterialType } from '../material/ExpeditionMaterial'
+import { Material } from '@gamepark/rules-api'
 import { LocationType } from '../material/LocationType'
 import { arrowRoad, Node, roads, StartNode } from '../material/Road'
 import equal from 'fast-deep-equal'
@@ -23,7 +21,7 @@ export class Expedition {
     return this.arrows.location(LocationType.ArrowsStock).length === 0
   }
 
-  getLegalMoves(loopsAllowed: boolean): MaterialRulesMove<Color, MaterialType, LocationType>[] {
+  getLegalMoves(loopsAllowed: boolean) {
     const stockArrows = this.arrows.location(LocationType.ArrowsStock)
     if (!stockArrows.length) return []
     const expeditionArrows = this.arrows.location(LocationType.Road).getItems()

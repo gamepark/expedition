@@ -1,14 +1,4 @@
-import {
-  isMoveItemLocation,
-  MaterialMove,
-  MaterialMoveType,
-  MaterialRulesMove,
-  MoveItem,
-  PlayerTurnRule,
-  RuleMove,
-  RuleMoveType,
-  RuleStep
-} from '@gamepark/rules-api'
+import { isMoveItemLocation, ItemMove, ItemMoveType, MaterialMove, MoveItem, PlayerTurnRule, RuleMove, RuleMoveType, RuleStep } from '@gamepark/rules-api'
 import Color from '../Color'
 import { MaterialType } from '../material/ExpeditionMaterial'
 import { LocationType } from '../material/LocationType'
@@ -28,7 +18,7 @@ export type PlayerTurnMemory = {
 export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType> {
   isFreeArrow = false
 
-  onRuleStart(move: RuleMove, previousRule?: RuleStep): MaterialRulesMove<Color, MaterialType, LocationType>[] {
+  onRuleStart(move: RuleMove, previousRule?: RuleStep) {
     if (move.type === RuleMoveType.StartPlayerTurn) {
       this.memorize({ arrowsLeft: 1, ticketsPlayed: 0, loopsCreated: [] })
     } else if (move.type === RuleMoveType.StartRule) {
@@ -39,7 +29,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
   }
 
   getPlayerMoves() {
-    const moves: MaterialRulesMove[] = []
+    const moves: MaterialMove[] = []
     const { arrowsLeft, arrowPlaced } = this.getMemory<PlayerTurnMemory>()
     if (arrowPlaced || !this.arrowLeft) {
       moves.push(this.passMove)
@@ -89,22 +79,22 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
     }
   }
 
-  afterMaterialMove(move: MaterialMove<Color, MaterialType, LocationType>): MaterialRulesMove<Color, MaterialType, LocationType>[] {
-    const consequences: MaterialRulesMove<Color, MaterialType, LocationType>[] = []
+  afterItemMove(move: ItemMove<Color, MaterialType, LocationType>) {
+    const consequences: MaterialMove[] = []
     switch (move.itemType) {
       case MaterialType.Arrow:
-        if (move.type === MaterialMoveType.Move) {
+        if (move.type === ItemMoveType.Move) {
           consequences.push(...this.afterArrowMove(move))
         }
         break
       case MaterialType.Ticket:
-        if (move.type === MaterialMoveType.Delete) {
+        if (move.type === ItemMoveType.Delete) {
           this.getMemory<PlayerTurnMemory>().ticketsPlayed++
           consequences.push(this.rules().startRule(RuleId.TicketRule))
         }
         break
       case MaterialType.Card:
-        if (move.type === MaterialMoveType.Move && move.position.location?.type === LocationType.PlayerArea) {
+        if (move.type === ItemMoveType.Move && move.position.location?.type === LocationType.PlayerArea) {
           if (this.material(MaterialType.Card).location(LocationType.Hand).player(move.position.location.player).length === 0) {
             this.memorizeOnGame({ lastTurn: true })
           }
@@ -114,7 +104,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
   }
 
   afterArrowMove(move: MoveItem<Color, MaterialType, LocationType>) {
-    const consequences: MaterialRulesMove<Color, MaterialType, LocationType>[] = []
+    const consequences: MaterialMove[] = []
     if (isMoveItemLocation(move) && move.position.location.type === LocationType.Road) {
       this.memorize({ arrowPlaced: true })
       if (!this.isFreeArrow) {
@@ -130,7 +120,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
   }
 
   onReachNode(expeditionColor: ArrowColor, node: Node) {
-    const consequences: MaterialRulesMove<Color, MaterialType, LocationType>[] = []
+    const consequences: MaterialMove[] = []
     if (isGreenNode(node)) {
       consequences.push(...this.onReachPlace(node))
     } else if (isBlueNode(node)) {
@@ -150,7 +140,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
   }
 
   onReachPlace(place: Place) {
-    const consequences: MaterialRulesMove<Color, MaterialType, LocationType>[] = []
+    const consequences: MaterialMove[] = []
     const card = this.material(MaterialType.Card).id(place)
     const cardLocation = card.getItem()?.location
     if (cardLocation?.type === LocationType.CommonObjectives || cardLocation?.type === LocationType.Hand) {

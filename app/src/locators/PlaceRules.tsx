@@ -6,7 +6,7 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { Trans, useTranslation } from 'react-i18next'
 import { isBlueNode, isGreenNode, isRedNode, isRoadToNode, Node } from '@gamepark/expedition/material/Road'
 import { TFunction } from 'i18next'
-import { displayMaterialRules, isMoveItem, MaterialRulesMove, MoveItem } from '@gamepark/rules-api'
+import { displayMaterialRules, isMoveItemLocation, MoveItem } from '@gamepark/rules-api'
 import { arrowColors } from '@gamepark/expedition/material/ArrowColor'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { ArrowsDescription } from '../material/ArrowsDescription'
@@ -18,8 +18,8 @@ export const PlaceRules = ({ location, legalMoves, close }: LocationRulesProps<C
   const { t } = useTranslation()
   const player = usePlayerId()
   const rules = useRules<ExpeditionRules>()
-  const arrowMoves = useLegalMoves<MaterialRulesMove, MoveItem>(
-    move => isMoveItem(move) && !!move.position.location && isRoadToNode(location.id, move.position.location, move.position.rotation?.z === 1)
+  const arrowMoves = useLegalMoves<MoveItem>(move =>
+    isMoveItemLocation(move, MaterialType.Arrow) && isRoadToNode(location.id, move.position.location, move.position.rotation?.z === 1)
   )
   return <>
     <h2>{getPlaceTitle(t, location.id)}</h2>

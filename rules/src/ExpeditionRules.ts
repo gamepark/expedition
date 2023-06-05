@@ -8,7 +8,7 @@ import {
   hideItemId,
   hideItemIdToOthers,
   MaterialGame,
-  MaterialRulesMove,
+  MaterialMove,
   PositiveSequenceStrategy,
   SecretMaterialRules,
   TimeLimit
@@ -22,8 +22,8 @@ const START_TICKETS = 3
 const ARROWS_PER_EXPEDITION = 45
 
 export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, LocationType>
-  implements Competitive<MaterialGame<Color, MaterialType, LocationType>, MaterialRulesMove<Color, MaterialType, LocationType>, Color>,
-    TimeLimit<MaterialGame<Color, MaterialType, LocationType>, MaterialRulesMove<Color, MaterialType, LocationType>, Color> {
+  implements Competitive<MaterialGame<Color, MaterialType, LocationType>, MaterialMove<Color, MaterialType, LocationType>, Color>,
+    TimeLimit<MaterialGame<Color, MaterialType, LocationType>, MaterialMove<Color, MaterialType, LocationType>, Color> {
 
   rulesSteps = rulesSteps
 

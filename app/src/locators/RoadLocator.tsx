@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { ItemLocator, LocationRulesProps, PlaceItemContext } from '@gamepark/react-game'
-import { Location, MaterialItem, MaterialMoveType, MoveKind, XYCoordinates } from '@gamepark/rules-api'
+import { isMoveItem, Location, MaterialItem, XYCoordinates } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
@@ -63,16 +63,8 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
   }
 
   itemExtraCss(item: MaterialItem<Color, LocationType>, { legalMoves, itemIndex }: PlaceItemContext<Color, MaterialType, LocationType>): Interpolation<Theme> {
-    if (legalMoves.some(move =>
-      move.kind === MoveKind.MaterialMove
-      && move.type === MaterialMoveType.Move
-      && move.itemType === MaterialType.Arrow
-      && equal(item.location.id, move.position.location?.id)
-    ) && !legalMoves.some(move =>
-      move.kind === MoveKind.MaterialMove
-      && move.type === MaterialMoveType.Move
-      && move.itemIndex === itemIndex
-    )) {
+    if (legalMoves.some(move => isMoveItem(move, MaterialType.Arrow) && equal(item.location.id, move.position.location?.id))
+      && !legalMoves.some(move => isMoveItem(move, MaterialType.Arrow) && move.itemIndex === itemIndex)) {
       return css`pointer-events: none;`
     }
     return
