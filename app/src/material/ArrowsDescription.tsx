@@ -15,7 +15,7 @@ export const ArrowsDescription: TokenMaterialDescription<ArrowColor> = {
       [ArrowColor.Yellow]: yellow
     },
     height: 4.5,
-    ratio: 135 / 500
+    ratio: 160 / 530
   },
   rules: ArrowRules
 }
