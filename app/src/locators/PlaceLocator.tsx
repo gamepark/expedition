@@ -23,16 +23,17 @@ export class PlaceLocator extends ItemLocator<Color, MaterialType, LocationType>
     return [locationCss, borderColor && borderCss(borderColor)]
   }
 
-  getObjectiveColor(cards: Material, place?: Node) {
+  getObjectiveColor(cards: Material<Color>, place?: Node) {
     if (!place || !isGreenNode(place)) return
-    const commonObjectives = cards.location(LocationType.CommonObjectives).getItems<Place>(card => card.id)
-    if (commonObjectives.includes(place)) return 'purple'
-    if (!this.player) return
-    const playerObjectives = cards.location(LocationType.Hand).player(this.player).getItems<Place>(card => card.id)
-    if (playerObjectives.includes(place)) {
-      return playerColorCode[this.player!]
+    const card = cards.id(place).getItem()
+    switch (card?.location.type) {
+      case LocationType.CommonObjectives:
+        return 'purple'
+      case LocationType.Hand:
+        return playerColorCode[card?.location.player!]
+      default:
+        return
     }
-    return
   }
 
   getPositionOnParent(location: Location<Color, LocationType, Place>): XYCoordinates {
