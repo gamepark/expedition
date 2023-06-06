@@ -6,7 +6,6 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { useTranslation } from 'react-i18next'
 import { MoveItem } from '@gamepark/rules-api'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
-import { ArrowsDescription } from '../material/ArrowsDescription'
 import { css } from '@emotion/react'
 
 export const RoadRules = ({ legalMoves, close }: LocationRulesProps<Color, MaterialType, LocationType>) => {
@@ -20,7 +19,7 @@ export const RoadRules = ({ legalMoves, close }: LocationRulesProps<Color, Mater
       return (
         <p key={color}>
           <PlayMoveButton move={move} css={placeArrowButton} onPlay={close}>
-            <MaterialComponent type={MaterialType.Arrow} description={ArrowsDescription} itemId={color} css={buttonArrowCss}/>
+            <MaterialComponent type={MaterialType.Arrow} itemId={color} css={buttonArrowCss}/>
             {t('rules.road.placeArrow', { color })}
           </PlayMoveButton>
         </p>

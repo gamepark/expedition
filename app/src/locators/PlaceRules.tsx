@@ -9,7 +9,6 @@ import { TFunction } from 'i18next'
 import { displayMaterialRules, isMoveItemLocation, MoveItem } from '@gamepark/rules-api'
 import { arrowColors } from '@gamepark/expedition/material/ArrowColor'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
-import { ArrowsDescription } from '../material/ArrowsDescription'
 import { css } from '@emotion/react'
 import { Place, places2StepsFromStart } from '@gamepark/expedition/material/Place'
 import { RuleId } from '@gamepark/expedition/rules/RuleId'
@@ -40,7 +39,7 @@ export const PlaceRules = ({ location, legalMoves, close }: LocationRulesProps<C
       return move ?
         <p key={color}>
           <PlayMoveButton move={move} css={placeArrowButton} onPlay={close}>
-            <MaterialComponent type={MaterialType.Arrow} description={ArrowsDescription} itemId={color} css={buttonArrowCss}/>
+            <MaterialComponent type={MaterialType.Arrow} itemId={color} css={buttonArrowCss}/>
             {t('rules.place.arrow', { color })}
           </PlayMoveButton>
         </p>
