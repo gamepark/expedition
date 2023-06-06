@@ -19,7 +19,7 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
   }
 
   getCoordinates(location: Location<Color, LocationType>, context: PlaceItemContext<Color, MaterialType, LocationType>) {
-    if (location.player === this.player) {
+    if (location.player === context.player) {
       const count = this.countItems(location, context)
       return { x: -55 + count * 3, y: 28, z: 10 }
     } else {
@@ -29,19 +29,19 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
     }
   }
 
-  getBaseAngle(item: MaterialItem<Color, LocationType>): number {
-    return item.location.player === this.player ? 0 : -90
+  getBaseAngle(item: MaterialItem<Color, LocationType>, { player }: PlaceItemContext<Color, MaterialType, LocationType>): number {
+    return item.location.player === player ? 0 : -90
   }
 
-  getGapMaxAngle(item: MaterialItem<Color, LocationType>): number {
-    return item.location.player === this.player ? 1.1 : 3
+  getGapMaxAngle(item: MaterialItem<Color, LocationType>, { player }: PlaceItemContext<Color, MaterialType, LocationType>): number {
+    return item.location.player === player ? 1.1 : 3
   }
 
-  getMaxAngle(item: MaterialItem<Color, LocationType>): number {
-    return item.location.player === this.player ? 15 : 2.3
+  getMaxAngle(item: MaterialItem<Color, LocationType>, { player }: PlaceItemContext<Color, MaterialType, LocationType>): number {
+    return item.location.player === player ? 15 : 2.3
   }
 
-  getRadius(item: MaterialItem<Color, LocationType>): number {
-    return item.location.player === this.player ? 300 : 100
+  getRadius(item: MaterialItem<Color, LocationType>, { player }: PlaceItemContext<Color, MaterialType, LocationType>): number {
+    return item.location.player === player ? 300 : 100
   }
 }

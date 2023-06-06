@@ -23,33 +23,33 @@ export class PlayerAreaLocator extends LineLocator<Color, MaterialType, Location
       case MaterialType.Ticket:
         return { x: 38.5, y: -27.2 + baseLocation, z: 0 }
       default:
-        return location.player === this.player ? { x: 24, y: 28, z: 0 } : { x: 32, y: -29 + baseLocation, z: 0 }
+        return location.player === context.player ? { x: 24, y: 28, z: 0 } : { x: 32, y: -29 + baseLocation, z: 0 }
     }
   }
 
-  getDelta({ location }: MaterialItem<Color, LocationType>, { type }: PlaceItemContext<Color, MaterialType, LocationType>): Partial<Coordinates> {
+  getDelta({ location }: MaterialItem<Color, LocationType>, { type, player }: PlaceItemContext<Color, MaterialType, LocationType>): Partial<Coordinates> {
     switch (type) {
       case MaterialType.Token:
         return { y: 1.5 }
       case MaterialType.Ticket:
         return { x: 0, y: 1.3, z: 0 }
       default:
-        return location.player === this.player ? { x: -3, z: 0.01 } : { y: 1, z: 0.01 }
+        return location.player === player ? { x: -3, z: 0.01 } : { y: 1, z: 0.01 }
     }
   }
 
-  getDeltaMax({ location }: MaterialItem<Color, LocationType>, { type }: PlaceItemContext<Color, MaterialType, LocationType>): Partial<Coordinates> {
+  getDeltaMax({ location }: MaterialItem<Color, LocationType>, { type, player }: PlaceItemContext<Color, MaterialType, LocationType>): Partial<Coordinates> {
     switch (type) {
       case MaterialType.Ticket:
         return { y: 5 }
       case MaterialType.Card:
-        return location.player === this.player ? { x: 71.5 } : { y: 4 }
+        return location.player === player ? { x: 71.5 } : { y: 4 }
       default:
         return {}
     }
   }
 
-  getRotation({ location }: MaterialItem<Color, LocationType>, { type }: PlaceItemContext<Color, MaterialType, LocationType>): number {
-    return type === MaterialType.Card && location.player !== this.player ? -90 : 0
+  getRotation({ location }: MaterialItem<Color, LocationType>, { type, player }: PlaceItemContext<Color, MaterialType, LocationType>): number {
+    return type === MaterialType.Card && location.player !== player ? -90 : 0
   }
 }
