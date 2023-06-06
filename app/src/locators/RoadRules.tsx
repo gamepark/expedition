@@ -20,7 +20,7 @@ export const RoadRules = ({ legalMoves, close }: LocationRulesProps<Color, Mater
       return (
         <p key={color}>
           <PlayMoveButton move={move} css={placeArrowButton} onPlay={close}>
-            <MaterialComponent description={ArrowsDescription} itemId={color} css={buttonArrowCss}/>
+            <MaterialComponent type={MaterialType.Arrow} description={ArrowsDescription} itemId={color} css={buttonArrowCss}/>
             {t('rules.road.placeArrow', { color })}
           </PlayMoveButton>
         </p>

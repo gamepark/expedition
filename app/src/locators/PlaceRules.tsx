@@ -40,7 +40,7 @@ export const PlaceRules = ({ location, legalMoves, close }: LocationRulesProps<C
       return move ?
         <p key={color}>
           <PlayMoveButton move={move} css={placeArrowButton} onPlay={close}>
-            <MaterialComponent description={ArrowsDescription} itemId={color} css={buttonArrowCss}/>
+            <MaterialComponent type={MaterialType.Arrow} description={ArrowsDescription} itemId={color} css={buttonArrowCss}/>
             {t('rules.place.arrow', { color })}
           </PlayMoveButton>
         </p>
