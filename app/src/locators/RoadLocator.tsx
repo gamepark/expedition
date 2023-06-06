@@ -1,14 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { ItemLocator, LocationRulesProps, PlaceItemContext } from '@gamepark/react-game'
-import { isMoveItem, Location, MaterialItem, XYCoordinates } from '@gamepark/rules-api'
+import { Location, MaterialItem, XYCoordinates } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { arrowRoad, Road, roads } from '@gamepark/expedition/material/Road'
-import { css, Interpolation, Theme } from '@emotion/react'
+import { css } from '@emotion/react'
 import { nodesCoordinates } from './PlaceLocator'
 import { boardRatio } from '../material/BoardDescription'
-import equal from 'fast-deep-equal'
 import { ReactNode } from 'react'
 import { RoadRules } from './RoadRules'
 
@@ -60,14 +59,6 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
       place += ` translateX(-0.8em)`
     }
     return place
-  }
-
-  itemExtraCss(item: MaterialItem<Color, LocationType>, { legalMoves, itemIndex }: PlaceItemContext<Color, MaterialType, LocationType>): Interpolation<Theme> {
-    if (legalMoves.some(move => isMoveItem(move, MaterialType.Arrow) && equal(item.location.id, move.position.location?.id))
-      && !legalMoves.some(move => isMoveItem(move, MaterialType.Arrow) && move.itemIndex === itemIndex)) {
-      return css`pointer-events: none;`
-    }
-    return
   }
 
   getLocationRules(props: LocationRulesProps<Color, MaterialType, LocationType>): ReactNode {
