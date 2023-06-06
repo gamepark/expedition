@@ -2,12 +2,14 @@
 import { css, Global } from '@emotion/react'
 import { ExpeditionOptionsSpec } from '@gamepark/expedition/ExpeditionOptions'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
-import { GameProvider, setupTranslation } from '@gamepark/react-game'
+import { GameProvider, MaterialAnimations, setupTranslation } from '@gamepark/react-game'
 import normalize from 'emotion-normalize'
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import translations from './translations.json'
+import { MaterialsDescription } from './material/MaterialsDescription'
+import { Locators } from './locators/Locators'
 
 setupTranslation(translations, { debug: false })
 
