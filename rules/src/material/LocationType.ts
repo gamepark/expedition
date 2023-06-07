@@ -6,5 +6,7 @@ export enum LocationType {
   CommonObjectives, // The 6 cards which are a common goal for players
   PlayerArea, // Area in front of the player, with tickets, tokens & cards for accomplished objectives
   ArrowsStock, // Stock of arrows
-  Card // When a goal with a token is fulfilled the token goes on the card
+  Card, // When a goal with a token is fulfilled the token goes on the card,
+  Board, // The board location
+  //TicketStock // The stock of tickets
 }

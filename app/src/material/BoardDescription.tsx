@@ -2,6 +2,7 @@
 import board from '../images/board.jpg'
 import { BoardMaterialDescription, MaterialComponentType } from '@gamepark/react-game'
 import { BoardRules } from './BoardRules'
+import { LocationType } from '@gamepark/expedition/material/LocationType'
 
 export const boardRatio = 2053 / 1554
 
@@ -12,7 +13,7 @@ export const BoardDescription: BoardMaterialDescription = {
     height: 56,
     ratio: boardRatio
   },
-  items: () => [{ position: { x: -10, y: -5, z: 0 } }],
+  items: () => [{ location: { type: LocationType.Board } }],
   rules: BoardRules
 }
 

@@ -9,10 +9,9 @@ import { MaterialComponentType, TokenMaterialDescription } from '@gamepark/react
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
-import { Coordinates } from '../../../../workshop/packages/rules-api'
 import { LargeTokenRules } from './LargeTokenRules'
 
-export const LargeTokensDescription: TokenMaterialDescription<Color, Color, MaterialType, LocationType> = {
+export const LargeTokensDescription: TokenMaterialDescription<Color, MaterialType, LocationType> = {
   type: MaterialComponentType.Token,
   props: {
     image: {
@@ -27,13 +26,6 @@ export const LargeTokensDescription: TokenMaterialDescription<Color, Color, Mate
     ratio: 1,
     borderRadius: 2
   },
-  items: (game, player) => game.players.map(color => ({ id: color, position: getColorTokenPosition(color, game.players, player) })),
+  items: (game) => game.players.map(color => ({ id: color, location: { type: LocationType.PlayerArea, player: color } })),
   rules: LargeTokenRules
-}
-
-const getColorTokenPosition = (color: Color, players: Color[], player?: Color): Coordinates => {
-  const colorIndex = players.indexOf(color)
-  const playerIndex = player !== undefined ? players.indexOf(player) : players.length - 1
-  const index = (colorIndex - playerIndex - 1 + players.length) % players.length
-  return { x: 38.5, y: -30.5 + (index % players.length) * 54.5 / (players.length - 1), z: 0 }
 }

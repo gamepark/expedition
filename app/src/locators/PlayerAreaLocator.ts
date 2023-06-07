@@ -22,6 +22,8 @@ export class PlayerAreaLocator extends LineLocator<Color, MaterialType, Location
         return { x: 30, y: -30 + baseLocation, z: 0 }
       case MaterialType.Ticket:
         return { x: 38.5, y: -27.2 + baseLocation, z: 0 }
+      case MaterialType.LargeToken:
+        return { x: 38.5, y: -30.5 + baseLocation, z: 0 }
       default:
         return location.player === context.player ? { x: 24, y: 28, z: 0 } : { x: 32, y: -29 + baseLocation, z: 0 }
     }
@@ -33,6 +35,8 @@ export class PlayerAreaLocator extends LineLocator<Color, MaterialType, Location
         return { y: 1.5 }
       case MaterialType.Ticket:
         return { x: 0, y: 1.3, z: 0 }
+      case MaterialType.LargeToken:
+        return {}
       default:
         return location.player === player ? { x: -3, z: 0.01 } : { y: 1, z: 0.01 }
     }
