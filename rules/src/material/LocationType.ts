@@ -8,5 +8,5 @@ export enum LocationType {
   ArrowsStock, // Stock of arrows
   Card, // When a goal with a token is fulfilled the token goes on the card,
   Board, // The board location
-  //TicketStock // The stock of tickets
+  TicketStock // The stock of tickets
 }

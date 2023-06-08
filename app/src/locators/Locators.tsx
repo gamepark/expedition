@@ -11,6 +11,7 @@ import { RoadLocator } from './RoadLocator'
 import { ArrowsStockLocator } from './ArrowsStockLocator'
 import { CardLocator } from './CardLocator'
 import { BoardLocator } from './BoardLocator'
+import { TicketStockLocator } from './TicketStockLocator'
 
 export const Locators: Record<LocationType, ItemLocator<Color, MaterialType, LocationType>> = {
   [LocationType.Place]: new PlaceLocator(),
@@ -21,6 +22,6 @@ export const Locators: Record<LocationType, ItemLocator<Color, MaterialType, Loc
   [LocationType.PlayerArea]: new PlayerAreaLocator(),
   [LocationType.ArrowsStock]: new ArrowsStockLocator(),
   [LocationType.Card]: new CardLocator(),
-  [LocationType.Board]: new BoardLocator()
-  //[LocationType.TicketStock]: new BoardLocator()
+  [LocationType.Board]: new BoardLocator(),
+  [LocationType.TicketStock]: new TicketStockLocator()
 }
