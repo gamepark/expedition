@@ -8,7 +8,7 @@ import { css, Interpolation, Theme } from '@emotion/react'
 
 export class TicketStockLocator extends DeckLocator<Color, MaterialType, LocationType> {
   getCoordinates(): Coordinates {
-    return { x: -59, y: 17, z: 0 }
+    return { x: -59, y: 19, z: 0 }
   }
 
   getDelta() {
@@ -26,7 +26,7 @@ export class TicketStockLocator extends DeckLocator<Color, MaterialType, Locatio
       width: 4.5em;
       height: 3em;
       left: 3.3%;
-      top: 74.6%;
+      top: 77.6%;
       transform: translate3d(-50%, -50%, 20em);
     `
   }
