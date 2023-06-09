@@ -5,13 +5,14 @@ import Color from '@gamepark/expedition/Color'
 import { TicketRules } from './TicketRules'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 
+export const ticketProps = {
+  image: ticket,
+  height: 2,
+  ratio: 325 / 200
+}
 export const TicketDescription: TokenMaterialDescription<Color> = {
   type: MaterialComponentType.Token,
-  props: {
-    image: ticket,
-    height: 2,
-    ratio: 325 / 200
-  },
+  props: ticketProps,
   rules: TicketRules,
   items: () => [{
     quantity: 10,

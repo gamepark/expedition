@@ -5,6 +5,7 @@ import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { css, Interpolation, Theme } from '@emotion/react'
+import { ticketProps } from '../material/TicketDescription'
 
 export class TicketStockLocator extends PileLocator<Color, MaterialType, LocationType> {
   rotate = true
@@ -24,9 +25,10 @@ export class TicketStockLocator extends PileLocator<Color, MaterialType, Locatio
   }
 
   getLocationCss(): Interpolation<Theme> {
+    const ticketWidth = ticketProps.height * ticketProps.ratio
     return css`
-      width: ${this.getRadius() * 2 + 3.25}em;
-      height: ${this.getRadius() * 2 + 3.25}em;
+      width: ${this.getRadius() * 2 + ticketWidth}em;
+      height: ${this.getRadius() * 2 + ticketWidth}em;
       transform: translate3d(-50%, -50%, 20em) translate3d(${this.getCoordinates().x}em, ${this.getCoordinates().y}em, ${this.getCoordinates().z}em);
       border-radius: 5em;
     `

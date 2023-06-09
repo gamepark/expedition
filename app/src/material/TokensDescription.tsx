@@ -9,20 +9,23 @@ import { MaterialComponentType, TokenMaterialDescription } from '@gamepark/react
 import Color from '@gamepark/expedition/Color'
 import { TokenRules } from './TokenRules'
 
+export const tokensProps = {
+  height: 1.4,
+  ratio: 1,
+  borderRadius: 1,
+  image: {
+    [Color.Red]: red,
+    [Color.Pink]: pink,
+    [Color.Blue]: blue,
+    [Color.Green]: green,
+    [Color.Yellow]: yellow,
+    [Color.White]: white
+  }
+}
+
+
 export const TokensDescription: TokenMaterialDescription<Color> = {
   type: MaterialComponentType.Token,
-  props: {
-    image: {
-      [Color.Red]: red,
-      [Color.Pink]: pink,
-      [Color.Blue]: blue,
-      [Color.Green]: green,
-      [Color.Yellow]: yellow,
-      [Color.White]: white
-    },
-    height: 1.4,
-    ratio: 1,
-    borderRadius: 1
-  },
+  props: tokensProps,
   rules: TokenRules
 }

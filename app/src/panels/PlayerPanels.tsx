@@ -2,10 +2,10 @@
 import { FC } from 'react'
 import { PlayerPanel, shadowCss, usePlayerId, usePlayers, useRules } from '@gamepark/react-game'
 import { playerColorCode } from '../locators/PlaceLocator'
-import { TokensDescription } from '../material/TokensDescription'
+import { tokensProps } from '../material/TokensDescription'
 import hand from '../images/icons/hand.png'
 import ticket from '../images/ticket.jpg'
-import { TicketDescription } from '../material/TicketDescription'
+import { ticketProps } from '../material/TicketDescription'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
 import { css } from '@emotion/react'
@@ -55,7 +55,7 @@ const PlayerPanels: FC<any> = () => {
               icon={faStar}
               value={rules?.getScore(player.id)!}/>
             <PlayerPanelCounter
-              ratio={TicketDescription.props.ratio as number}
+              ratio={ticketProps.ratio}
               image={ticket}
               value={rules?.material(MaterialType.Ticket).location(LocationType.PlayerArea).player(player.id).length!}
               shadow
@@ -65,8 +65,8 @@ const PlayerPanels: FC<any> = () => {
               value={rules?.material(MaterialType.Card).location(LocationType.Hand).player(player.id).length!}
             />
             <PlayerPanelCounter
-              ratio={TokensDescription.props.ratio as number}
-              image={TokensDescription.props.image[player.id]}
+              ratio={tokensProps.ratio}
+              image={tokensProps.image[player.id]}
               width={2.8}
               borderRadius={3}
               value={rules?.material(MaterialType.Token).location(LocationType.Place).id(player.id).length!}

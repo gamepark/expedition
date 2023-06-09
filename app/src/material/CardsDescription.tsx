@@ -83,12 +83,17 @@ import FiordlandNationalPark from '../images/cards/80-FiordlandNationalPark.jpg'
 import { CardMaterialDescription, MaterialComponentType } from '@gamepark/react-game'
 import { Place } from '@gamepark/expedition/material/Place'
 import { CardRules } from './CardRules'
+import { LocationType } from '@gamepark/expedition/material/LocationType'
+
+export const cardProps = {
+  height: 8.8,
+  ratio: 5 / 7
+}
 
 export const CardsDescription: CardMaterialDescription = {
   type: MaterialComponentType.Card,
   props: {
-    height: 8.8,
-    ratio: 5 / 7,
+    ...cardProps,
     back: {
       image: back
     },
@@ -177,5 +182,10 @@ export const CardsDescription: CardMaterialDescription = {
       }
     }
   },
-  rules: CardRules
+  rules: CardRules,
+  stock: {
+    location: {
+      type: LocationType.Deck
+    }
+  }
 }
