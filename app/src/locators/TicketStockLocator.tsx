@@ -1,14 +1,16 @@
 /** @jsxImportSource @emotion/react */
-import { DeckLocator } from '@gamepark/react-game'
+import { PileLocator } from '@gamepark/react-game'
 import { Coordinates, Location } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { css, Interpolation, Theme } from '@emotion/react'
 
-export class TicketStockLocator extends DeckLocator<Color, MaterialType, LocationType> {
+export class TicketStockLocator extends PileLocator<Color, MaterialType, LocationType> {
+  rotate = true
+
   getCoordinates(): Coordinates {
-    return { x: -59, y: 19, z: 0 }
+    return { x: -59, y: 18, z: 0 }
   }
 
   getDelta() {
@@ -23,11 +25,14 @@ export class TicketStockLocator extends DeckLocator<Color, MaterialType, Locatio
 
   getLocationCss(): Interpolation<Theme> {
     return css`
-      width: 4.5em;
-      height: 3em;
-      left: 3.3%;
-      top: 77.6%;
-      transform: translate3d(-50%, -50%, 20em);
+      width: ${this.getRadius() * 2 + 3.25}em;
+      height: ${this.getRadius() * 2 + 3.25}em;
+      transform: translate3d(-50%, -50%, 20em) translate3d(${this.getCoordinates().x}em, ${this.getCoordinates().y}em, ${this.getCoordinates().z}em);
+      border-radius: 5em;
     `
+  }
+
+  getRadius(): number {
+    return 3
   }
 }
