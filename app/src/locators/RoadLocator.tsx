@@ -50,15 +50,15 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
     return { x: average(coordinates.map(c => c.x)), y: average(coordinates.map(c => c.y)) }
   }
 
-  place(item: MaterialItem<Color, LocationType>, context: PlaceItemContext<Color, MaterialType, LocationType>): string {
-    let place = super.place(item, context)
+  transformOwnItemLocation(item: MaterialItem<Color, LocationType>, context: PlaceItemContext<Color, MaterialType, LocationType>) {
+    const transform = super.transformOwnItemLocation(item, context)
     const index = this.getItemIndex(item, context)
     if (index === 1) {
-      place += ` translateX(0.8em)`
+      transform.push('translateX(0.8em)')
     } else if (index === 2) {
-      place += ` translateX(-0.8em)`
+      transform.push('translateX(-0.8em)')
     }
-    return place
+    return transform
   }
 
   getLocationRules(props: LocationRulesProps<Color, MaterialType, LocationType>): ReactNode {
