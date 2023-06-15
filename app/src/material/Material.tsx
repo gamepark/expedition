@@ -7,7 +7,7 @@ import { TicketDescription } from './TicketDescription'
 import { ArrowsDescription } from './ArrowsDescription'
 import { LargeTokensDescription } from './LargeTokensDescription'
 
-export const MaterialsDescription: Record<MaterialType, MaterialDescription> = {
+export const Material: Record<MaterialType, MaterialDescription> = {
   [MaterialType.Board]: BoardDescription,
   [MaterialType.Card]: CardsDescription,
   [MaterialType.Token]: TokensDescription,

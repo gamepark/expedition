@@ -8,7 +8,7 @@ import { StrictMode } from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import translations from './translations.json'
-import { MaterialsDescription } from './material/MaterialsDescription'
+import { Material } from './material/Material'
 import { Locators } from './locators/Locators'
 import { animations } from './animations/Animations'
 
@@ -65,7 +65,7 @@ const style = css`
 ReactDOM.render(
   <StrictMode>
     <GameProvider game="expedition" Rules={ExpeditionRules} optionsSpec={ExpeditionOptionsSpec}
-                  material={MaterialsDescription} locators={Locators} animations={animations}>
+                  material={Material} locators={Locators} animations={animations}>
       <App/>
     </GameProvider>
     <Global styles={[normalize, style]}/>
