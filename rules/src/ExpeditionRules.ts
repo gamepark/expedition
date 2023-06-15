@@ -14,7 +14,13 @@ import {
   TimeLimit
 } from '@gamepark/rules-api'
 import { arrowColors } from './material/ArrowColor'
-import { RuleId, rulesSteps } from './rules/RuleId'
+import { RuleId } from './rules/RuleId'
+import { SetupKeyPlaces } from './rules/SetupKeyPlaces'
+import { PlayerTurn } from './rules/PlayerTurn'
+import { TicketRule } from './rules/TicketRule'
+import { LoopRule } from './rules/LoopRule'
+import { ChooseCardRule } from './rules/ChooseCardRule'
+import { DiscardRule } from './rules/DiscardRule'
 
 const COMMON_OBJECTIVES = 6
 const TOKENS_PER_PLAYER = 4
@@ -25,16 +31,27 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
   implements Competitive<MaterialGame<Color, MaterialType, LocationType>, MaterialMove<Color, MaterialType, LocationType>, Color>,
     TimeLimit<MaterialGame<Color, MaterialType, LocationType>, MaterialMove<Color, MaterialType, LocationType>, Color> {
 
-  rulesSteps = rulesSteps
-
-  hidingStrategies = {
-    [MaterialType.Card]: {
-      [LocationType.Deck]: hideItemId,
-      [LocationType.Hand]: hideItemIdToOthers
+  get rules() {
+    return {
+      [RuleId.SetupKeyPlaces]: SetupKeyPlaces,
+      [RuleId.PlayerTurn]: PlayerTurn,
+      [RuleId.TicketRule]: TicketRule,
+      [RuleId.LoopRule]: LoopRule,
+      [RuleId.ChooseCardRule]: ChooseCardRule,
+      [RuleId.DiscardRule]: DiscardRule
     }
   }
 
-  getLocationsStrategies() {
+  get hidingStrategies() {
+    return {
+      [MaterialType.Card]: {
+        [LocationType.Deck]: hideItemId,
+        [LocationType.Hand]: hideItemIdToOthers
+      }
+    }
+  }
+
+  get locationsStrategies() {
     return {
       [MaterialType.Card]: {
         [LocationType.Deck]: new PositiveSequenceStrategy(),

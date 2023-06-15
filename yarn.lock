@@ -1333,15 +1333,13 @@
   dependencies:
     prop-types "^15.8.1"
 
-"@gamepark/rules-api@~6.0.4-alpha.0":
-  version "6.0.4-alpha.0"
-  resolved "https://registry.yarnpkg.com/@gamepark/rules-api/-/rules-api-6.0.4-alpha.0.tgz#738f808735fb19226971642f744f421abf246c67"
-  integrity sha512-xX6MQkIEzhDsXmu/Tdyl2/ansK+/JhuejH7a7OVXULHdFshvQGPr41PwPbd3Op00Sm9um+03OAwFxKUmA6TR+A==
+"@gamepark/rules-api@~6.0.5-alpha.0":
+  version "6.0.5-alpha.0"
+  resolved "https://registry.yarnpkg.com/@gamepark/rules-api/-/rules-api-6.0.5-alpha.0.tgz#abaf9576028cd1158a8ab3f6fc497abdeb1e449c"
+  integrity sha512-DX5l9TN2czeicajYYRhoCJffdrn0cNBjN7HYkfpTjqfaig2s9zQN/jSqgY5ye0QzLdETA67254nhO/3Ftwz6zQ==
   dependencies:
     fast-deep-equal "^3.1.3"
-    lodash.mapvalues "^4.6.0"
-    lodash.maxby "^4.6.0"
-    lodash.minby "^4.6.0"
+    lodash "^4.17.21"
 
 "@gar/promisify@^1.0.1":
   version "1.1.3"
@@ -8453,16 +8451,6 @@ lodash.ismatch@^4.4.0:
   resolved "https://registry.yarnpkg.com/lodash.ismatch/-/lodash.ismatch-4.4.0.tgz#756cb5150ca3ba6f11085a78849645f188f85f37"
   integrity sha1-dWy1FQyjum8RCFp4hJZF8Yj4Xzc=
 
-lodash.mapvalues@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.mapvalues/-/lodash.mapvalues-4.6.0.tgz#1bafa5005de9dd6f4f26668c30ca37230cc9689c"
-  integrity sha512-JPFqXFeZQ7BfS00H58kClY7SPVeHertPE0lNuCyZ26/XlN8TvakYD7b9bGyNmXbT/D3BbtPAAmq90gPWqLkxlQ==
-
-lodash.maxby@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.maxby/-/lodash.maxby-4.6.0.tgz#082240068f3c7a227aa00a8380e4f38cf0786e3d"
-  integrity sha512-QfTqQTwzmKxLy7VZlbx2M/ipWv8DCQ2F5BI/MRxLharOQ5V78yMSuB+JE+EuUM22txYfj09R2Q7hUlEYj7KdNg==
-
 lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -8472,11 +8460,6 @@ lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
-
-lodash.minby@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.minby/-/lodash.minby-4.6.0.tgz#8b105765ae973954ae944a8029999b8080bdf8c4"
-  integrity sha512-/BQsNmceLCn6priGkiihvV5w/G9da7tqI6Wb4rS+PeaZcsFOv4PjNRs9/3ZQPY1sqpfhRtJQkAYLiaohlTUt0g==
 
 lodash.sortby@^4.7.0:
   version "4.7.0"
