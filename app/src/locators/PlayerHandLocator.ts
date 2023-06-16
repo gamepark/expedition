@@ -1,8 +1,10 @@
-import { HandLocator, PlaceItemContext } from '@gamepark/react-game'
-import { Location, MaterialItem } from '@gamepark/rules-api'
+import { BaseContext, HandLocator, PlaceItemContext } from '@gamepark/react-game'
+import { Location, MaterialItem, MaterialMove, MaterialRules } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
+import { css, Interpolation, Theme } from '@emotion/react'
+import { cardProps } from '../material/CardsDescription'
 
 export class PlayerHandLocator extends HandLocator<Color, MaterialType, LocationType> {
   getDisplayIndex(player: Color, context: PlaceItemContext<Color, MaterialType, LocationType>) {
@@ -43,5 +45,35 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
 
   getRadius(item: MaterialItem<Color, LocationType>, { player }: PlaceItemContext<Color, MaterialType, LocationType>): number {
     return item.location.player === player ? 300 : 100
+  }
+
+  getLocations(): Location<Color, LocationType>[] {
+    return [{
+      type: LocationType.Hand
+    }]
+  }
+
+  getLocationCss(_location: Location<Color, LocationType>, _rules: MaterialRules<Color, MaterialType, LocationType>, _legalMoves: MaterialMove<Color, MaterialType, LocationType>[], context: BaseContext<Color, MaterialType, LocationType>): Interpolation<Theme> {
+    const height = cardProps.height
+    const width = height * cardProps.ratio
+    const radius = height / 15
+    const handLocation: Location = {
+      type: LocationType.Hand,
+      player: context.player
+    }
+
+    const itemContext = { ...context, type: MaterialType.Card, index: 0 }
+    const count = this.countItems(handLocation, itemContext)
+    itemContext.index = count
+    handLocation.x = count
+
+    return css`
+      width: ${width}em;
+      height: ${height}em;
+      transform: ${this.place({
+        location: handLocation
+      }, itemContext)};
+      border-radius: ${radius}em;
+    `
   }
 }
