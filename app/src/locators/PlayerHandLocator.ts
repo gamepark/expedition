@@ -1,4 +1,4 @@
-import { BaseContext, HandLocator, PlaceItemContext } from '@gamepark/react-game'
+import { BaseContext, HandLocator, PlaceItemContext, transformCss } from '@gamepark/react-game'
 import { Location, MaterialItem, MaterialMove, MaterialRules } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
@@ -67,12 +67,14 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
     itemContext.index = count
     handLocation.x = count
 
+    const transformations = this.transformItem({
+      location: handLocation
+    }, itemContext)
+
     return css`
       width: ${width}em;
       height: ${height}em;
-      transform: ${this.place({
-        location: handLocation
-      }, itemContext)};
+      ${transformCss(...transformations)};
       border-radius: ${radius}em;
     `
   }
