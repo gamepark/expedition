@@ -1,19 +1,7 @@
 import Color from './Color'
 import { MaterialType } from './material/ExpeditionMaterial'
 import { LocationType } from './material/LocationType'
-import { Place, places, places2StepsFromStart } from './material/Place'
-import {
-  Competitive,
-  FillGapStrategy,
-  hideItemId,
-  hideItemIdToOthers,
-  MaterialGame,
-  MaterialMove,
-  PositiveSequenceStrategy,
-  SecretMaterialRules,
-  TimeLimit
-} from '@gamepark/rules-api'
-import { arrowColors } from './material/ArrowColor'
+import { Competitive, hideItemId, hideItemIdToOthers, MaterialGame, MaterialMove, SecretMaterialRules, TimeLimit } from '@gamepark/rules-api'
 import { RuleId } from './rules/RuleId'
 import { SetupKeyPlaces } from './rules/SetupKeyPlaces'
 import { PlayerTurn } from './rules/PlayerTurn'
@@ -21,128 +9,15 @@ import { TicketRule } from './rules/TicketRule'
 import { LoopRule } from './rules/LoopRule'
 import { ChooseCardRule } from './rules/ChooseCardRule'
 import { DiscardRule } from './rules/DiscardRule'
-
-const COMMON_OBJECTIVES = 6
-const TOKENS_PER_PLAYER = 4
-const START_TICKETS = 3
-const ARROWS_PER_EXPEDITION = 45
+import { locationsStrategies } from './material/LocationStrategies'
 
 export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, LocationType>
   implements Competitive<MaterialGame<Color, MaterialType, LocationType>, MaterialMove<Color, MaterialType, LocationType>, Color>,
     TimeLimit<MaterialGame<Color, MaterialType, LocationType>, MaterialMove<Color, MaterialType, LocationType>, Color> {
 
-  get rules() {
-    return {
-      [RuleId.SetupKeyPlaces]: SetupKeyPlaces,
-      [RuleId.PlayerTurn]: PlayerTurn,
-      [RuleId.TicketRule]: TicketRule,
-      [RuleId.LoopRule]: LoopRule,
-      [RuleId.ChooseCardRule]: ChooseCardRule,
-      [RuleId.DiscardRule]: DiscardRule
-    }
-  }
-
-  get hidingStrategies() {
-    return {
-      [MaterialType.Card]: {
-        [LocationType.Deck]: hideItemId,
-        [LocationType.Hand]: hideItemIdToOthers
-      }
-    }
-  }
-
-  get locationsStrategies() {
-    return {
-      [MaterialType.Card]: {
-        [LocationType.Deck]: new PositiveSequenceStrategy(),
-        [LocationType.Hand]: new PositiveSequenceStrategy(),
-        [LocationType.PlayerArea]: new PositiveSequenceStrategy(),
-        [LocationType.CommonObjectives]: new FillGapStrategy()
-      },
-      [MaterialType.Arrow]: {
-        [LocationType.Road]: new PositiveSequenceStrategy()
-      }
-    }
-  }
-
-  setup() {
-    this.createDeck()
-    this.dealCards()
-    this.revealCommonObjectives()
-    this.createTokens()
-    this.giveStartTickets()
-    this.createArrows()
-    this.start(RuleId.SetupKeyPlaces, this.game.players[0])
-  }
-
-  private createDeck() {
-    this.setupMaterial(MaterialType.Card).createItems(places.map(id => ({ id, location: { type: LocationType.Deck } })))
-    this.setupMaterial(MaterialType.Card).shuffle()
-  }
-
-  private dealCards() {
-    const cardsPerPlayer = this.game.players.length <= 3 ? 12 : 9
-    for (const player of this.game.players) {
-      this.dealPlayerCards(player, cardsPerPlayer)
-      while (!this.hasEnoughCards2StepsFromStart(player)) {
-        this.discardCards(player)
-        this.dealPlayerCards(player, cardsPerPlayer)
-      }
-    }
-  }
-
-  private dealPlayerCards(player: Color, quantity: number) {
-    this.setupMaterial(MaterialType.Card).location(LocationType.Deck)
-      .sort(item => -item.location.x!).limit(quantity)
-      .moveItems({ location: { type: LocationType.Hand, player } })
-  }
-
-  private hasEnoughCards2StepsFromStart(player: Color) {
-    return this.setupMaterial(MaterialType.Card).location(LocationType.Hand).player(player)
-      .id<Place>(place => !places2StepsFromStart.includes(place!))
-      .length >= TOKENS_PER_PLAYER
-  }
-
-  private discardCards(player: Color) {
-    this.setupMaterial(MaterialType.Card).location(LocationType.Hand).player(player).moveItems({ location: { type: LocationType.Deck, x: 0 } })
-  }
-
-  private revealCommonObjectives() {
-    this.drawCommonObjectives(COMMON_OBJECTIVES)
-    let cardsToReplace
-    while ((cardsToReplace = this.getCommonObjectives2StepsFromStart()).length > 0) {
-      cardsToReplace.moveItems({ location: { type: LocationType.Deck, x: 0 } })
-      this.drawCommonObjectives(cardsToReplace.length)
-    }
-  }
-
-  private drawCommonObjectives(quantity: number) {
-    this.setupMaterial(MaterialType.Card).location(LocationType.Deck)
-      .sort(item => -item.location.x!).limit(quantity)
-      .moveItems({ location: { type: LocationType.CommonObjectives } })
-  }
-
-  private getCommonObjectives2StepsFromStart() {
-    return this.setupMaterial(MaterialType.Card).location(LocationType.CommonObjectives).id<Place>(place => places2StepsFromStart.includes(place!))
-  }
-
-  private createTokens() {
-    this.setupMaterial(MaterialType.Token).createItems(this.game.players.map(player => (
-      { id: player, quantity: TOKENS_PER_PLAYER, location: { type: LocationType.PlayerArea, player } }
-    )))
-  }
-
-  private giveStartTickets() {
-    this.setupMaterial(MaterialType.Ticket).createItems(this.game.players.map(player => (
-      { quantity: START_TICKETS, location: { type: LocationType.PlayerArea, player } }
-    )))
-  }
-
-  private createArrows() {
-    this.setupMaterial(MaterialType.Arrow).createItems(arrowColors.map(id => (
-      { id, quantity: ARROWS_PER_EXPEDITION, location: { type: LocationType.ArrowsStock } }
-    )))
-  }
+  rules = rules
+  locationsStrategies = locationsStrategies
+  hidingStrategies = hidingStrategies
 
   giveTime(): number {
     return 30
@@ -165,5 +40,21 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
     const cardsInHand = cards.location(LocationType.Hand).length
     const tokensOnBoard = tokens.location(LocationType.Place).length
     return cardsInFrontOfPlayer + tokensCollected - cardsInHand - tokensOnBoard
+  }
+}
+
+const rules = {
+  [RuleId.SetupKeyPlaces]: SetupKeyPlaces,
+  [RuleId.PlayerTurn]: PlayerTurn,
+  [RuleId.TicketRule]: TicketRule,
+  [RuleId.LoopRule]: LoopRule,
+  [RuleId.ChooseCardRule]: ChooseCardRule,
+  [RuleId.DiscardRule]: DiscardRule
+}
+
+const hidingStrategies = {
+  [MaterialType.Card]: {
+    [LocationType.Deck]: hideItemId,
+    [LocationType.Hand]: hideItemIdToOthers
   }
 }

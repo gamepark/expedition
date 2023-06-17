@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css, Global } from '@emotion/react'
 import { ExpeditionOptionsSpec } from '@gamepark/expedition/ExpeditionOptions'
+import { ExpeditionSetup } from '@gamepark/expedition/ExpeditionSetup'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { GameProvider, setupTranslation } from '@gamepark/react-game'
 import normalize from 'emotion-normalize'
@@ -64,7 +65,7 @@ const style = css`
 
 ReactDOM.render(
   <StrictMode>
-    <GameProvider game="expedition" Rules={ExpeditionRules} optionsSpec={ExpeditionOptionsSpec}
+    <GameProvider game="expedition" GameSetup={ExpeditionSetup} Rules={ExpeditionRules} optionsSpec={ExpeditionOptionsSpec}
                   material={Material} locators={Locators} animations={animations}>
       <App/>
     </GameProvider>
