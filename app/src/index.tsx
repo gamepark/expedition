@@ -12,6 +12,7 @@ import translations from './translations.json'
 import { Material } from './material/Material'
 import { Locators } from './locators/Locators'
 import { animations } from './animations/Animations'
+import { Tutorial } from './tutorial/Tutorial'
 
 setupTranslation(translations, { debug: false })
 
@@ -66,7 +67,7 @@ const style = css`
 ReactDOM.render(
   <StrictMode>
     <GameProvider game="expedition" GameSetup={ExpeditionSetup} Rules={ExpeditionRules} optionsSpec={ExpeditionOptionsSpec}
-                  material={Material} locators={Locators} animations={animations}>
+                  material={Material} locators={Locators} animations={animations} tutorial={new Tutorial()}>
       <App/>
     </GameProvider>
     <Global styles={[normalize, style]}/>
