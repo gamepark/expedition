@@ -2,20 +2,26 @@
 import red from '../images/arrows/red-arrow.png'
 import blue from '../images/arrows/blue-arrow.png'
 import yellow from '../images/arrows/yellow-arrow.png'
-import { MaterialComponentType, TokenMaterialDescription } from '@gamepark/react-game'
 import { ArrowColor } from '@gamepark/expedition/material/ArrowColor'
 import { ArrowRules } from './ArrowRules'
+import { MaterialComponentType, TokenMaterialDescription } from '@gamepark/react-game'
+import Color from '@gamepark/expedition/Color'
+import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
+import { LocationType } from '@gamepark/expedition/material/LocationType'
 
-export const ArrowsDescription: TokenMaterialDescription<ArrowColor> = {
-  type: MaterialComponentType.Token,
-  props: {
-    image: {
-      [ArrowColor.Red]: red,
-      [ArrowColor.Blue]: blue,
-      [ArrowColor.Yellow]: yellow
-    },
+export class ArrowsDescription extends TokenMaterialDescription<Color, MaterialType, LocationType> {
+  type: typeof MaterialComponentType.Token = MaterialComponentType.Token
+  images = {
+    [ArrowColor.Red]: red,
+    [ArrowColor.Blue]: blue,
+    [ArrowColor.Yellow]: yellow
+  }
+
+  props = {
+    image: this.images,
     height: 4.5,
     ratio: 160 / 530
-  },
-  rules: ArrowRules
+  }
+
+  rules = ArrowRules
 }

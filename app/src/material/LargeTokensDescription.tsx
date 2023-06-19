@@ -10,22 +10,30 @@ import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { LargeTokenRules } from './LargeTokenRules'
+import { MaterialGame } from '../../../../workshop/packages/rules-api'
 
-export const LargeTokensDescription: TokenMaterialDescription<Color, MaterialType, LocationType> = {
-  type: MaterialComponentType.Token,
-  props: {
-    image: {
-      [Color.Red]: red,
-      [Color.Pink]: pink,
-      [Color.Blue]: blue,
-      [Color.Green]: green,
-      [Color.Yellow]: yellow,
-      [Color.White]: white
-    },
+export class LargeTokensDescription extends TokenMaterialDescription<Color, MaterialType, LocationType> {
+  type: typeof MaterialComponentType.Token = MaterialComponentType.Token
+
+  images = {
+    [Color.Red]: red,
+    [Color.Pink]: pink,
+    [Color.Blue]: blue,
+    [Color.Green]: green,
+    [Color.Yellow]: yellow,
+    [Color.White]: white
+  }
+
+  props = {
+    image: this.images,
     height: 3.5,
     ratio: 1,
     borderRadius: 2
-  },
-  items: (game) => game.players.map(color => ({ id: color, location: { type: LocationType.PlayerArea, player: color } })),
-  rules: LargeTokenRules
+  }
+
+  items = (game: MaterialGame<Color, MaterialType, LocationType>) => game.players.map(color => ({
+    id: color,
+    location: { type: LocationType.PlayerArea, player: color }
+  }))
+  rules = LargeTokenRules
 }

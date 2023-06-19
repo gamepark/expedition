@@ -1,13 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { ItemLocator, LocationRulesProps } from '@gamepark/react-game'
-import { Location, Material, XYCoordinates } from '@gamepark/rules-api'
+import { Location, Material, MaterialRules, XYCoordinates } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { Place } from '@gamepark/expedition/material/Place'
 import { css } from '@emotion/react'
 import { BlueNode, isGreenNode, Node, nodes, RedNode, StartNode } from '@gamepark/expedition/material/Road'
-import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { ReactNode } from 'react'
 import { PlaceRules } from './PlaceRules'
 
@@ -18,7 +17,7 @@ export class PlaceLocator extends ItemLocator<Color, MaterialType, LocationType>
     return nodes.map(place => ({ type: LocationType.Place, id: place }))
   }
 
-  getLocationCss(location: Location<Color, LocationType, Node>, rules: ExpeditionRules) {
+  getLocationCss(location: Location<Color, LocationType, Node>, rules: MaterialRules<Color, MaterialType, LocationType>) {
     const borderColor = this.getObjectiveColor(rules.material(MaterialType.Card), location.id)
     return [locationCss, borderColor && borderCss(borderColor)]
   }

@@ -2,10 +2,9 @@
 import { FC } from 'react'
 import { PlayerPanel, shadowCss, usePlayerId, usePlayers, useRules } from '@gamepark/react-game'
 import { playerColorCode } from '../locators/PlaceLocator'
-import { tokensProps } from '../material/TokensDescription'
+// TODO: hand must be included in image loader
 import hand from '../images/icons/hand.png'
 import ticket from '../images/ticket.jpg'
-import { ticketProps } from '../material/TicketDescription'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
 import { css } from '@emotion/react'
@@ -13,6 +12,9 @@ import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { Material } from '../material/Material'
+import { TicketDescription } from '../material/TicketDescription'
+import { TokensDescription } from '../material/TokensDescription'
 
 type PlayerPanelCounterProps = {
   icon?: IconProp;
@@ -39,7 +41,8 @@ const PlayerPanelCounter: FC<PlayerPanelCounterProps> = (props) => {
   )
 }
 
-
+const ticketDescription = Material[MaterialType.Ticket] as TicketDescription
+const tokenDescription = Material[MaterialType.Token] as TokensDescription
 const PlayerPanels: FC<any> = () => {
   const players = usePlayers({ sortFromMe: true })
   const isSpectator = usePlayerId() === undefined
@@ -55,7 +58,7 @@ const PlayerPanels: FC<any> = () => {
               icon={faStar}
               value={rules?.getScore(player.id)!}/>
             <PlayerPanelCounter
-              ratio={ticketProps.ratio}
+              ratio={ticketDescription.props.ratio}
               image={ticket}
               value={rules?.material(MaterialType.Ticket).location(LocationType.PlayerArea).player(player.id).length!}
               shadow
@@ -65,8 +68,8 @@ const PlayerPanels: FC<any> = () => {
               value={rules?.material(MaterialType.Card).location(LocationType.Hand).player(player.id).length!}
             />
             <PlayerPanelCounter
-              ratio={tokensProps.ratio}
-              image={tokensProps.image[player.id]}
+              ratio={ticketDescription.props.ratio}
+              image={tokenDescription.images[player.id]}
               width={2.8}
               borderRadius={3}
               value={rules?.material(MaterialType.Token).location(LocationType.Place).id(player.id).length!}

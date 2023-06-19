@@ -8,12 +8,14 @@ import white from '../images/tokens/white-token.jpg'
 import { MaterialComponentType, TokenMaterialDescription } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { TokenRules } from './TokenRules'
+import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
+import { LocationType } from '@gamepark/expedition/material/LocationType'
 
-export const tokensProps = {
-  height: 1.4,
-  ratio: 1,
-  borderRadius: 1,
-  image: {
+
+export class TokensDescription extends TokenMaterialDescription<Color, MaterialType, LocationType> {
+  type: typeof MaterialComponentType.Token = MaterialComponentType.Token
+
+  images = {
     [Color.Red]: red,
     [Color.Pink]: pink,
     [Color.Blue]: blue,
@@ -21,11 +23,13 @@ export const tokensProps = {
     [Color.Yellow]: yellow,
     [Color.White]: white
   }
-}
 
+  props = {
+    height: 1.4,
+    ratio: 1,
+    borderRadius: 1,
+    image: this.images
+  }
 
-export const TokensDescription: TokenMaterialDescription<Color> = {
-  type: MaterialComponentType.Token,
-  props: tokensProps,
-  rules: TokenRules
+  rules = TokenRules
 }

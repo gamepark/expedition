@@ -4,23 +4,28 @@ import { MaterialComponentType, TokenMaterialDescription } from '@gamepark/react
 import Color from '@gamepark/expedition/Color'
 import { TicketRules } from './TicketRules'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
+import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 
-export const ticketProps = {
-  image: ticket,
-  height: 2,
-  ratio: 325 / 200
-}
-export const TicketDescription: TokenMaterialDescription<Color> = {
-  type: MaterialComponentType.Token,
-  props: ticketProps,
-  rules: TicketRules,
-  items: () => [{
+export class TicketDescription extends TokenMaterialDescription<Color, MaterialType, LocationType> {
+  type: typeof MaterialComponentType.Token = MaterialComponentType.Token
+
+  images = ticket
+
+  props = {
+    image: this.images,
+    height: 2,
+    ratio: 325 / 200
+  }
+
+  rules = TicketRules
+  items = () => [{
     quantity: 10,
     location: {
       type: LocationType.TicketStock
     }
-  }],
-  stock: {
+  }]
+
+  stock = {
     location: {
       type: LocationType.TicketStock
     }

@@ -8,10 +8,10 @@ import { ArrowsDescription } from './ArrowsDescription'
 import { LargeTokensDescription } from './LargeTokensDescription'
 
 export const Material: Record<MaterialType, MaterialDescription> = {
-  [MaterialType.Board]: BoardDescription,
-  [MaterialType.Card]: CardsDescription,
-  [MaterialType.Token]: TokensDescription,
-  [MaterialType.Arrow]: ArrowsDescription,
-  [MaterialType.Ticket]: TicketDescription,
-  [MaterialType.LargeToken]: LargeTokensDescription
+  [MaterialType.Board]: new BoardDescription(),
+  [MaterialType.Card]: new CardsDescription(),
+  [MaterialType.Token]: new TokensDescription(),
+  [MaterialType.Arrow]: new ArrowsDescription(),
+  [MaterialType.Ticket]: new TicketDescription(),
+  [MaterialType.LargeToken]: new LargeTokensDescription()
 }
