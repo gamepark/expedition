@@ -11,16 +11,17 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 
 export class ArrowsDescription extends TokenMaterialDescription<Color, MaterialType, LocationType> {
   type: typeof MaterialComponentType.Token = MaterialComponentType.Token
-  images = {
-    [ArrowColor.Red]: red,
-    [ArrowColor.Blue]: blue,
-    [ArrowColor.Yellow]: yellow
-  }
 
-  props = {
-    image: this.images,
-    height: 4.5,
-    ratio: 160 / 530
+  getProps() {
+    return ({
+      image: {
+        [ArrowColor.Red]: red,
+        [ArrowColor.Blue]: blue,
+        [ArrowColor.Yellow]: yellow
+      },
+      height: 4.5,
+      ratio: 160 / 530
+    })
   }
 
   rules = ArrowRules

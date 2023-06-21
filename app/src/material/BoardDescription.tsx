@@ -11,12 +11,12 @@ export const boardRatio = 2053 / 1554
 export class BoardDescription extends BoardMaterialDescription<Color, MaterialType, LocationType> {
   type: typeof MaterialComponentType.Board = MaterialComponentType.Board
 
-  images = board
-
-  props = {
-    image: this.images,
-    height: 56,
-    ratio: boardRatio
+  getProps() {
+    return ({
+      image: board,
+      height: 56,
+      ratio: boardRatio
+    })
   }
 
   items = () => [{ location: { type: LocationType.Board } }]

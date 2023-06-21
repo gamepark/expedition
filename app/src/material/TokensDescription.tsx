@@ -15,20 +15,20 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 export class TokensDescription extends TokenMaterialDescription<Color, MaterialType, LocationType> {
   type: typeof MaterialComponentType.Token = MaterialComponentType.Token
 
-  images = {
-    [Color.Red]: red,
-    [Color.Pink]: pink,
-    [Color.Blue]: blue,
-    [Color.Green]: green,
-    [Color.Yellow]: yellow,
-    [Color.White]: white
-  }
-
-  props = {
-    height: 1.4,
-    ratio: 1,
-    borderRadius: 1,
-    image: this.images
+  getProps() {
+    return ({
+      height: 1.4,
+      ratio: 1,
+      borderRadius: 1,
+      image: {
+        [Color.Red]: red,
+        [Color.Pink]: pink,
+        [Color.Blue]: blue,
+        [Color.Green]: green,
+        [Color.Yellow]: yellow,
+        [Color.White]: white
+      }
+    })
   }
 
   rules = TokenRules

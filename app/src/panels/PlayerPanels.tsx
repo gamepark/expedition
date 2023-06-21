@@ -58,7 +58,7 @@ const PlayerPanels: FC<any> = () => {
               icon={faStar}
               value={rules?.getScore(player.id)!}/>
             <PlayerPanelCounter
-              ratio={ticketDescription.props.ratio}
+              ratio={ticketDescription.props.ratio as number}
               image={ticket}
               value={rules?.material(MaterialType.Ticket).location(LocationType.PlayerArea).player(player.id).length!}
               shadow
@@ -68,8 +68,8 @@ const PlayerPanels: FC<any> = () => {
               value={rules?.material(MaterialType.Card).location(LocationType.Hand).player(player.id).length!}
             />
             <PlayerPanelCounter
-              ratio={ticketDescription.props.ratio}
-              image={tokenDescription.images[player.id]}
+              ratio={tokenDescription.props.ratio as number}
+              image={tokenDescription.props.image[player.id]}
               width={2.8}
               borderRadius={3}
               value={rules?.material(MaterialType.Token).location(LocationType.Place).id(player.id).length!}

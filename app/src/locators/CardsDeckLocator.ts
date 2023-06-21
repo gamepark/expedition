@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { DeckLocator } from '@gamepark/react-game'
+import { CardProps, DeckLocator } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
@@ -28,7 +28,7 @@ export class CardsDeckLocator extends DeckLocator<Color, MaterialType, LocationT
   }
 
   getLocationCss(): Interpolation<Theme> {
-    const cardProps = (Material[MaterialType.Card] as CardsDescription).props
+    const cardProps = (Material[MaterialType.Card] as CardsDescription).props as CardProps
     const height = cardProps.height
     const width = height * cardProps.ratio
     const radius = height / 15

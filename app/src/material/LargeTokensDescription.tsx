@@ -15,20 +15,20 @@ import { MaterialGame } from '../../../../workshop/packages/rules-api'
 export class LargeTokensDescription extends TokenMaterialDescription<Color, MaterialType, LocationType> {
   type: typeof MaterialComponentType.Token = MaterialComponentType.Token
 
-  images = {
-    [Color.Red]: red,
-    [Color.Pink]: pink,
-    [Color.Blue]: blue,
-    [Color.Green]: green,
-    [Color.Yellow]: yellow,
-    [Color.White]: white
-  }
-
-  props = {
-    image: this.images,
-    height: 3.5,
-    ratio: 1,
-    borderRadius: 2
+  getProps() {
+    return ({
+      image: {
+        [Color.Red]: red,
+        [Color.Pink]: pink,
+        [Color.Blue]: blue,
+        [Color.Green]: green,
+        [Color.Yellow]: yellow,
+        [Color.White]: white
+      },
+      height: 3.5,
+      ratio: 1,
+      borderRadius: 2
+    })
   }
 
   items = (game: MaterialGame<Color, MaterialType, LocationType>) => game.players.map(color => ({

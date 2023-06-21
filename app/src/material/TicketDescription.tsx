@@ -9,12 +9,13 @@ import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 export class TicketDescription extends TokenMaterialDescription<Color, MaterialType, LocationType> {
   type: typeof MaterialComponentType.Token = MaterialComponentType.Token
 
-  images = ticket
+  getProps() {
 
-  props = {
-    image: this.images,
-    height: 2,
-    ratio: 325 / 200
+    return ({
+      image: ticket,
+      height: 2,
+      ratio: 325 / 200
+    })
   }
 
   rules = TicketRules
