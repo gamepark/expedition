@@ -12,7 +12,7 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { LargeTokenRules } from './LargeTokenRules'
 import { MaterialGame } from '../../../../workshop/packages/rules-api'
 
-export class LargeTokensDescription extends TokenMaterialDescription<Color, MaterialType, LocationType> {
+export class LargeTokenDescription extends TokenMaterialDescription<Color, MaterialType, LocationType> {
   type: typeof MaterialComponentType.Token = MaterialComponentType.Token
 
   getProps() {
@@ -37,3 +37,5 @@ export class LargeTokensDescription extends TokenMaterialDescription<Color, Mate
   }))
   rules = LargeTokenRules
 }
+
+export const largeTokenDescription = new LargeTokenDescription()

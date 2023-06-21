@@ -9,7 +9,7 @@ import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 
-export class ArrowsDescription extends TokenMaterialDescription<Color, MaterialType, LocationType> {
+class ArrowDescription extends TokenMaterialDescription<Color, MaterialType, LocationType> {
   type: typeof MaterialComponentType.Token = MaterialComponentType.Token
 
   getProps() {
@@ -26,3 +26,5 @@ export class ArrowsDescription extends TokenMaterialDescription<Color, MaterialT
 
   rules = ArrowRules
 }
+
+export const arrowDescription = new ArrowDescription()

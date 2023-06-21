@@ -12,9 +12,8 @@ import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
-import { Material } from '../material/Material'
-import { TicketDescription } from '../material/TicketDescription'
-import { TokensDescription } from '../material/TokensDescription'
+import { ticketDescription } from '../material/TicketDescription'
+import { tokensDescription } from '../material/TokenDescription'
 
 type PlayerPanelCounterProps = {
   icon?: IconProp;
@@ -41,8 +40,6 @@ const PlayerPanelCounter: FC<PlayerPanelCounterProps> = (props) => {
   )
 }
 
-const ticketDescription = Material[MaterialType.Ticket] as TicketDescription
-const tokenDescription = Material[MaterialType.Token] as TokensDescription
 const PlayerPanels: FC<any> = () => {
   const players = usePlayers({ sortFromMe: true })
   const isSpectator = usePlayerId() === undefined
@@ -58,7 +55,7 @@ const PlayerPanels: FC<any> = () => {
               icon={faStar}
               value={rules?.getScore(player.id)!}/>
             <PlayerPanelCounter
-              ratio={ticketDescription.props.ratio as number}
+              ratio={ticketDescription.getProps().ratio}
               image={ticket}
               value={rules?.material(MaterialType.Ticket).location(LocationType.PlayerArea).player(player.id).length!}
               shadow
@@ -68,8 +65,8 @@ const PlayerPanels: FC<any> = () => {
               value={rules?.material(MaterialType.Card).location(LocationType.Hand).player(player.id).length!}
             />
             <PlayerPanelCounter
-              ratio={tokenDescription.props.ratio as number}
-              image={tokenDescription.props.image[player.id]}
+              ratio={ticketDescription.getProps().ratio}
+              image={tokensDescription.props.image[player.id]}
               width={2.8}
               borderRadius={3}
               value={rules?.material(MaterialType.Token).location(LocationType.Place).id(player.id).length!}

@@ -169,7 +169,7 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import Color from '@gamepark/expedition/Color'
 
-export class CardsDescription extends CardMaterialDescription<Color, MaterialType, LocationType> {
+class CardDescription extends CardMaterialDescription<Color, MaterialType, LocationType> {
   type: typeof MaterialComponentType.Card = MaterialComponentType.Card
 
   getProps() {
@@ -366,3 +366,5 @@ export class CardsDescription extends CardMaterialDescription<Color, MaterialTyp
     }
   }
 }
+
+export const cardDescription = new CardDescription()

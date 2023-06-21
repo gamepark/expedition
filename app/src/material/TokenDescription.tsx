@@ -11,8 +11,7 @@ import { TokenRules } from './TokenRules'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 
-
-export class TokensDescription extends TokenMaterialDescription<Color, MaterialType, LocationType> {
+class TokenDescription extends TokenMaterialDescription<Color, MaterialType, LocationType> {
   type: typeof MaterialComponentType.Token = MaterialComponentType.Token
 
   getProps() {
@@ -33,3 +32,5 @@ export class TokensDescription extends TokenMaterialDescription<Color, MaterialT
 
   rules = TokenRules
 }
+
+export const tokensDescription = new TokenDescription()

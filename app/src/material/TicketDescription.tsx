@@ -6,7 +6,7 @@ import { TicketRules } from './TicketRules'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 
-export class TicketDescription extends TokenMaterialDescription<Color, MaterialType, LocationType> {
+class TicketDescription extends TokenMaterialDescription<Color, MaterialType, LocationType> {
   type: typeof MaterialComponentType.Token = MaterialComponentType.Token
 
   getProps() {
@@ -32,3 +32,5 @@ export class TicketDescription extends TokenMaterialDescription<Color, MaterialT
     }
   }
 }
+
+export const ticketDescription = new TicketDescription()

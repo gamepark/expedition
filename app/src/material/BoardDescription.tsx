@@ -23,3 +23,4 @@ export class BoardDescription extends BoardMaterialDescription<Color, MaterialTy
   rules = BoardRules
 }
 
+export const boardDescription = new BoardDescription()
