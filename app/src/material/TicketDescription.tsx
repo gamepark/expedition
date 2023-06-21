@@ -1,24 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import ticket from '../images/ticket.jpg'
-import { MaterialComponentType, TokenMaterialDescription } from '@gamepark/react-game'
-import Color from '@gamepark/expedition/Color'
+import { TokenDescription } from '@gamepark/react-game'
 import { TicketRules } from './TicketRules'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
-import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 
-class TicketDescription extends TokenMaterialDescription<Color, MaterialType, LocationType> {
-  type: typeof MaterialComponentType.Token = MaterialComponentType.Token
-
-  getProps() {
-
-    return ({
-      image: ticket,
-      height: 2,
-      ratio: 325 / 200
-    })
-  }
+class TicketDescription extends TokenDescription {
+  height = 2
+  width = 3.25
+  image = ticket
 
   rules = TicketRules
+
   items = () => [{
     quantity: 10,
     location: {

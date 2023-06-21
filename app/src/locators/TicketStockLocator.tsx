@@ -14,10 +14,6 @@ export class TicketStockLocator extends PileLocator<Color, MaterialType, Locatio
     return { x: -59, y: 18, z: 0 }
   }
 
-  getDelta() {
-    return { x: -0.05, y: -0.05, z: 0.1 }
-  }
-
   getLocations(): Location<Color, LocationType>[] {
     return [{
       type: LocationType.TicketStock
@@ -25,13 +21,12 @@ export class TicketStockLocator extends PileLocator<Color, MaterialType, Locatio
   }
 
   getLocationCss(): Interpolation<Theme> {
-    const ticketProps = ticketDescription.getProps()
-    const ticketWidth = ticketProps.height * ticketProps.ratio
+    const size = this.getRadius() * 2 + ticketDescription.width
     return css`
-      width: ${this.getRadius() * 2 + ticketWidth}em;
-      height: ${this.getRadius() * 2 + ticketWidth}em;
+      width: ${size}em;
+      height: ${size}em;
       transform: translate3d(-50%, -50%, 20em) translate3d(${this.getCoordinates().x}em, ${this.getCoordinates().y}em, ${this.getCoordinates().z}em);
-      border-radius: 5em;
+      border-radius: ${size / 2}em;
     `
   }
 

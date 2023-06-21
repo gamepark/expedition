@@ -4,7 +4,7 @@ import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { css, Interpolation, Theme } from '@emotion/react'
-import { cardDescription } from '../material/CardDescription'
+import { cardDescription } from '../material/PlaceCardDescription'
 
 export class PlayerHandLocator extends HandLocator<Color, MaterialType, LocationType> {
   getDisplayIndex(player: Color, context: PlaceItemContext<Color, MaterialType, LocationType>) {
@@ -54,10 +54,6 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
   }
 
   getLocationCss(_location: Location<Color, LocationType>, _rules: MaterialRules<Color, MaterialType, LocationType>, _legalMoves: MaterialMove<Color, MaterialType, LocationType>[], context: BaseContext<Color, MaterialType, LocationType>): Interpolation<Theme> {
-    const cardProps = cardDescription.getProps()
-    const height = cardProps.height
-    const width = height * cardProps.ratio
-    const radius = height / 15
     const handLocation: Location = {
       type: LocationType.Hand,
       player: context.player
@@ -73,10 +69,10 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
     }, itemContext)
 
     return css`
-      width: ${width}em;
-      height: ${height}em;
+      width: ${(cardDescription.width)}em;
+      height: ${(cardDescription.width / cardDescription.ratio)}em;
       ${transformCss(...transformations)};
-      border-radius: ${radius}em;
+      border-radius: ${(cardDescription.borderRadius)}em;
     `
   }
 }

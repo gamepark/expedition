@@ -13,7 +13,7 @@ import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { ticketDescription } from '../material/TicketDescription'
-import { tokensDescription } from '../material/TokenDescription'
+import { playerTokensDescription } from '../material/PlayerTokenDescription'
 
 type PlayerPanelCounterProps = {
   icon?: IconProp;
@@ -55,7 +55,7 @@ const PlayerPanels: FC<any> = () => {
               icon={faStar}
               value={rules?.getScore(player.id)!}/>
             <PlayerPanelCounter
-              ratio={ticketDescription.getProps().ratio}
+              ratio={ticketDescription.width / ticketDescription.height}
               image={ticket}
               value={rules?.material(MaterialType.Ticket).location(LocationType.PlayerArea).player(player.id).length!}
               shadow
@@ -65,8 +65,7 @@ const PlayerPanels: FC<any> = () => {
               value={rules?.material(MaterialType.Card).location(LocationType.Hand).player(player.id).length!}
             />
             <PlayerPanelCounter
-              ratio={ticketDescription.getProps().ratio}
-              image={tokensDescription.props.image[player.id]}
+              image={playerTokensDescription.images[player.id]}
               width={2.8}
               borderRadius={3}
               value={rules?.material(MaterialType.Token).location(LocationType.Place).id(player.id).length!}
