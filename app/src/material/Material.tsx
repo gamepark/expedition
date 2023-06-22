@@ -1,6 +1,6 @@
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { placeCardDescription } from './PlaceCardDescription'
-import { boardDescription } from './BoardDescription'
+import { boardDescription, frenchBoardDescription } from './BoardDescription'
 import { MaterialDescription } from '@gamepark/react-game'
 import { playerTokensDescription } from './PlayerTokenDescription'
 import { ticketDescription } from './TicketDescription'
@@ -19,6 +19,7 @@ export const material: Record<MaterialType, MaterialDescription> = {
 
 export const materialI18n: Record<string, Partial<Record<MaterialType, MaterialDescription>>> = {
   'fr': {
+    [MaterialType.Board]: frenchBoardDescription,
     [MaterialType.Card]: placeCardFrenchDescription
   }
 }

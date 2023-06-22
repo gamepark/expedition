@@ -4,7 +4,7 @@ import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { Trans, useTranslation } from 'react-i18next'
-import { isBlueNode, isGreenNode, isRedNode, isRoadToNode, Node } from '@gamepark/expedition/material/Road'
+import { isBlueNode, isGreenNode, isRedNode, isRoadToNode, Node, RedNode } from '@gamepark/expedition/material/Road'
 import { TFunction } from 'i18next'
 import { displayMaterialRules, isMoveItemLocation, MoveItem } from '@gamepark/rules-api'
 import { arrowColors } from '@gamepark/expedition/material/ArrowColor'
@@ -23,6 +23,9 @@ export const PlaceRules = ({ location, legalMoves, close }: LocationRulesProps<C
   return <>
     <h2>{getPlaceTitle(t, location.id)}</h2>
     <p>{getPlaceText(t, location.id)}</p>
+    {(location.id === RedNode.CraterLake_NorthWest || location.id === RedNode.Teotihuacan_SouthWest || location.id === RedNode.RapaNui_South) &&
+      <p>{t('rules.place.red.border')}</p>
+    }
     {isGreenNode(location.id) && <GreenPlaceDetails place={location.id}/>}
     {legalMoves.length > 0 &&
       <p>
