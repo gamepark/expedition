@@ -15,7 +15,7 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
   parentItemType = MaterialType.Board
   rotationUnit = 'rad'
 
-  getLocationsOnParent(): Location<Color, LocationType, Road>[] {
+  getLocations(): Location<Color, LocationType, Road>[] {
     return roads.map(road => ({ type: LocationType.Road, id: road }))
   }
 

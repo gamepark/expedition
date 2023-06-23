@@ -13,7 +13,7 @@ import { PlaceRules } from './PlaceRules'
 export class PlaceLocator extends ItemLocator<Color, MaterialType, LocationType> {
   parentItemType = MaterialType.Board
 
-  getLocationsOnParent(): Location<Color, LocationType, Node>[] {
+  getLocations(): Location<Color, LocationType, Node>[] {
     return nodes.map<Location>(place => ({ type: LocationType.Place, id: place })).concat([
       { type: LocationType.Place, id: RedNode.CraterLake_NorthWest, x: 1 },
       { type: LocationType.Place, id: RedNode.Teotihuacan_SouthWest, x: 1 },
