@@ -9,9 +9,8 @@ export class TutorialSetup extends ExpeditionSetup {
     super.createDeck()
     this.material(MaterialType.Card).id(Place.CanaryIslands).moveItems({ location: { type: LocationType.Board } })
     this.material(MaterialType.Card).id(Place.PuertoRico).moveItems({ location: { type: LocationType.Board } })
-    this.material(MaterialType.Card).id(Place.Madagascar).moveItems({ location: { type: LocationType.Board } })
+    this.material(MaterialType.Card).id(Place.NorthwestPassage).moveItems({ location: { type: LocationType.Board } })
     this.material(MaterialType.Card).id(Place.Rome).moveItems({ location: { type: LocationType.Deck, x: 0 } })
-    this.material(MaterialType.Card).id(Place.Athens).moveItems({ location: { type: LocationType.Deck, x: 0 } })
   }
 
   dealCards() {
@@ -20,7 +19,7 @@ export class TutorialSetup extends ExpeditionSetup {
     this.discard(Color.Red, 1)
     this.material(MaterialType.Card).id(Place.CanaryIslands).moveItems({ location: { type: LocationType.Hand, player: Color.Blue } })
     this.material(MaterialType.Card).id(Place.PuertoRico).moveItems({ location: { type: LocationType.Hand, player: Color.Blue } })
-    this.material(MaterialType.Card).id(Place.Madagascar).moveItems({ location: { type: LocationType.Hand, player: Color.Red } })
+    this.material(MaterialType.Card).id(Place.NorthwestPassage).moveItems({ location: { type: LocationType.Hand, player: Color.Red } })
   }
 
   discard(player: Color, quantity: number) {

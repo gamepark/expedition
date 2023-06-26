@@ -17,7 +17,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
   steps: TutorialStep<Color, MaterialType, LocationType>[] = [
     {
       type: TutorialStepType.Popup,
-      text: (t: TFunction) => t('tuto.welcome')
+      text: () => <Trans defaults="tuto.welcome" components={[<strong/>]}/>
     },
     {
       type: TutorialStepType.Popup,
@@ -50,22 +50,22 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     },
     {
       type: TutorialStepType.Popup,
-      text: (t: TFunction) => t('tuto.tokens.newfoundland'),
+      text: (t: TFunction) => t('tuto.tokens.canary'),
       focus: () => this.location(LocationType.Place).id(Place.CanaryIslands)
     },
     {
       type: TutorialStepType.Move,
-      move: (moves: MaterialMove[]) => moves.find(move => isMoveItem(move) && move.position.location?.id === Place.CanaryIslands)
+      isValidMove: (move: MaterialMove) => isMoveItem(move) && move.position.location?.id === Place.CanaryIslands
     },
     {
       type: TutorialStepType.Move,
       playerId: Color.Red,
-      move: (moves: MaterialMove[]) => moves.find(move => isMoveItem(move) && move.position.location?.id === Place.Madagascar)
+      isValidMove: (move: MaterialMove) => isMoveItem(move) && move.position.location?.id === Place.NorthwestPassage
     },
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.tokens.opponent'),
-      focus: () => this.location(LocationType.Place).id(Place.Madagascar)
+      focus: () => this.location(LocationType.Place).id(Place.NorthwestPassage)
     },
     { type: TutorialStepType.Move },
     { type: TutorialStepType.Move, playerId: Color.Red },
@@ -85,12 +85,12 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     },
     {
       type: TutorialStepType.Popup,
-      text: (t: TFunction) => t('tuto.thingvellir'),
+      text: (t: TFunction) => t('tuto.rome'),
       focus: () => this.location(LocationType.Road).id([StartNode, Place.Rome])
     },
     {
       type: TutorialStepType.Move,
-      move: (moves: MaterialMove[]) => moves.find(move => isMoveItem(move) && move.itemIndex === 0 && move.position.location?.id[1] === Place.Rome)
+      isValidMove: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.position.location?.id[1] === Place.Rome
     },
     {
       type: TutorialStepType.Popup,
@@ -99,12 +99,17 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     },
     {
       type: TutorialStepType.Move,
-      move: (moves: MaterialMove[]) => moves.find(move => isStartPlayerTurn(move))
+      isValidMove: (move: MaterialMove) => isStartPlayerTurn(move)
     },
     {
       type: TutorialStepType.Move,
       playerId: Color.Red,
-      move: (moves: MaterialMove[]) => moves.find(move => isMoveItem(move) && move.itemIndex === 1 && move.position.location?.id[1] === Place.Athens)
+      isValidMove: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 1 && move.position.location?.id[1] === Place.Thingvellir
+    },
+    {
+      type: TutorialStepType.Move,
+      playerId: Color.Red,
+      isValidMove: (move: MaterialMove) => isStartPlayerTurn(move)
     },
     {
       type: TutorialStepType.Popup,
@@ -113,7 +118,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     },
     {
       type: TutorialStepType.Move,
-      move: (moves: MaterialMove[]) => moves.find(move => isMoveItem(move) && move.itemIndex === 0 && move.position.location?.id[1] === BlueNode.Rome_West)
+      isValidMove: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.position.location?.id[1] === BlueNode.Rome_West
     },
     {
       type: TutorialStepType.Popup,
@@ -122,16 +127,31 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     },
     {
       type: TutorialStepType.Move,
-      move: (moves: MaterialMove[]) => moves.find(move => isMoveItem(move) && move.itemIndex === 0 && move.position.location?.id[1] === Place.CanaryIslands)
+      isValidMove: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.position.location?.id[1] === Place.CanaryIslands
     },
     {
       type: TutorialStepType.Popup,
-      text: (t: TFunction) => t('tuto.newfoundland.score'),
+      text: (t: TFunction) => t('tuto.canary.score'),
       focus: () => this.material(MaterialType.Card).id(Place.CanaryIslands)
     },
     {
       type: TutorialStepType.Move,
-      move: (moves: MaterialMove[]) => moves.find(move => isStartPlayerTurn(move))
+      isValidMove: (move: MaterialMove) => isStartPlayerTurn(move)
+    },
+    {
+      type: TutorialStepType.Move,
+      playerId: Color.Red,
+      isValidMove: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 1 && move.position.location?.id[1] === BlueNode.Thingvellir_West
+    },
+    {
+      type: TutorialStepType.Move,
+      playerId: Color.Red,
+      isValidMove: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 1 && move.position.location?.id[1] === Place.NorthwestPassage
+    },
+    {
+      type: TutorialStepType.Move,
+      playerId: Color.Red,
+      isValidMove: (move: MaterialMove) => isStartPlayerTurn(move)
     },
     {
       type: TutorialStepType.Popup,
@@ -140,7 +160,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     },
     {
       type: TutorialStepType.Move,
-      move: (moves: MaterialMove[]) => moves.find(move => isMoveItem(move) && move.itemIndex === 0 && move.position.location?.id[1] === RedNode.Tombouctou_West)
+      isValidMove: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.position.location?.id[1] === RedNode.Tombouctou_West
     },
     {
       type: TutorialStepType.Popup,
@@ -149,7 +169,15 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     },
     {
       type: TutorialStepType.Move,
-      move: (moves: MaterialMove[]) => moves.find(move => isDeleteItem(move, MaterialType.Ticket))
+      isValidMove: (move: MaterialMove) => isDeleteItem(move, MaterialType.Ticket)
+    },
+    {
+      type: TutorialStepType.Popup,
+      text: (t: TFunction) => t('tuto.ticket'),
+    },
+    {
+      type: TutorialStepType.Move,
+      isValidMove: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.position.location?.id[1] === Place.PuertoRico
     },
     {
       type: TutorialStepType.Popup,
