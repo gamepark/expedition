@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { TutorialSetup } from './TutorialSetup'
 import { TFunction } from 'i18next'
-import { isDeleteItem, isMoveItem, isStartPlayerTurn, MaterialMove } from '@gamepark/rules-api'
+import { isDeleteItem, isMoveItem, isStartPlayerTurn, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { MaterialTutorial, TutorialFocusType, TutorialStep, TutorialStepType } from '@gamepark/react-game'
 import { Place } from '@gamepark/expedition/material/Place'
 import Color from '@gamepark/expedition/Color'
@@ -26,7 +26,8 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.cards'),
-      focus: () => this.material(MaterialType.Card).player(Color.Blue)
+      focus: (game: MaterialGame) => this.material(game, MaterialType.Card).player(Color.Blue),
+      zoom: 2
     },
     {
       type: TutorialStepType.Popup,
@@ -41,12 +42,12 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.common'),
-      focus: () => this.material(MaterialType.Card).location(LocationType.CommonObjectives).location(location => location.x === 2)
+      focus: (game: MaterialGame) => this.material(game, MaterialType.Card).location(LocationType.CommonObjectives)
     },
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.tokens'),
-      focus: () => this.material(MaterialType.Token).player(Color.Blue)
+      focus: (game: MaterialGame) => this.material(game, MaterialType.Token).player(Color.Blue)
     },
     {
       type: TutorialStepType.Popup,
@@ -132,7 +133,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.canary.score'),
-      focus: () => this.material(MaterialType.Card).id(Place.CanaryIslands)
+      focus: (game: MaterialGame) => this.material(game, MaterialType.Card).id(Place.CanaryIslands)
     },
     {
       type: TutorialStepType.Move,
@@ -165,7 +166,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.red.ticket'),
-      focus: () => this.material(MaterialType.Ticket).player(Color.Blue)
+      focus: (game: MaterialGame) => this.material(game, MaterialType.Ticket).player(Color.Blue)
     },
     {
       type: TutorialStepType.Move,
