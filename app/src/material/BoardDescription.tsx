@@ -9,7 +9,7 @@ class ExpeditionBoardDescription extends BoardDescription {
   image = board
   height = 56
   width = 74
-  items = () => [{ location: { type: LocationType.Board } }]
+  item = { location: { type: LocationType.Board } }
   rules = BoardRules
 }
 

@@ -11,12 +11,12 @@ class TicketDescription extends TokenDescription {
 
   rules = TicketRules
 
-  items = () => [{
+  item = {
     quantity: 10,
     location: {
       type: LocationType.TicketStock
     }
-  }]
+  }
 
   stock = {
     location: {
