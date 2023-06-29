@@ -10,6 +10,7 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { ArrowColor } from '@gamepark/expedition/material/ArrowColor'
 import { BlueNode, RedNode, StartNode } from '@gamepark/expedition/material/Road'
 import { Trans } from 'react-i18next'
+import { boardDescription } from '../material/BoardDescription'
 
 export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType> {
   options = { players: [{ id: Color.Blue }, { id: Color.Red }] }
@@ -26,18 +27,19 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.cards'),
-      focus: (game: MaterialGame) => this.material(game, MaterialType.Card).player(Color.Blue),
-      zoom: 2
+      focus: (game: MaterialGame) => this.material(game, MaterialType.Card).player(Color.Blue)
     },
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.place'),
-      focus: () => this.location(LocationType.Place).id(Place.Rome)
+      focus: () => ({ type: MaterialType.Board, item: boardDescription.item }),
+      position: {x: 45, y: 0}
     },
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.circles'),
-      focus: () => this.location(LocationType.Place).id(Place.CanaryIslands)
+      focus: () => ({ type: MaterialType.Board, item: boardDescription.item }),
+      position: {x: 45, y: 0}
     },
     {
       type: TutorialStepType.Popup,
@@ -47,7 +49,8 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.tokens'),
-      focus: (game: MaterialGame) => this.material(game, MaterialType.Token).player(Color.Blue)
+      focus: (game: MaterialGame) => this.material(game, MaterialType.Token).player(Color.Blue),
+      position: {x: 0, y: -20}
     },
     {
       type: TutorialStepType.Popup,
@@ -174,7 +177,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     },
     {
       type: TutorialStepType.Popup,
-      text: (t: TFunction) => t('tuto.ticket'),
+      text: (t: TFunction) => t('tuto.ticket')
     },
     {
       type: TutorialStepType.Move,
