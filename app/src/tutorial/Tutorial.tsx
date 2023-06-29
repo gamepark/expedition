@@ -33,13 +33,13 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.place'),
       focus: () => ({ type: MaterialType.Board, item: boardDescription.item }),
-      position: {x: 45, y: 0}
+      position: { x: 45, y: 0 }
     },
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.circles'),
       focus: () => ({ type: MaterialType.Board, item: boardDescription.item }),
-      position: {x: 45, y: 0}
+      position: { x: 45, y: 0 }
     },
     {
       type: TutorialStepType.Popup,
@@ -50,12 +50,13 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.tokens'),
       focus: (game: MaterialGame) => this.material(game, MaterialType.Token).player(Color.Blue),
-      position: {x: 0, y: -20}
+      position: { x: 0, y: -25 }
     },
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.tokens.canary'),
-      focus: () => this.location(LocationType.Place).id(Place.CanaryIslands)
+      focus: () => this.location(LocationType.Place).id(Place.CanaryIslands),
+      position: { x: -15, y: -25 }
     },
     {
       type: TutorialStepType.Move,
@@ -69,7 +70,8 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.tokens.opponent'),
-      focus: () => this.location(LocationType.Place).id(Place.NorthwestPassage)
+      focus: () => this.location(LocationType.Place).id(Place.NorthwestPassage),
+      position: { x: -15, y: 25 }
     },
     { type: TutorialStepType.Move },
     { type: TutorialStepType.Move, playerId: Color.Red },
@@ -85,12 +87,14 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.start'),
-      focus: () => this.location(LocationType.Place).id(StartNode)
+      focus: () => this.location(LocationType.Place).id(StartNode),
+      position: { x: -15, y: -25 }
     },
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.rome'),
-      focus: () => this.location(LocationType.Road).id([StartNode, Place.Rome])
+      focus: () => this.location(LocationType.Road).id([StartNode, Place.Rome]),
+      position: { x: -15, y: -25 }
     },
     {
       type: TutorialStepType.Move,
@@ -118,7 +122,8 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.blue.goto'),
-      focus: () => this.location(LocationType.Place).id(BlueNode.Rome_West)
+      focus: () => this.location(LocationType.Place).id(BlueNode.Rome_West),
+      position: { x: -15, y: -25 }
     },
     {
       type: TutorialStepType.Move,
@@ -127,7 +132,8 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.blue.replay'),
-      focus: () => this.location(LocationType.Road).id([BlueNode.Rome_West, Place.CanaryIslands])
+      focus: () => this.location(LocationType.Road).id([BlueNode.Rome_West, Place.CanaryIslands]),
+      position: { x: -15, y: -25 }
     },
     {
       type: TutorialStepType.Move,
@@ -136,7 +142,8 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.canary.score'),
-      focus: (game: MaterialGame) => this.material(game, MaterialType.Card).id(Place.CanaryIslands)
+      focus: (game: MaterialGame) => this.material(game, MaterialType.Card).id(Place.CanaryIslands),
+      position: { x: -15, y: -25 }
     },
     {
       type: TutorialStepType.Move,
@@ -160,7 +167,8 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.red.goto'),
-      focus: () => this.location(LocationType.Place).id(RedNode.Tombouctou_West)
+      focus: () => this.location(LocationType.Place).id(RedNode.Tombouctou_West),
+      position: { x: -15, y: -25 }
     },
     {
       type: TutorialStepType.Move,
@@ -177,7 +185,9 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     },
     {
       type: TutorialStepType.Popup,
-      text: (t: TFunction) => t('tuto.ticket')
+      text: (t: TFunction) => t('tuto.ticket'),
+      focus: () => this.location(LocationType.Road).id([RedNode.Tombouctou_West, Place.PuertoRico]),
+      position: { x: -15, y: -25 }
     },
     {
       type: TutorialStepType.Move,
