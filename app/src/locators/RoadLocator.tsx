@@ -4,7 +4,7 @@ import { Location, MaterialItem, XYCoordinates } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
-import { arrowRoad, Road, roads } from '@gamepark/expedition/material/Road'
+import { arrowRoad, Road } from '@gamepark/expedition/material/Road'
 import { css } from '@emotion/react'
 import { nodesCoordinates } from './PlaceLocator'
 import { boardRatio } from '../material/BoardDescription'
@@ -14,10 +14,6 @@ import { RoadRules } from './RoadRules'
 export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> {
   parentItemType = MaterialType.Board
   rotationUnit = 'rad'
-
-  getLocations(): Location<Color, LocationType, Road>[] {
-    return roads.map(road => ({ type: LocationType.Road, id: road }))
-  }
 
   getRotation(item: MaterialItem<Color, LocationType>): number {
     return this.getAngle(this.getRoadCoordinates(arrowRoad(item)))

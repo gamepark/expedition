@@ -6,7 +6,7 @@ import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { Place } from '@gamepark/expedition/material/Place'
 import { css } from '@emotion/react'
-import { BlueNode, isGreenNode, Node, nodes, RedNode, StartNode } from '@gamepark/expedition/material/Road'
+import { BlueNode, isGreenNode, Node, RedNode, StartNode } from '@gamepark/expedition/material/Road'
 import { ReactNode } from 'react'
 import { PlaceRules } from './PlaceRules'
 import { PlaceLocationContext } from '@gamepark/react-game/dist/locators/ItemLocator'
@@ -14,14 +14,6 @@ import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 
 export class PlaceLocator extends ItemLocator<Color, MaterialType, LocationType> {
   parentItemType = MaterialType.Board
-
-  getLocations(): Location<Color, LocationType, Node>[] {
-    return nodes.map<Location>(place => ({ type: LocationType.Place, id: place })).concat([
-      { type: LocationType.Place, id: RedNode.CraterLake_NorthWest, x: 1 },
-      { type: LocationType.Place, id: RedNode.Teotihuacan_SouthWest, x: 1 },
-      { type: LocationType.Place, id: RedNode.RapaNui_South, x: 1 }
-    ])
-  }
 
   getLocationCss(location: Location<Color, LocationType, Node>, { game }: PlaceLocationContext<Color, MaterialType, LocationType>) {
     const borderColor = this.getObjectiveColor(new ExpeditionRules(game).material(MaterialType.Card), location.id)
