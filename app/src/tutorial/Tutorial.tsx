@@ -71,7 +71,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.tokens.opponent'),
-      focus: () => this.location(LocationType.Place).id(Place.NorthwestPassage),
+      focus: (game: MaterialGame) => this.material(game, MaterialType.Token).location(LocationType.Place).locationId(Place.NorthwestPassage),
       position: { x: -15, y: 25 }
     },
     { type: TutorialStepType.Move },
