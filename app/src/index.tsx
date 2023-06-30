@@ -13,6 +13,7 @@ import { material, materialI18n } from './material/Material'
 import { Locators } from './locators/Locators'
 import { animations } from './animations/Animations'
 import { Tutorial } from './tutorial/Tutorial'
+import { ai } from './tutorial/TutorialAI'
 
 setupTranslation(translations, { debug: false })
 
@@ -68,7 +69,7 @@ ReactDOM.render(
   <StrictMode>
     <GameProvider game="expedition" GameSetup={ExpeditionSetup} Rules={ExpeditionRules} optionsSpec={ExpeditionOptionsSpec}
                   material={material} locators={Locators} animations={animations} tutorial={new Tutorial()}
-                  materialI18n={materialI18n}>
+                  materialI18n={materialI18n} ai={ai}>
       <App/>
     </GameProvider>
     <Global styles={[normalize, style]}/>
