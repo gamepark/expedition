@@ -268,7 +268,8 @@
       "time.think.max": "Maximum thinking time",
       "time.wait.total": "Total down time",
       "time.wait.max": "Maximum down time",
-      "time.awaited": "Made others wait (average)"
+      "time.awaited": "Made others wait (average)",
+      "tuto.over": "Congratulations, you've completed the tutorial!\r\nReady to play with other players?"
     }
   },
   "fr": {
@@ -620,7 +621,8 @@
       "time.think.max": "Temps de réflexion maximum",
       "time.wait.total": "Temps d’attente total",
       "time.wait.max": "Temps d’attente maximum",
-      "time.awaited": "A fait attendre les autres (moyenne)"
+      "time.awaited": "A fait attendre les autres (moyenne)",
+      "tuto.over": "Félicitations, vous avez terminé le tutoriel !\nPrêt à jouer avec d’autres joueurs ?"
     }
   },
   "de": {
