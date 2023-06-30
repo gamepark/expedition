@@ -1,5 +1,5 @@
 import { GameAI } from '@gamepark/react-client'
-import { ItemMoveType, MaterialGame, MaterialMove, MoveKind, playAction, RuleMoveType } from '@gamepark/rules-api'
+import { isEndGame, isMoveItem, isStartPlayerTurn, MaterialGame, MaterialMove, MoveKind, playAction } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
@@ -12,7 +12,8 @@ import { PlayerTurnMemory } from '@gamepark/expedition/rules/PlayerTurn'
 const TICKET_WEIGHT = 1
 type Path = { moves: MaterialMove<Color, MaterialType, LocationType>[], score: number }
 
-export const ai: GameAI<MaterialGame<Color, MaterialType, LocationType>, MaterialMove, Color> = (game: MaterialGame<Color, MaterialType, LocationType>, bot: Color): Promise<MaterialMove[]> => {
+export const ai: GameAI<MaterialGame<Color, MaterialType, LocationType>, MaterialMove<Color, MaterialType, LocationType>, Color>
+  = (game: MaterialGame<Color, MaterialType, LocationType>, bot: Color): Promise<MaterialMove[]> => {
   const rules = new ExpeditionRules(game)
   if (rules.getLegalMoves(bot).length === 1) return Promise.resolve(rules.getLegalMoves(bot))
 
@@ -23,88 +24,63 @@ export const ai: GameAI<MaterialGame<Color, MaterialType, LocationType>, Materia
   return Promise.resolve(bestPath.moves)
 }
 
-const computeBestPath = (baseGame: MaterialGame, realPlayer: Color, bot: Color, path: MaterialMove[] = [], iteration: number = 1): Path => {
-  const baseRules = new ExpeditionRules(baseGame)
-  const legalMoves = getLegalMoves(baseRules, bot)
+const computeBestPath = (game: MaterialGame, realPlayer: Color, bot: Color, path: MaterialMove[] = [], iteration: number = 1): Path => {
+  const rules = new ExpeditionRules(game)
+  const legalMoves = rules.getLegalMoves(bot)
   if (legalMoves.length === 0 || iteration >= 4) {
     return {
       moves: path,
-      score: baseRules.getScore(bot) - baseRules.getScore(realPlayer) + getTickets(baseRules, bot) * TICKET_WEIGHT
+      score: rules.getScore(bot) - rules.getScore(realPlayer) + countPlayerTickets(rules, bot) * TICKET_WEIGHT
     }
   }
 
-  const paths = []
-  for (const move of filterStupidMoves(baseRules, legalMoves, bot)) {
-    const rules = new ExpeditionRules(JSON.parse(JSON.stringify(baseGame)))
-    applyMoves(rules, bot, move)
-    const newPath = [
-      ...path,
-      move
-    ]
-
-    const computedPaths = computeBestPath(rules.game, realPlayer, bot, newPath, iteration + 1)
-    paths.push(computedPaths)
-  }
+  const paths = filterStupidMoves(rules, legalMoves).map(move =>
+    computeBestPath(applyMove(game, move, bot), realPlayer, bot, [...path, move], iteration + 1)
+  )
 
   const maxScore = maxBy(paths, (p) => p.score)!.score!
   const maxPaths = paths.filter((p) => p.score === maxScore)
   return maxPaths[Math.floor(Math.random() * maxPaths.length)]
 }
 
-const getTickets = (rules: ExpeditionRules, bot: Color) => {
-  const tickets = rules.material(MaterialType.Ticket).player(bot).getItem()
-
-  if (!tickets) return 0
-
-  return tickets.quantity ?? 1
+const applyMove = (game: MaterialGame, move: MaterialMove, player: Color) => {
+  const rules = new ExpeditionRules(JSON.parse(JSON.stringify(game)))
+  playAction(rules, move, player)
+  return rules.game
 }
 
-const filterStupidMoves = (rules: ExpeditionRules, legalMoves: MaterialMove[], bot: Color) => {
-  const moves = legalMoves.filter((move) => {
-    return !isExchangeCard(move)
-      && !isPassWhileThereIsOtherMoves(rules, legalMoves, move)
-      && !isNotRemoveArrowWhileNoArrowWasPlayed(rules, move, bot)
-      && !isRemoveArrowWhileArrowIsPlayed(rules, move, bot)
-  })
+const countPlayerTickets = (rules: ExpeditionRules, player: Color) => {
+  const tickets = rules.material(MaterialType.Ticket).player(player).getItem()
+  return tickets ? tickets.quantity ?? 1 : 0
+}
+
+const filterStupidMoves = (rules: ExpeditionRules, legalMoves: MaterialMove[]) => {
+  const moves = legalMoves.filter((move) =>
+    !isExchangeCard(move)
+    && !isPassWhenICanPlaceArrow(move, legalMoves)
+    && !isPlaceFirstArrowWithTicket(rules, move)
+    && !isRemoveArrowAfterPlacingArrow(rules, move))
 
   if (!moves.length) return legalMoves
   return moves
 }
 
-const isExchangeCard = (move: MaterialMove) => {
-  return move.kind === MoveKind.CustomMove && move.type === CustomMoveType.ExchangeCard
-}
+const isExchangeCard = (move: MaterialMove) => move.kind === MoveKind.CustomMove && move.type === CustomMoveType.ExchangeCard
 
-const isPassWhileThereIsOtherMoves = (rules: ExpeditionRules, legalMoves: MaterialMove[], move: MaterialMove) => {
-  return (rules.game.rule?.id === RuleId.TicketRule || rules.game.rule?.id === RuleId.LoopRule) && legalMoves.length > 1 && move.kind === MoveKind.RulesMove && move.type === RuleMoveType.StartPlayerTurn
-}
+const isPassWhenICanPlaceArrow = (move: MaterialMove, legalMoves: MaterialMove[]) => isPass(move) && legalMoves.some(isPlaceArrow)
 
-const isRemoveArrowWhileArrowIsPlayed = (rules: ExpeditionRules, move: MaterialMove, bot: Color) => {
-  if (rules.game.rule?.id === RuleId.TicketRule) {
-    const isRemoveArrow = move.kind === MoveKind.ItemMove && move.type === ItemMoveType.Move && move.position.location?.type === LocationType.ArrowsStock
-    return rules.getMemory<PlayerTurnMemory>(bot).arrowPlaced && isRemoveArrow
-  }
+const isPass = (move: MaterialMove) => isStartPlayerTurn(move) || isEndGame(move)
 
-  return true
-}
+const isPlaceArrow = (move: MaterialMove) => isMoveItem(move, MaterialType.Arrow) && move.position.location?.type === LocationType.Road
 
-const isNotRemoveArrowWhileNoArrowWasPlayed = (rules: ExpeditionRules, move: MaterialMove, bot: Color) => {
-  if (rules.game.rule?.id === RuleId.TicketRule) {
-    const isRemoveArrow = move.kind === MoveKind.ItemMove && move.type === ItemMoveType.Move && move.position.location?.type === LocationType.ArrowsStock
-    return !rules.getMemory<PlayerTurnMemory>(bot).arrowPlaced && !isRemoveArrow
-  }
+const isPlaceFirstArrowWithTicket = (rules: ExpeditionRules, move: MaterialMove) =>
+  !arrowWasPlaced(rules) && rules.game.rule?.id === RuleId.TicketRule && isPlaceArrow(move)
 
-  return true
-}
+const isRemoveArrowAfterPlacingArrow = (rules: ExpeditionRules, move: MaterialMove) => arrowWasPlaced(rules) && isRemoveArrow(move)
 
-const getLegalMoves = (rules: ExpeditionRules, bot: Color) => {
-  return rules
-    .getLegalMoves(bot)
-    .filter(move => (
-      (move.kind !== MoveKind.CustomMove || move.type !== CustomMoveType.ExchangeCard)
-    ))
-}
+const arrowWasPlaced = (rules: ExpeditionRules) => rules.rulesStep?.getMemory<PlayerTurnMemory>().arrowPlaced
 
-const applyMoves = (rules: ExpeditionRules, bot: Color, move: MaterialMove) => {
-  playAction(rules, move, bot)
-}
+const isRemoveArrow = (move: MaterialMove) => isMoveItem(move, MaterialType.Arrow) && move.position.location?.type === LocationType.ArrowsStock
+
+
+
