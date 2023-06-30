@@ -44,7 +44,8 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.common'),
-      focus: (game: MaterialGame) => this.material(game, MaterialType.Card).location(LocationType.CommonObjectives)
+      focus: (game: MaterialGame) => this.material(game, MaterialType.Card).location(LocationType.CommonObjectives),
+      position: { x: -20, y: 0 }
     },
     {
       type: TutorialStepType.Popup,
@@ -177,7 +178,8 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.red.ticket'),
-      focus: (game: MaterialGame) => this.material(game, MaterialType.Ticket).player(Color.Blue)
+      focus: (game: MaterialGame) => this.material(game, MaterialType.Ticket).player(Color.Blue),
+      position: { x: -10, y: 10 }
     },
     {
       type: TutorialStepType.Move,
