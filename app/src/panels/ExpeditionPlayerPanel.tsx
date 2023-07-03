@@ -8,45 +8,42 @@ import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import hand from '../images/icons/hand.png'
 import { playerTokensDescription } from '../material/PlayerTokenDescription'
-import Player from '@gamepark/expedition/Player'
 import { css } from '@emotion/react'
-import { PlayerPanel } from '@gamepark/react-game'
+import { PlayerPanel, useRules } from '@gamepark/react-game'
 import { PlayerPanelCounter } from './PlayerPanelCounter'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import Color from '@gamepark/expedition/Color'
 
 
 type ExpeditionPlayerPanelProps = {
-  players: Player[]
-  player: Player
+  player: Color
   index: number
-  rules: ExpeditionRules
 } & HTMLAttributes<HTMLDivElement>
 
-const ExpeditionPlayerPanel: FC<ExpeditionPlayerPanelProps> = (props) => {
-  const { player, index, players, rules, ...rest } = props
+export const ExpeditionPlayerPanel: FC<ExpeditionPlayerPanelProps> = ({ index, player, ...props }) => {
+  const rules = useRules<ExpeditionRules>()
   return (
-    <PlayerPanel playerId={player.id} color={playerColorCode[player.id]}  {...rest}>
+    <PlayerPanel playerId={player} color={playerColorCode[player]}  {...props}>
       <div css={indicators}>
         <PlayerPanelCounter
           width={3}
           icon={faStar}
-          value={rules?.getScore(player.id)!}/>
+          value={rules?.getScore(player)!}/>
         <PlayerPanelCounter
           ratio={ticketDescription.width / ticketDescription.height}
           image={ticket}
-          value={countPlayerTickets(rules, player.id)}
+          value={rules ? countPlayerTickets(rules, player) : 0}
           shadow
         />
         <PlayerPanelCounter
           image={hand}
-          value={rules?.material(MaterialType.Card).location(LocationType.Hand).player(player.id).length!}
+          value={rules?.material(MaterialType.Card).location(LocationType.Hand).player(player).length!}
         />
         <PlayerPanelCounter
-          image={playerTokensDescription.images[player.id]}
+          image={playerTokensDescription.images[player]}
           width={2.8}
           borderRadius={3}
-          value={rules?.material(MaterialType.Token).location(LocationType.Place).id(player.id).length!}
+          value={rules?.material(MaterialType.Token).location(LocationType.Place).id(player).length!}
           shadow
         />
       </div>
@@ -57,11 +54,6 @@ const ExpeditionPlayerPanel: FC<ExpeditionPlayerPanelProps> = (props) => {
 export const countPlayerTickets = (rules: ExpeditionRules, player: Color) => {
   const tickets = rules.material(MaterialType.Ticket).player(player).getItem()
   return tickets ? tickets.quantity ?? 1 : 0
-}
-
-
-export {
-  ExpeditionPlayerPanel
 }
 
 const indicators = css`

@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import Player from '@gamepark/expedition/Player'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { FC } from 'react'
-import { Avatar, RulesDialog, usePlayer } from '@gamepark/react-game'
+import { Avatar, RulesDialog, usePlayerName, useRules } from '@gamepark/react-game'
 import { useTranslation } from 'react-i18next'
 import { css } from '@emotion/react'
 import { getPlayerName } from '@gamepark/expedition/ExpeditionOptions'
@@ -15,24 +14,23 @@ import hand from '../../images/icons/hand.png'
 import { playerTokensDescription } from '../../material/PlayerTokenDescription'
 import { PlayerDialogIndicator } from './PlayerDialogIndicator'
 import { countPlayerTickets } from '../ExpeditionPlayerPanel'
+import Color from '@gamepark/expedition/Color'
 
 type PlayerDialogProps = {
-  player: Player
-  rules: ExpeditionRules
-  close: () => void;
-  open: boolean;
+  player: Color
+  close: () => void
+  open: boolean
 }
 
-const PlayerDialog: FC<PlayerDialogProps> = (props) => {
-  const { close, player, rules } = props
+export const PlayerDialog: FC<PlayerDialogProps> = ({ close, player }) => {
   const { t } = useTranslation()
-  const playerInfo = usePlayer(player.id)
-  const name = playerInfo?.name ?? getPlayerName(player.id, t)
+  const rules = useRules<ExpeditionRules>()
+  const name = usePlayerName(player) ?? getPlayerName(player, t)
   return (
     <RulesDialog open close={close}>
       <div css={container}>
         <div css={header}>
-          <Avatar playerId={player.id} css={avatar}/>
+          <Avatar playerId={player} css={avatar}/>
           <h2>{name}</h2>
         </div>
         <div css={content}>
@@ -41,7 +39,7 @@ const PlayerDialog: FC<PlayerDialogProps> = (props) => {
             icon={faStar}
             value={t('player.dialog.score.value', {
               player: name,
-              score: rules.getScore(player.id)
+              score: rules?.getScore(player)
             })}/>
           <PlayerDialogIndicator
             ratio={ticketDescription.width / ticketDescription.height}
@@ -49,7 +47,7 @@ const PlayerDialog: FC<PlayerDialogProps> = (props) => {
             image={ticket}
             value={t('player.dialog.ticket.value', {
               player: name,
-              tickets: countPlayerTickets(rules, player.id)
+              tickets: rules ? countPlayerTickets(rules, player) : 0
             })}
             shadow
           />
@@ -58,17 +56,17 @@ const PlayerDialog: FC<PlayerDialogProps> = (props) => {
             width={3}
             value={t('player.dialog.card.value', {
               player: name,
-              cards: rules.material(MaterialType.Card).location(LocationType.Hand).player(player.id).length
+              cards: rules?.material(MaterialType.Card).location(LocationType.Hand).player(player).length
             })}
             shadow
           />
           <PlayerDialogIndicator
-            image={playerTokensDescription.images[player.id]}
+            image={playerTokensDescription.images[player]}
             width={3}
             radius={3}
             value={t('player.dialog.token.value', {
               player: name,
-              tokens: rules.material(MaterialType.Token).location(LocationType.Place).id(player.id).length
+              tokens: rules?.material(MaterialType.Token).location(LocationType.Place).id(player).length
             })}
             shadow
           />
@@ -119,7 +117,3 @@ const content = css`
     white-space: break-spaces;
   }
 `
-
-export {
-  PlayerDialog
-}

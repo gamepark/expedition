@@ -1,42 +1,45 @@
 /** @jsxImportSource @emotion/react */
-import { FC, useState } from 'react'
-import { usePlayerId, usePlayers, useRules } from '@gamepark/react-game'
+import { useState } from 'react'
+import { usePlayerId, useRules } from '@gamepark/react-game'
 import { css } from '@emotion/react'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { ExpeditionPlayerPanel } from './ExpeditionPlayerPanel'
 import { PlayerDialog } from './dialog/PlayerDialog'
-import Player from '@gamepark/expedition/Player'
+import Color from '@gamepark/expedition/Color'
 
-const PlayerPanels: FC<any> = () => {
-  const [playerDialog, setPlayerDialog] = useState<Player | undefined>()
-  const players = usePlayers({ sortFromMe: true })
-  const isSpectator = usePlayerId() === undefined
-  const rules = useRules<ExpeditionRules>()!
+export const PlayerPanels = () => {
+  const [playerDialog, setPlayerDialog] = useState<Color | undefined>()
+  const playerId = usePlayerId()
+  const rules = useRules<ExpeditionRules>()
+  const players = rules?.players ?? []
+  const playerIndex = players.indexOf(playerId)
+  const playersOrdered = playerIndex > 0 ? players.slice(playerIndex).concat(players.slice(0, playerIndex)) : players
+  console.log(playerIndex)
+  console.log(playerId)
+  console.log(players)
+  console.log(playersOrdered)
 
   return (
     <>
-      {players.map((player, index) =>
+      {playersOrdered.map((player, index) =>
         <ExpeditionPlayerPanel
-          key={player.id}
-          players={players}
+          key={player}
           player={player}
           index={index}
-          rules={rules}
           onClick={() => setPlayerDialog(player)}
-          css={panelPosition(index, players.length, isSpectator)}/>
+          css={panelPosition(index, players.length, playerId)}/>
       )}
-      {!!playerDialog && <PlayerDialog open={!!playerDialog} player={playerDialog!} rules={rules} close={() => setPlayerDialog(undefined)}/>}
+      {!!playerDialog && <PlayerDialog open={!!playerDialog} player={playerDialog!} close={() => setPlayerDialog(undefined)}/>}
     </>
   )
 }
 
-const panelPosition = (index: number, players: number, isSpectator: boolean) => css`
+const panelPosition = (index: number, players: number, player: Color) => css`
   position: absolute;
   right: 1em;
-  top: ${8.5 + (isSpectator ? index : (index || players) - 1) * 76.5 / (players - 1)}em;
+  top: ${8.5 + (player === undefined ? index : (index || players) - 1) * 76.5 / (players - 1)}em;
   width: 28em;
   height: 14em;
   cursor: pointer;
 `
 
-export { PlayerPanels }
