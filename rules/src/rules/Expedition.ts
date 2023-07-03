@@ -21,18 +21,13 @@ export class Expedition {
     return this.arrows.location(LocationType.ArrowsStock).length === 0
   }
 
-  getLegalMoves(loopsAllowed: boolean) {
+  getLegalMoves() {
     const stockArrows = this.arrows.location(LocationType.ArrowsStock)
     if (!stockArrows.length) return []
     const expeditionArrows = this.arrows.location(LocationType.Road).getItems()
     return this.getNextArrowOrigin().flatMap(node =>
-      roads.filter(road =>
-        (road[0] === node || road[1] === node)
-        && !expeditionArrows.some(arrow => equal(arrow.location.id, road))
-        && (loopsAllowed || !expeditionArrows.some(arrow => arrowRoad(arrow)[0] === (road[0] === node ? road[1] : road[0])))
-      ).map(road => {
-        return stockArrows.moveItem({ location: { type: LocationType.Road, id: road }, rotation: { z: road[1] === node ? 1 : 0 } })
-      })
+      roads.filter(road => (road[0] === node || road[1] === node) && !expeditionArrows.some(arrow => equal(arrow.location.id, road)))
+        .map(road => stockArrows.moveItem({ location: { type: LocationType.Road, id: road }, rotation: { z: road[1] === node ? 1 : 0 } }))
     )
   }
 

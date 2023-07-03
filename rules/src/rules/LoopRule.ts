@@ -18,7 +18,7 @@ export class LoopRule extends PlayerTurn {
     const { loopColor } = this.getMemory<LoopRuleMemory>()
     return [
       this.passMove,
-      ...new Expedition(loopColor, this.material(MaterialType.Arrow)).getLegalMoves(false)
+      ...new Expedition(loopColor, this.material(MaterialType.Arrow)).getLegalMoves()
     ]
   }
 

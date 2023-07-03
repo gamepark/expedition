@@ -11,7 +11,6 @@ import { Place } from '../material/Place'
 export type PlayerTurnMemory = {
   arrowsLeft: number
   ticketsPlayed: number
-  loopsCreated: ArrowColor[]
   arrowPlaced?: boolean
 }
 
@@ -20,7 +19,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
 
   onRuleStart(move: RuleMove, previousRule?: RuleStep) {
     if (move.type === RuleMoveType.StartPlayerTurn) {
-      this.memorize({ arrowsLeft: 1, ticketsPlayed: 0, loopsCreated: [] })
+      this.memorize({ arrowsLeft: 1, ticketsPlayed: 0 })
     } else if (move.type === RuleMoveType.StartRule) {
       this.memorize(previousRule?.memory)
       this.memorize(move.memory)
@@ -55,10 +54,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
   }
 
   get placeArrowMoves() {
-    const { loopsCreated } = this.getMemory<PlayerTurnMemory>()
-    return arrowColors.flatMap(arrowColor =>
-      new Expedition(arrowColor, this.material(MaterialType.Arrow)).getLegalMoves(!loopsCreated.includes(arrowColor))
-    )
+    return arrowColors.flatMap(arrowColor => new Expedition(arrowColor, this.material(MaterialType.Arrow)).getLegalMoves())
   }
 
   get arrowLeft() {
@@ -132,7 +128,6 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
     }
     const expedition = new Expedition(expeditionColor, this.material(MaterialType.Arrow))
     if (expedition.loop) {
-      this.getMemory<PlayerTurnMemory>().loopsCreated.push(expeditionColor)
       consequences.push(this.rules().startRule(RuleId.LoopRule, this.player, { loopColor: expeditionColor }))
     }
     return consequences
