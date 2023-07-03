@@ -13,6 +13,7 @@ import { css } from '@emotion/react'
 import { PlayerPanel } from '@gamepark/react-game'
 import { PlayerPanelCounter } from './PlayerPanelCounter'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
+import Color from '@gamepark/expedition/Color'
 
 
 type ExpeditionPlayerPanelProps = {
@@ -34,7 +35,7 @@ const ExpeditionPlayerPanel: FC<ExpeditionPlayerPanelProps> = (props) => {
         <PlayerPanelCounter
           ratio={ticketDescription.width / ticketDescription.height}
           image={ticket}
-          value={rules?.material(MaterialType.Ticket).location(LocationType.PlayerArea).player(player.id).length!}
+          value={countPlayerTickets(rules, player.id)}
           shadow
         />
         <PlayerPanelCounter
@@ -52,6 +53,12 @@ const ExpeditionPlayerPanel: FC<ExpeditionPlayerPanelProps> = (props) => {
     </PlayerPanel>
   )
 }
+
+const countPlayerTickets = (rules: ExpeditionRules, player: Color) => {
+  const tickets = rules.material(MaterialType.Ticket).player(player).getItem()
+  return tickets ? tickets.quantity ?? 1 : 0
+}
+
 
 export {
   ExpeditionPlayerPanel
