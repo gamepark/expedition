@@ -143,7 +143,10 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.canary.score'),
-      focus: (game: MaterialGame) => this.material(game, MaterialType.Card).id(Place.CanaryIslands),
+      focus: (game: MaterialGame) => [
+        this.material(game, MaterialType.Card).id(Place.CanaryIslands),
+        this.material(game, MaterialType.Token).id(game.players[0]).location(LocationType.Card)
+      ],
       position: { x: -15, y: -25 }
     },
     {
