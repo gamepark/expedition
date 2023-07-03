@@ -10,4 +10,8 @@ export class CardLocator extends ItemLocator<Color, MaterialType, LocationType> 
   getPositionOnParent(): XYCoordinates {
     return { x: 80, y: 60 }
   }
+
+  getPosition() {
+    return { x: 0, y: 0, z: 1 }
+  }
 }
