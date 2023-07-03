@@ -14,6 +14,7 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 import hand from '../../images/icons/hand.png'
 import { playerTokensDescription } from '../../material/PlayerTokenDescription'
 import { PlayerDialogIndicator } from './PlayerDialogIndicator'
+import { countPlayerTickets } from '../ExpeditionPlayerPanel'
 
 type PlayerDialogProps = {
   player: Player
@@ -48,7 +49,7 @@ const PlayerDialog: FC<PlayerDialogProps> = (props) => {
             image={ticket}
             value={t('player.dialog.ticket.value', {
               player: name,
-              tickets: rules.material(MaterialType.Ticket).location(LocationType.PlayerArea).player(player.id).length
+              tickets: countPlayerTickets(rules, player.id)
             })}
             shadow
           />

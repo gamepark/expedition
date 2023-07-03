@@ -54,7 +54,7 @@ const ExpeditionPlayerPanel: FC<ExpeditionPlayerPanelProps> = (props) => {
   )
 }
 
-const countPlayerTickets = (rules: ExpeditionRules, player: Color) => {
+export const countPlayerTickets = (rules: ExpeditionRules, player: Color) => {
   const tickets = rules.material(MaterialType.Ticket).player(player).getItem()
   return tickets ? tickets.quantity ?? 1 : 0
 }
