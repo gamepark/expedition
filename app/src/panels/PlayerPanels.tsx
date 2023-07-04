@@ -14,10 +14,6 @@ export const PlayerPanels = () => {
   const players = rules?.players ?? []
   const playerIndex = players.indexOf(playerId)
   const playersOrdered = playerIndex > 0 ? players.slice(playerIndex).concat(players.slice(0, playerIndex)) : players
-  console.log(playerIndex)
-  console.log(playerId)
-  console.log(players)
-  console.log(playersOrdered)
 
   return (
     <>
