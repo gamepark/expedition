@@ -1,11 +1,11 @@
-import { LineLocator, PlaceItemContext } from '@gamepark/react-game'
+import { ItemContext, LineLocator } from '@gamepark/react-game'
 import { Coordinates, MaterialItem } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 
 export class PlayerAreaLocator extends LineLocator<Color, MaterialType, LocationType> {
-  getDisplayIndex(player: Color, context: PlaceItemContext<Color, MaterialType, LocationType>) {
+  getDisplayIndex(player: Color, context: ItemContext<Color, MaterialType, LocationType>) {
     if (context.player === undefined) {
       return this.getRelativePlayerIndex(context, player)
     } else {
@@ -14,7 +14,7 @@ export class PlayerAreaLocator extends LineLocator<Color, MaterialType, Location
     }
   }
 
-  getCoordinates({ location }: MaterialItem<Color, LocationType>, context: PlaceItemContext<Color, MaterialType, LocationType>): Coordinates {
+  getCoordinates({ location }: MaterialItem<Color, LocationType>, context: ItemContext<Color, MaterialType, LocationType>): Coordinates {
     const index = this.getDisplayIndex(location.player!, context)
     const baseLocation = index * 54.5 / (context.game.players.length - 1)
     switch (context.type) {
@@ -29,7 +29,7 @@ export class PlayerAreaLocator extends LineLocator<Color, MaterialType, Location
     }
   }
 
-  getDelta({ location }: MaterialItem<Color, LocationType>, { type, player }: PlaceItemContext<Color, MaterialType, LocationType>): Partial<Coordinates> {
+  getDelta({ location }: MaterialItem<Color, LocationType>, { type, player }: ItemContext<Color, MaterialType, LocationType>): Partial<Coordinates> {
     switch (type) {
       case MaterialType.Token:
         return { y: 1.5 }
@@ -42,7 +42,7 @@ export class PlayerAreaLocator extends LineLocator<Color, MaterialType, Location
     }
   }
 
-  getDeltaMax({ location }: MaterialItem<Color, LocationType>, { type, player }: PlaceItemContext<Color, MaterialType, LocationType>): Partial<Coordinates> {
+  getDeltaMax({ location }: MaterialItem<Color, LocationType>, { type, player }: ItemContext<Color, MaterialType, LocationType>): Partial<Coordinates> {
     switch (type) {
       case MaterialType.Ticket:
         return { y: 5 }
@@ -53,7 +53,7 @@ export class PlayerAreaLocator extends LineLocator<Color, MaterialType, Location
     }
   }
 
-  getRotation({ location }: MaterialItem<Color, LocationType>, { type, player }: PlaceItemContext<Color, MaterialType, LocationType>): number {
+  getRotation({ location }: MaterialItem<Color, LocationType>, { type, player }: ItemContext<Color, MaterialType, LocationType>): number {
     return type === MaterialType.Card && location.player !== player ? -90 : 0
   }
 }

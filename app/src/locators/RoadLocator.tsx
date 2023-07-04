@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { ItemLocator, LocationRulesProps, PlaceItemContext } from '@gamepark/react-game'
+import { ItemContext, ItemLocator, LocationRulesProps } from '@gamepark/react-game'
 import { Location, MaterialItem, XYCoordinates } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
@@ -46,7 +46,7 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
     return { x: average(coordinates.map(c => c.x)), y: average(coordinates.map(c => c.y)) }
   }
 
-  transformOwnItemLocation(item: MaterialItem<Color, LocationType>, context: PlaceItemContext<Color, MaterialType, LocationType>) {
+  transformOwnItemLocation(item: MaterialItem<Color, LocationType>, context: ItemContext<Color, MaterialType, LocationType>) {
     const transform = super.transformOwnItemLocation(item, context)
     const index = this.getItemIndex(item, context)
     if (index === 1) {

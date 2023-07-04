@@ -1,4 +1,4 @@
-import { BaseContext, HandLocator, PlaceItemContext, transformCss } from '@gamepark/react-game'
+import { BaseContext, HandLocator, ItemContext, transformCss } from '@gamepark/react-game'
 import { Location, MaterialItem } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
@@ -7,7 +7,7 @@ import { css, Interpolation, Theme } from '@emotion/react'
 import { placeCardDescription } from '../material/PlaceCardDescription'
 
 export class PlayerHandLocator extends HandLocator<Color, MaterialType, LocationType> {
-  getDisplayIndex(player: Color, context: PlaceItemContext<Color, MaterialType, LocationType>) {
+  getDisplayIndex(player: Color, context: ItemContext<Color, MaterialType, LocationType>) {
     if (context.player === undefined) {
       return this.getRelativePlayerIndex(context, player)
     } else {
@@ -16,11 +16,11 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
     }
   }
 
-  isHidden(item: MaterialItem<Color, LocationType>, context: PlaceItemContext<Color, MaterialType, LocationType>): boolean {
+  isHidden(item: MaterialItem<Color, LocationType>, context: ItemContext<Color, MaterialType, LocationType>): boolean {
     return item.location.player !== context.player
   }
 
-  getCoordinates(location: Location<Color, LocationType>, context: PlaceItemContext<Color, MaterialType, LocationType>) {
+  getCoordinates(location: Location<Color, LocationType>, context: ItemContext<Color, MaterialType, LocationType>) {
     if (location.player === context.player) {
       const count = this.countItems(location, context)
       return { x: -55 + count * 3, y: 28, z: 10 }
@@ -31,19 +31,19 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
     }
   }
 
-  getBaseAngle(item: MaterialItem<Color, LocationType>, { player }: PlaceItemContext<Color, MaterialType, LocationType>): number {
+  getBaseAngle(item: MaterialItem<Color, LocationType>, { player }: ItemContext<Color, MaterialType, LocationType>): number {
     return item.location.player === player ? 0 : -90
   }
 
-  getGapMaxAngle(item: MaterialItem<Color, LocationType>, { player }: PlaceItemContext<Color, MaterialType, LocationType>): number {
+  getGapMaxAngle(item: MaterialItem<Color, LocationType>, { player }: ItemContext<Color, MaterialType, LocationType>): number {
     return item.location.player === player ? 1.1 : 3
   }
 
-  getMaxAngle(item: MaterialItem<Color, LocationType>, { player }: PlaceItemContext<Color, MaterialType, LocationType>): number {
+  getMaxAngle(item: MaterialItem<Color, LocationType>, { player }: ItemContext<Color, MaterialType, LocationType>): number {
     return item.location.player === player ? 15 : 2.3
   }
 
-  getRadius(item: MaterialItem<Color, LocationType>, { player }: PlaceItemContext<Color, MaterialType, LocationType>): number {
+  getRadius(item: MaterialItem<Color, LocationType>, { player }: ItemContext<Color, MaterialType, LocationType>): number {
     return item.location.player === player ? 300 : 100
   }
 
@@ -59,7 +59,7 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
       player: context.player
     }
 
-    const itemContext = { ...context, type: MaterialType.Card, index: 0 }
+    const itemContext = { ...context, type: MaterialType.Card, index: 0, displayIndex: 0 }
     const count = this.countItems(handLocation, itemContext)
     itemContext.index = count
     handLocation.x = count
