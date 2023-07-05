@@ -4,10 +4,11 @@ import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { Location } from '../../../../workshop/packages/rules-api'
-import { css, Interpolation, Theme } from '@emotion/react'
-import { placeCardDescription } from '../material/PlaceCardDescription'
+import { DeckLocationDescription } from './DeckLocationDescription'
 
 export class CardsDeckLocator extends DeckLocator<Color, MaterialType, LocationType> {
+  locationDescription = new DeckLocationDescription()
+
   getCoordinates() {
     return { x: -58, y: -28.5, z: 0 }
   }
@@ -25,15 +26,4 @@ export class CardsDeckLocator extends DeckLocator<Color, MaterialType, LocationT
       type: LocationType.Deck
     }]
   }
-
-  getLocationCss(): Interpolation<Theme> {
-    return css`
-      width: ${placeCardDescription.width + 1}em;
-      height: ${placeCardDescription.width / placeCardDescription.ratio + 1}em;
-      transform: translate3d(-50%, -50%, 20em) translate3d(${this.getCoordinates().x - 0.5}em, ${this.getCoordinates().y - 0.5}em, ${this.getCoordinates().z}em);
-      border-radius: ${(placeCardDescription.borderRadius)}em;
-    `
-  }
-
-
 }

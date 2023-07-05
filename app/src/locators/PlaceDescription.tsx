@@ -15,9 +15,9 @@ export class PlaceDescription extends LocationDescription<Color, MaterialType, L
   borderRadius = this.width / 2
   rules = PlaceRules
 
-  getSize(location: Location<Color, LocationType, Node>) {
+  getSize(location: Location<Color, LocationType, Node>, context: MaterialContext<Color, MaterialType, LocationType>) {
     if (location.id === 0) return { width: 3, height: 3 }
-    return super.getSize(location)
+    return super.getSize(location, context)
   }
 
   getExtraCss(location: Location<Color, LocationType>, { game }: MaterialContext<Color, MaterialType, LocationType>) {
