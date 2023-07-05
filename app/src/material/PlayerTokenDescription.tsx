@@ -11,6 +11,7 @@ import { TokenRules } from './TokenRules'
 
 export class PlayerTokenDescription extends RoundTokenDescription {
   diameter = 1.4
+  thickness = 0.3
 
   images = {
     [Color.Red]: red,

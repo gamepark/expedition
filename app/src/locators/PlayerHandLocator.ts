@@ -1,12 +1,14 @@
-import { HandLocator, ItemContext, MaterialContext, transformCss } from '@gamepark/react-game'
+import { HandLocator, ItemContext } from '@gamepark/react-game'
 import { Location, MaterialItem } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
-import { css, Interpolation, Theme } from '@emotion/react'
-import { placeCardDescription } from '../material/PlaceCardDescription'
+import { PlayerHandDescription } from './PlayerHandDescription'
 
 export class PlayerHandLocator extends HandLocator<Color, MaterialType, LocationType> {
+  locations = [{ type: LocationType.Hand }]
+  locationDescription = new PlayerHandDescription()
+
   getDisplayIndex(player: Color, context: ItemContext<Color, MaterialType, LocationType>) {
     if (context.player === undefined) {
       return this.getRelativePlayerIndex(context, player)
@@ -45,34 +47,5 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
 
   getRadius(item: MaterialItem<Color, LocationType>, { player }: ItemContext<Color, MaterialType, LocationType>): number {
     return item.location.player === player ? 300 : 100
-  }
-
-  getLocations(): Location<Color, LocationType>[] {
-    return [{
-      type: LocationType.Hand
-    }]
-  }
-
-  getLocationCss(_location: Location<Color, LocationType>, context: MaterialContext<Color, MaterialType, LocationType>): Interpolation<Theme> {
-    const handLocation: Location = {
-      type: LocationType.Hand,
-      player: context.player
-    }
-
-    const itemContext = { ...context, type: MaterialType.Card, index: 0, displayIndex: 0 }
-    const count = this.countItems(handLocation, itemContext)
-    itemContext.index = count
-    handLocation.x = count
-
-    const transformations = this.transformItem({
-      location: handLocation
-    }, itemContext)
-
-    return css`
-      width: ${(placeCardDescription.width)}em;
-      height: ${(placeCardDescription.width / placeCardDescription.ratio)}em;
-      ${transformCss(...transformations)};
-      border-radius: ${(placeCardDescription.borderRadius)}em;
-    `
   }
 }
