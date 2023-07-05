@@ -1,48 +1,23 @@
 /** @jsxImportSource @emotion/react */
-import { ItemContext, ItemLocator, LocationRulesProps } from '@gamepark/react-game'
+import { ItemContext, ItemLocator } from '@gamepark/react-game'
 import { Location, MaterialItem, XYCoordinates } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { arrowRoad, Road } from '@gamepark/expedition/material/Road'
-import { css } from '@emotion/react'
-import { nodesCoordinates } from './PlaceLocator'
-import { boardRatio } from '../material/BoardDescription'
-import { ReactNode } from 'react'
-import { RoadRules } from './RoadRules'
+import { RoadDescription } from './RoadDescription'
 
 export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> {
   parentItemType = MaterialType.Board
   rotationUnit = 'rad'
+  locationDescription = new RoadDescription()
 
   getRotation(item: MaterialItem<Color, LocationType>): number {
-    return this.getAngle(this.getRoadCoordinates(arrowRoad(item)))
-  }
-
-  getRoadCoordinates(road: Road): [XYCoordinates, XYCoordinates] {
-    const coordinates: [XYCoordinates, XYCoordinates] = [nodesCoordinates[road[0]], nodesCoordinates[road[1]]]
-    // 3 red nodes are links between the left & right sides of the board
-    if (coordinates[0].x > 50 && coordinates[1].x < 1) {
-      coordinates[1] = { x: 99.95, y: coordinates[1].y }
-    } else if (coordinates[1].x > 50 && coordinates[0].x < 1) {
-      coordinates[0] = { x: 99.95, y: coordinates[0].y }
-    }
-    return coordinates
-  }
-
-  getAngle(coordinates: [XYCoordinates, XYCoordinates]): number {
-    return -Math.atan2((coordinates[0].x - coordinates[1].x) * boardRatio, coordinates[0].y - coordinates[1].y)
-  }
-
-  getLocationCss(location: Location<Color, LocationType, Road>) {
-    const coordinates = this.getRoadCoordinates(location.id!)
-    const angle = this.getAngle(coordinates)
-    const distance = Math.hypot((coordinates[1].x - coordinates[0].x) * boardRatio, (coordinates[1].y - coordinates[0].y))
-    return locationCss(distance, angle)
+    return this.locationDescription.getAngle(this.locationDescription.getRoadCoordinates(arrowRoad(item)))
   }
 
   getPositionOnParent(location: Location<Color, LocationType, Road>): XYCoordinates {
-    const coordinates = this.getRoadCoordinates(location.id!)
+    const coordinates = this.locationDescription.getRoadCoordinates(location.id!)
     return { x: average(coordinates.map(c => c.x)), y: average(coordinates.map(c => c.y)) }
   }
 
@@ -56,17 +31,6 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
     }
     return transform
   }
-
-  getLocationRules(props: LocationRulesProps<Color, MaterialType, LocationType>): ReactNode {
-    return <RoadRules {...props}/>
-  }
 }
-
-const locationCss = (distance: number, rotate: number) => css`
-  height: ${distance - 3}%;
-  width: 3%;
-  border-radius: 50%;
-  transform: translate(-50%, -50%) rotate(${rotate}rad);
-`
 
 const average = (arr: number[]) => arr.reduce((p, c) => p + c, 0) / arr.length

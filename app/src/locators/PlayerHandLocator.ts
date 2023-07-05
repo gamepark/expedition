@@ -1,4 +1,4 @@
-import { BaseContext, HandLocator, ItemContext, transformCss } from '@gamepark/react-game'
+import { HandLocator, ItemContext, MaterialContext, transformCss } from '@gamepark/react-game'
 import { Location, MaterialItem } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
@@ -53,7 +53,7 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
     }]
   }
 
-  getLocationCss(_location: Location<Color, LocationType>, context: BaseContext<Color, MaterialType, LocationType>): Interpolation<Theme> {
+  getLocationCss(_location: Location<Color, LocationType>, context: MaterialContext<Color, MaterialType, LocationType>): Interpolation<Theme> {
     const handLocation: Location = {
       type: LocationType.Hand,
       player: context.player

@@ -1,46 +1,22 @@
 /** @jsxImportSource @emotion/react */
-import { ItemLocator, LocationRulesProps } from '@gamepark/react-game'
-import { Location, Material, XYCoordinates } from '@gamepark/rules-api'
+import { ItemLocator } from '@gamepark/react-game'
+import { Location, XYCoordinates } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { Place } from '@gamepark/expedition/material/Place'
-import { css } from '@emotion/react'
-import { BlueNode, isGreenNode, Node, RedNode, StartNode } from '@gamepark/expedition/material/Road'
-import { ReactNode } from 'react'
-import { PlaceRules } from './PlaceRules'
-import { PlaceLocationContext } from '@gamepark/react-game/dist/locators/ItemLocator'
-import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
+import { BlueNode, Node, RedNode, StartNode } from '@gamepark/expedition/material/Road'
+import { PlaceDescription } from './PlaceDescription'
 
 export class PlaceLocator extends ItemLocator<Color, MaterialType, LocationType> {
   parentItemType = MaterialType.Board
 
-  getLocationCss(location: Location<Color, LocationType, Node>, { game }: PlaceLocationContext<Color, MaterialType, LocationType>) {
-    const borderColor = this.getObjectiveColor(new ExpeditionRules(game).material(MaterialType.Card), location.id)
-    return [locationCss, borderColor && borderCss(borderColor)]
-  }
-
-  getObjectiveColor(cards: Material<Color>, place?: Node) {
-    if (!place || !isGreenNode(place)) return
-    const card = cards.id(place).getItem()
-    switch (card?.location.type) {
-      case LocationType.CommonObjectives:
-        return 'purple'
-      case LocationType.Hand:
-        return playerColorCode[card?.location.player!]
-      default:
-        return
-    }
-  }
+  locationDescription = new PlaceDescription()
 
   getPositionOnParent(location: Location<Color, LocationType, Place>): XYCoordinates {
     const coordinates = nodesCoordinates[location.id!]
     if (location.x === 1) return { x: 99.8, y: coordinates.y }
     return coordinates
-  }
-
-  getLocationRules(props: LocationRulesProps<Color, MaterialType, LocationType>): ReactNode {
-    return <PlaceRules {...props}/>
   }
 }
 
@@ -168,22 +144,3 @@ export const nodesCoordinates: Record<Node, XYCoordinates> = {
   [RedNode.PutoranaPlateau_SouthEast]: { x: 73.32, y: 11.6 },
   [RedNode.AngkorVat_East]: { x: 93.18, y: 51.32 }
 }
-
-export const playerColorCode: Record<Color, string> = {
-  [Color.Red]: '#E75035',
-  [Color.Pink]: '#F19FC5',
-  [Color.Blue]: '#21BBEF',
-  [Color.Green]: '#AFCB54',
-  [Color.Yellow]: '#FED061',
-  [Color.White]: '#FFFFFF'
-}
-
-const locationCss = css`
-  height: 1.8em;
-  width: 1.8em;
-  border-radius: 50%;
-`
-
-const borderCss = (color: string) => css`
-  border: 0.2em solid ${color}
-`

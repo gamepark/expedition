@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { FC, HTMLAttributes } from 'react'
-import { playerColorCode } from '../locators/PlaceLocator'
+import { playerColorCode } from '../locators/PlaceDescription'
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
 import { ticketDescription } from '../material/TicketDescription'
 import ticket from '../images/ticket.jpg'

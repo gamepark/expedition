@@ -11,6 +11,7 @@ export class TutorialSetup extends ExpeditionSetup {
     this.material(MaterialType.Card).id(Place.PuertoRico).moveItems({ location: { type: LocationType.Board } })
     this.material(MaterialType.Card).id(Place.NorthwestPassage).moveItems({ location: { type: LocationType.Board } })
     this.material(MaterialType.Card).id(Place.Rome).moveItems({ location: { type: LocationType.Deck, x: 0 } })
+    this.material(MaterialType.Card).id(Place.Thingvellir).moveItems({ location: { type: LocationType.Deck, x: 0 } })
   }
 
   dealCards() {

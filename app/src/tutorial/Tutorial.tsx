@@ -3,7 +3,7 @@ import { TutorialSetup } from './TutorialSetup'
 import { TFunction } from 'i18next'
 import { isDeleteItem, isMoveItem, isStartPlayerTurn, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { MaterialTutorial, TutorialFocusType, TutorialStep, TutorialStepType } from '@gamepark/react-game'
-import { Place } from '@gamepark/expedition/material/Place'
+import { Place, places } from '@gamepark/expedition/material/Place'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
@@ -32,19 +32,32 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.place'),
-      focus: () => ({ type: MaterialType.Board, item: boardDescription.item }),
+      focus: () => [
+        { type: MaterialType.Board, item: boardDescription.item },
+        ...places.map(place => this.location(LocationType.Place).id(place))
+      ],
       position: { x: 45, y: 0 }
     },
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.circles'),
-      focus: () => ({ type: MaterialType.Board, item: boardDescription.item }),
+      focus: (game: MaterialGame) => [
+        { type: MaterialType.Board, item: boardDescription.item },
+        ...this.material(game, MaterialType.Card).player(Color.Blue).getItems().map(card =>
+          this.location(LocationType.Place).id(card.id)
+        )
+      ],
       position: { x: 45, y: 0 }
     },
     {
       type: TutorialStepType.Popup,
       text: (t: TFunction) => t('tuto.common'),
-      focus: (game: MaterialGame) => this.material(game, MaterialType.Card).location(LocationType.CommonObjectives),
+      focus: (game: MaterialGame) => [
+        this.material(game, MaterialType.Card).location(LocationType.CommonObjectives),
+        ...this.material(game, MaterialType.Card).location(LocationType.CommonObjectives).getItems().map(card =>
+          this.location(LocationType.Place).id(card.id)
+        )
+      ],
       position: { x: -20, y: 0 }
     },
     {
