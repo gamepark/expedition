@@ -19,7 +19,7 @@ export class TicketRule extends PlayerTurn {
     for (const arrowColor of arrowColors) {
       const lastArrow = new Expedition(arrowColor, arrows).lastArrow
       if (lastArrow.length) {
-        moves.push(lastArrow.moveItem({ location: { type: LocationType.ArrowsStock } }))
+        moves.push(lastArrow.moveItem({ location: { type: LocationType.ArrowsStock, id: arrowColor } }))
       }
     }
 

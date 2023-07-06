@@ -90,7 +90,7 @@ export class ExpeditionSetup extends MaterialGameSetup<Color, MaterialType, Loca
 
   createArrows() {
     this.material(MaterialType.Arrow).createItems(arrowColors.map(id => (
-      { id, quantity: ARROWS_PER_EXPEDITION, location: { type: LocationType.ArrowsStock } }
+      { id, quantity: ARROWS_PER_EXPEDITION, location: { type: LocationType.ArrowsStock, id } }
     )))
   }
 

@@ -15,8 +15,4 @@ export class ArrowsStockLocator extends PileLocator<Color, MaterialType, Locatio
   getCoordinates(item: MaterialItem<Color, LocationType, ArrowColor>): Coordinates {
     return this.locationDescription.stockCoordinates[item.id!]
   }
-
-  getPileId(item: MaterialItem<Color, LocationType>): number {
-    return item.id
-  }
 }
