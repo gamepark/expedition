@@ -143,7 +143,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
       if (cardLocation.type === LocationType.Hand) {
         const token = this.material(MaterialType.Token).id(cardLocation.player).location(LocationType.Place).locationId(place)
         if (token.length) {
-          consequences.push(token.moveItem({ location: { type: LocationType.Card, parent: card.index } }))
+          consequences.push(token.moveItem({ location: { type: LocationType.Card, parent: card.getIndex() } }))
         }
       } else if (this.deckHasCard) {
         const topDeckCard = this.material(MaterialType.Card).location(LocationType.Deck).maxBy(item => item.location.x!)
