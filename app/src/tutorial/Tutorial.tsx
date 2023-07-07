@@ -88,9 +88,9 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
         text: (t: TFunction) => t('tuto.tokens.opponent'),
         position: { x: -15, y: 25 }
       },
-      focus: (game: MaterialGame) => this.material(game, MaterialType.Token).location(LocationType.Place).locationId(Place.NorthwestPassage)
+      focus: (game: MaterialGame) => this.material(game, MaterialType.Token).location(LocationType.Place).locationId(Place.NorthwestPassage),
+      move: { player: Color.Blue }
     },
-    { move: { player: Color.Blue } },
     { move: { player: Color.Red } },
     { move: { player: Color.Blue } },
     { move: { player: Color.Red } },
