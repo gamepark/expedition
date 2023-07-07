@@ -10,7 +10,7 @@ import { css } from '@emotion/react'
 export const LastTurnDialog = () => {
   const { t } = useTranslation()
   const rules = useRules<ExpeditionRules>()
-  const lastTurn = !rules?.isOver() && rules?.getMemory<{ lastTurn?: boolean }>()?.lastTurn
+  const lastTurn = !rules?.isOver() && rules?.isLastTurn
   const [explainLastTurn, setExplainLastTurn] = useState(false)
   const lastPlayer = rules ? rules.game.players[rules.game.players.length - 1] : Color.Red
   const lastPlayerName = usePlayerName(lastPlayer) || getPlayerName(lastPlayer, t)

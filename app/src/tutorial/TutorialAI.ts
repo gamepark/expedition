@@ -24,13 +24,13 @@ export const ai: GameAI<MaterialGame<Color, MaterialType, LocationType>, Materia
   return Promise.resolve(bestPath.moves)
 }
 
-const computeBestPath = (game: MaterialGame, realPlayer: Color, bot: Color, path: MaterialMove[] = [], iteration: number = 1): Path => {
+const computeBestPath = (game: MaterialGame, realPlayer: Color, bot: Color, path: MaterialMove[] = [], iteration: number = 0): Path => {
   const rules = new ExpeditionRules(game)
   const legalMoves = rules.getLegalMoves(bot)
   if (legalMoves.length === 0 || iteration >= 4) {
     return {
       moves: path,
-      score: rules.getScore(bot) - rules.getScore(realPlayer) + countPlayerTickets(rules, bot) * TICKET_WEIGHT
+      score: rules.getScore(bot) - rules.getScore(realPlayer) + (rules.isLastTurn ? 0 : countPlayerTickets(rules, bot) * TICKET_WEIGHT)
     }
   }
 
