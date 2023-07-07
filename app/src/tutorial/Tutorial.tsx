@@ -11,10 +11,30 @@ import { ArrowColor } from '@gamepark/expedition/material/ArrowColor'
 import { BlueNode, RedNode, StartNode } from '@gamepark/expedition/material/Road'
 import { Trans } from 'react-i18next'
 import { boardDescription } from '../material/BoardDescription'
+import { AvatarProps, ClotheType, EyebrowType, EyeType, FacialHairType, GraphicType, MouthType, TopType } from '@gamepark/avataaars'
+import HairColorName from '@gamepark/avataaars/dist/avatar/top/HairColorName'
+import ClotheColorName from '@gamepark/avataaars/dist/avatar/clothes/ClotheColorName'
+import SkinColor from '@gamepark/avataaars/dist/avatar/SkinColor'
 
 export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType> {
   options = { players: [{ id: Color.Blue }, { id: Color.Red }] }
   setup = new TutorialSetup()
+
+  avatars: Partial<Record<Color, AvatarProps>> = {
+    [Color.Red]: {
+      topType: TopType.LongHairBun,
+      hairColor: HairColorName.BrownDark,
+      facialHairType: FacialHairType.MoustacheFancy,
+      clotheType: ClotheType.GraphicShirt,
+      clotheColor: ClotheColorName.Red,
+      graphicType: GraphicType.Hola,
+      eyeType: EyeType.Happy,
+      eyebrowType: EyebrowType.DefaultNatural,
+      mouthType: MouthType.Smile,
+      skinColor: SkinColor.Brown
+    }
+  }
+
   steps: TutorialStep<Color, MaterialType, LocationType>[] = [
     {
       popup: { text: () => <Trans defaults="tuto.welcome" components={[<strong/>]}/> }
