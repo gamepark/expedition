@@ -12,6 +12,7 @@ export type PlayerTurnMemory = {
   arrowsLeft: number
   ticketsPlayed: number
   arrowPlaced?: boolean
+  expeditionColor?: ArrowColor
 }
 
 export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType> {
@@ -19,7 +20,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
 
   onRuleStart(move: RuleMove, previousRule?: RuleStep) {
     if (move.type === RuleMoveType.StartPlayerTurn) {
-      this.memorize({ arrowsLeft: 1, ticketsPlayed: 0 })
+      this.memorize<PlayerTurnMemory>({ arrowsLeft: 1, ticketsPlayed: 0 })
     } else if (move.type === RuleMoveType.StartRule) {
       this.memorize(previousRule?.memory)
       this.memorize(move.memory)
@@ -75,6 +76,13 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
     }
   }
 
+  beforeItemMove(move: ItemMove<Color, MaterialType, LocationType>): MaterialMove[] {
+    if (move.itemType === MaterialType.Arrow && move.type === ItemMoveType.Move) {
+      this.memorize<PlayerTurnMemory>({ expeditionColor: this.material(MaterialType.Arrow).getItem(move.itemIndex)?.id })
+    }
+    return []
+  }
+
   afterItemMove(move: ItemMove<Color, MaterialType, LocationType>) {
     const consequences: MaterialMove[] = []
     switch (move.itemType) {
@@ -102,20 +110,24 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
   afterArrowMove(move: MoveItem<Color, MaterialType, LocationType>) {
     const consequences: MaterialMove[] = []
     if (isMoveItemLocation(move) && move.position.location.type === LocationType.Road) {
-      this.memorize({ arrowPlaced: true })
+      this.memorize<PlayerTurnMemory>({ arrowPlaced: true })
       if (!this.isFreeArrow) {
         this.getMemory<PlayerTurnMemory>().arrowsLeft--
       }
       const destination = arrowRoad(move.position)[1]
-      consequences.push(...this.onReachNode(this.material(MaterialType.Arrow).getItem(move.itemIndex)!.id, destination))
+      consequences.push(...this.onReachNode(destination))
       if (!this.arrowLeft) {
         this.memorizeOnGame({ lastTurn: true })
       }
     }
+    const { expeditionColor } = this.getMemory<PlayerTurnMemory>()
+    if (expeditionColor && new Expedition(expeditionColor, this.material(MaterialType.Arrow)).loop) {
+      consequences.push(this.rules().startRule(RuleId.LoopRule, this.player))
+    }
     return consequences
   }
 
-  onReachNode(expeditionColor: ArrowColor, node: Node) {
+  onReachNode(node: Node) {
     const consequences: MaterialMove[] = []
     if (isGreenNode(node)) {
       consequences.push(...this.onReachPlace(node))
@@ -126,12 +138,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
         location: { type: LocationType.PlayerArea, player: this.player }
       }))
     }
-    const expedition = new Expedition(expeditionColor, this.material(MaterialType.Arrow))
-    if (expedition.loop) {
-      consequences.push(this.rules().startRule(RuleId.LoopRule, this.player, { loopColor: expeditionColor }))
-    }
     return consequences
-
   }
 
   onReachPlace(place: Place) {
