@@ -17,25 +17,25 @@ export const ai: GameAI<MaterialGame<Color, MaterialType, LocationType>, Materia
   const rules = new ExpeditionRules(game)
   if (rules.getLegalMoves(bot).length === 1) return Promise.resolve(rules.getLegalMoves(bot))
 
-  const realPlayer = game.players.find((p: Color) => p !== bot)!
-
-  const bestPath = computeBestPath(game, realPlayer, bot)
+  const bestPath = computeBestPath(game, bot)
 
   return Promise.resolve(bestPath.moves)
 }
 
-const computeBestPath = (game: MaterialGame, realPlayer: Color, bot: Color, path: MaterialMove[] = [], iteration: number = 0): Path => {
+const computeBestPath = (game: MaterialGame, bot: Color, path: MaterialMove[] = [], iteration: number = 0): Path => {
   const rules = new ExpeditionRules(game)
   const legalMoves = rules.getLegalMoves(bot)
   if (legalMoves.length === 0 || iteration >= 4) {
+    const botScore = rules.getScore(bot)
+    const ticketsPotential = rules.isLastTurn ? 0 : countPlayerTickets(rules, bot) * TICKET_WEIGHT
     return {
       moves: path,
-      score: rules.getScore(bot) - rules.getScore(realPlayer) + (rules.isLastTurn ? 0 : countPlayerTickets(rules, bot) * TICKET_WEIGHT)
+      score: botScore + ticketsPotential
     }
   }
 
   const paths = filterStupidMoves(rules, legalMoves).map(move =>
-    computeBestPath(applyMove(game, move, bot), realPlayer, bot, [...path, move], iteration + 1)
+    computeBestPath(applyMove(game, move, bot), bot, [...path, move], iteration + 1)
   )
 
   const maxScore = maxBy(paths, (p) => p.score)!.score!
