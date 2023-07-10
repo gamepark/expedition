@@ -24,7 +24,7 @@ type PlayerDialogProps = {
 
 export const PlayerDialog: FC<PlayerDialogProps> = ({ close, player }) => {
   const { t } = useTranslation()
-  const rules = useRules<ExpeditionRules>()
+  const rules = useRules<ExpeditionRules>()!
   const name = usePlayerName(player) ?? getPlayerName(player, t)
   return (
     <RulesDialog open close={close}>
@@ -37,9 +37,10 @@ export const PlayerDialog: FC<PlayerDialogProps> = ({ close, player }) => {
           <PlayerDialogIndicator
             width={3}
             icon={faStar}
-            value={t('player.dialog.score.value', {
-              player: name,
-              score: rules?.getScore(player)
+            value={t('player.dialog.score.value', { player: name, score: rules.getScore(player) })}
+            description={t('player.dialog.score.details', {
+              bonus: rules.getCardsDone(player) + rules.getTokensOnCards(player),
+              malus: rules.getCardsInHand(player) + rules.getTokensOnBoard(player)
             })}/>
           <PlayerDialogIndicator
             ratio={ticketDescription.width / ticketDescription.height}

@@ -11,8 +11,8 @@ type PlayerDialogIndicatorProps = {
   image?: string
   ratio?: number
   width?: number
-  description?: string
   value: string
+  description?: string | null
   radius?: number
   shadow?: boolean
 
@@ -28,7 +28,7 @@ const PlayerDialogIndicator: FC<PlayerDialogIndicatorProps> = (props) => {
       </div>
       <div css={detail}>
         <div>{value}</div>
-        <div css={descriptionStyle}>{description}</div>
+        {description && <div css={descriptionStyle}>{description}</div>}
       </div>
     </div>
   )

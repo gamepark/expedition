@@ -36,14 +36,28 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
     return ticketsB - ticketsA
   }
 
-  getScore(playerId: Color): number {
-    const cards = this.material(MaterialType.Card).player(playerId)
-    const tokens = this.material(MaterialType.Token).id(playerId)
-    const cardsInFrontOfPlayer = cards.location(LocationType.PlayerArea).length
-    const tokensCollected = tokens.location(LocationType.Card).length
-    const cardsInHand = cards.location(LocationType.Hand).length
-    const tokensOnBoard = tokens.location(LocationType.Place).length
-    return cardsInFrontOfPlayer + tokensCollected - cardsInHand - tokensOnBoard
+  getScore(player: Color): number {
+    return this.getCardsDone(player) + this.getTokensOnCards(player) - this.getCardsInHand(player) - this.getTokensOnBoard(player)
+  }
+
+  getCardsDone(player: Color) {
+    const cards = this.material(MaterialType.Card).player(player)
+    return cards.location(LocationType.PlayerArea).length
+  }
+
+  getCardsInHand(player: Color) {
+    const cards = this.material(MaterialType.Card).player(player)
+    return cards.location(LocationType.Hand).length
+  }
+
+  getTokensOnBoard(player: Color) {
+    const tokens = this.material(MaterialType.Token).id(player)
+    return tokens.location(LocationType.Place).length
+  }
+
+  getTokensOnCards(player: Color) {
+    const tokens = this.material(MaterialType.Token).id(player)
+    return tokens.location(LocationType.Card).length
   }
 }
 
