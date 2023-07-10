@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { getPlayerName } from '@gamepark/expedition/ExpeditionOptions'
 import { useTranslation } from 'react-i18next'
 import { MaterialGame } from '@gamepark/rules-api'
 import { useGame, usePlayerId, usePlayerName } from '@gamepark/react-game'
@@ -12,7 +11,7 @@ export const SetupKeyPlacesHeader = () => {
   const game = useGame<MaterialGame<Color, MaterialType, LocationType>>()!
   const currentPlayer = game.rule!.player!
   const me = usePlayerId<Color>()
-  const playerName = usePlayerName(currentPlayer) || getPlayerName(currentPlayer, t)
+  const playerName = usePlayerName(currentPlayer)
   return <>{
     currentPlayer === me
       ? t('header.setup.me')

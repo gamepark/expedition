@@ -3,7 +3,6 @@ import { RulesDialog, ThemeButton, usePlayerName, useRules } from '@gamepark/rea
 import { useEffect, useState } from 'react'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { useTranslation } from 'react-i18next'
-import { getPlayerName } from '@gamepark/expedition/ExpeditionOptions'
 import Color from '@gamepark/expedition/Color'
 import { css } from '@emotion/react'
 
@@ -13,7 +12,7 @@ export const LastTurnDialog = () => {
   const lastTurn = !rules?.isOver() && rules?.isLastTurn
   const [explainLastTurn, setExplainLastTurn] = useState(false)
   const lastPlayer = rules ? rules.game.players[rules.game.players.length - 1] : Color.Red
-  const lastPlayerName = usePlayerName(lastPlayer) || getPlayerName(lastPlayer, t)
+  const lastPlayerName = usePlayerName(lastPlayer)
   useEffect(() => {
       if (lastTurn) setExplainLastTurn(true)
     }, [lastTurn]

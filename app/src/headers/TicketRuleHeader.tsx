@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { getPlayerName } from '@gamepark/expedition/ExpeditionOptions'
 import { Trans, useTranslation } from 'react-i18next'
 import { isCustomMove, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { PlayMoveButton, useGame, useLegalMoves, usePlayerName } from '@gamepark/react-game'
@@ -13,7 +12,7 @@ export const TicketRuleHeader = () => {
   const rule = useGame<MaterialGame<Color, MaterialType, LocationType>>()!.rule!
   const legalMoves = useLegalMoves<MaterialMove>()
   const exchangeCard = legalMoves.find(move => isCustomMove(move, CustomMoveType.ExchangeCard))
-  const playerName = usePlayerName(rule.player!) || getPlayerName(rule.player!, t)
+  const playerName = usePlayerName(rule.player!)
   if (legalMoves.length) {
     return <Trans defaults="header.ticket.me" components={[<PlayMoveButton move={exchangeCard}/>]}/>
   } else {

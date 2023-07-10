@@ -3,7 +3,6 @@ import { MaterialRulesProps, PlayMoveButton, useLegalMove, usePlayerId, usePlaye
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { Trans, useTranslation } from 'react-i18next'
-import { getPlayerName } from '@gamepark/expedition/ExpeditionOptions'
 import Color from '@gamepark/expedition/Color'
 import { isMoveItemLocation, MoveItem } from '@gamepark/rules-api'
 import { RuleId } from '@gamepark/expedition/rules/RuleId'
@@ -21,7 +20,7 @@ export const CardRules = (props: MaterialRulesProps) => {
   const hand = item.location?.type === LocationType.Hand
   const common = item.location?.type === LocationType.CommonObjectives
   const scored = item.location?.type === LocationType.PlayerArea
-  const playerName = usePlayerName(item.location!.player!) || getPlayerName(item.location!.player!, t)
+  const playerName = usePlayerName(item.location!.player!)
   const country = getCountry(item.id, t)
   const continent = getContinent(item.id, t)
   return <>
@@ -62,7 +61,7 @@ const HandCardRules = ({ item, close }: MaterialRulesProps) => {
   const placeTokenMove = useLegalMove<MoveItem>(move => isMoveItemLocation(move, MaterialType.Token) && move.position.location.id === item.id)
   const tokens = rules.material(MaterialType.Token)
   const isRevealed = mine && tokens.location(LocationType.Place).locationId(item.id).length > 0
-  const playerName = usePlayerName(item.location!.player!) || getPlayerName(item.location!.player!, t)
+  const playerName = usePlayerName(item.location!.player!)
   return <>
     {mine && !isRevealed && <p>{t('rules.card.hand.private')}</p>}
     {mine && isRevealed && <p>{t('rules.card.hand.revealed')}</p>}
