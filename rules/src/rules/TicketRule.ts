@@ -31,11 +31,12 @@ export class TicketRule extends PlayerTurn {
   }
 
   beforeItemMove(move: ItemMove<Color, MaterialType, LocationType>) {
+    super.beforeItemMove(move)
     if (move.type === ItemMoveType.Move && move.itemType === MaterialType.Arrow && move.position.location?.type === LocationType.ArrowsStock) {
       const arrow = this.material(MaterialType.Arrow).getItem(move.itemIndex)!
       return super.onReachNode(arrowRoad(arrow)[0])
     }
-    return super.beforeItemMove(move)
+    return []
   }
 
   afterArrowMove(move: MoveItem<Color, MaterialType, LocationType>) {
