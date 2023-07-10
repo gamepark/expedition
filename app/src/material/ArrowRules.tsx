@@ -4,19 +4,21 @@ import { ArrowColor } from '@gamepark/expedition/material/ArrowColor'
 import { TFunction } from 'i18next'
 import { Trans, useTranslation } from 'react-i18next'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
+import { RoadMovesButtons } from './RoadMovesButtons'
 
 export const ArrowRules = ({ item, legalMoves, close }: MaterialRulesProps) => {
   const { t } = useTranslation()
   return <>
-    <h2>{ arrowTitle[item.id!](t) }</h2>
-    { item.location?.type === LocationType.ArrowsStock && <p>{ arrowStock[item.id!](t, item.quantity) }</p> }
-    { legalMoves.length === 1 &&
-        <PlayMoveButton move={ legalMoves[0] } onPlay={ close }>
-          { t('rules.arrow.remove') }
-        </PlayMoveButton>
+    <h2>{arrowTitle[item.id!](t)}</h2>
+    {item.location?.type === LocationType.ArrowsStock && <p>{arrowStock[item.id!](t, item.quantity)}</p>}
+    {legalMoves.length === 1 &&
+      <PlayMoveButton move={legalMoves[0]} onPlay={close}>
+        {t('rules.arrow.remove')}
+      </PlayMoveButton>
     }
     <hr/>
-    <p><Trans defaults="rules.arrow.purpose" components={ [<strong/>] }/></p>
+    <p><Trans defaults="rules.arrow.purpose" components={[<strong/>]}/></p>
+    {item.location?.type === LocationType.Road && <RoadMovesButtons road={item.location.id} close={close}/>}
   </>
 }
 
