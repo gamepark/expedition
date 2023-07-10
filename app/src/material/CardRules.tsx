@@ -39,17 +39,19 @@ export const CardRules = (props: MaterialRulesProps) => {
       </PlayMoveButton>
     }
     <hr/>
-    <section css={cardText}>
-      <h3>{t(`place.${item.id}.name`)}</h3>
-      {(country || continent) && <p>
-        <em>
-          {country && <strong>{country}</strong>}
-          {country && continent && <span> - </span>}
-          {continent}
-        </em>
-      </p>}
-      <p>{t(`place.${item.id}.text`)}</p>
-    </section>
+    {item.id !== undefined &&
+      <section css={cardText}>
+        <h3>{t(`place.${item.id}.name`)}</h3>
+        {(country || continent) && <p>
+          <em>
+            {country && <strong>{country}</strong>}
+            {country && continent && <span> - </span>}
+            {continent}
+          </em>
+        </p>}
+        <p>{t(`place.${item.id}.text`)}</p>
+      </section>
+    }
   </>
 }
 
