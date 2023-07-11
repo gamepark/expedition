@@ -6,7 +6,6 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { PlayerHandDescription } from './PlayerHandDescription'
 
 export class PlayerHandLocator extends HandLocator<Color, MaterialType, LocationType> {
-  locations = [{ type: LocationType.Hand }]
   locationDescription = new PlayerHandDescription()
 
   getDisplayIndex(player: Color, context: ItemContext<Color, MaterialType, LocationType>) {
