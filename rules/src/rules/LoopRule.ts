@@ -1,7 +1,7 @@
 import { MaterialType } from '../material/ExpeditionMaterial'
 import { Expedition } from './Expedition'
 import { PlayerTurn, PlayerTurnMemory } from './PlayerTurn'
-import { MoveItem } from '../../../../workshop/packages/rules-api'
+import { MoveItem } from '@gamepark/rules-api'
 import Color from '../Color'
 import { LocationType } from '../material/LocationType'
 import { RuleId } from './RuleId'

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { LargeTokenRules } from './LargeTokenRules'
-import { MaterialGame } from '../../../../workshop/packages/rules-api'
+import { MaterialGame } from '@gamepark/rules-api'
 import { PlayerTokenDescription } from './PlayerTokenDescription'
 
 export class LargeTokenDescription extends PlayerTokenDescription {
