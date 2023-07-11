@@ -6,9 +6,11 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { ticketDescription } from '../material/TicketDescription'
 
 export class TicketStockDescription extends LocationDescription<Color, MaterialType, LocationType> {
-  location = { type: LocationType.TicketStock }
+  location = ticketStockLocation
   width = ticketDescription.width + 6
   ratio = 1
   borderRadius = this.width / 2
   coordinates = { x: -59, y: 18, z: 20 }
 }
+
+export const ticketStockLocation = { type: LocationType.TicketStock }

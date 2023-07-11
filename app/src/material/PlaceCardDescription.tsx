@@ -84,7 +84,6 @@ import FiordlandNationalPark from '../images/cards/en/80-FiordlandNationalPark.j
 import { CardDescription } from '@gamepark/react-game'
 import { Place } from '@gamepark/expedition/material/Place'
 import { CardRules } from './CardRules'
-import { LocationType } from '@gamepark/expedition/material/LocationType'
 
 export class PlaceCardDescription extends CardDescription {
   backImage = back
@@ -173,12 +172,6 @@ export class PlaceCardDescription extends CardDescription {
   }
 
   rules = CardRules
-
-  stock = {
-    location: {
-      type: LocationType.Deck
-    }
-  }
 }
 
 export const placeCardDescription = new PlaceCardDescription()
