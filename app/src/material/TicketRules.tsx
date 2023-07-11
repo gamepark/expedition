@@ -1,10 +1,13 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialRulesProps, PlayMoveButton, usePlayerId, usePlayerName } from '@gamepark/react-game'
+import { MaterialRulesProps, PlayMoveButton, useLegalMove, usePlayerId, usePlayerName } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { Trans, useTranslation } from 'react-i18next'
+import { isDeleteItem, MaterialMove } from '@gamepark/rules-api'
+import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 
-export const TicketRules = ({ item, legalMoves, close }: MaterialRulesProps) => {
+export const TicketRules = ({ item, itemIndex, closeDialog }: MaterialRulesProps) => {
   const { t } = useTranslation()
+  const legalMove = useLegalMove((move: MaterialMove) => isDeleteItem(move, MaterialType.Ticket, itemIndex))
   const player = usePlayerId<Color>()
   const owner = item.location?.player
   const mine = owner !== undefined && owner === player
@@ -12,8 +15,8 @@ export const TicketRules = ({ item, legalMoves, close }: MaterialRulesProps) => 
   return <>
     <h2>{t('rules.ticket.title')}</h2>
     {mine && <p>{t('rules.ticket.mine', { number: item.quantity })}</p>}
-    {mine && legalMoves.length === 1 &&
-      <PlayMoveButton move={legalMoves[0]} onPlay={close}>
+    {legalMove &&
+      <PlayMoveButton move={legalMove} onPlay={closeDialog}>
         {t('rules.ticket.spend')}
       </PlayMoveButton>
     }

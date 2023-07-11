@@ -4,17 +4,22 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { Trans, useTranslation } from 'react-i18next'
 import Color from '@gamepark/expedition/Color'
-import { isMoveItemLocation, MoveItem } from '@gamepark/rules-api'
+import { isCustomMove, isMoveItem, isMoveItemLocation, MaterialMove, MoveItem } from '@gamepark/rules-api'
 import { RuleId } from '@gamepark/expedition/rules/RuleId'
 import { Place, places2StepsFromStart } from '@gamepark/expedition/material/Place'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { css } from '@emotion/react'
 import { TFunction } from 'i18next'
+import { CustomMoveType } from '@gamepark/expedition/rules/CustomMoveType'
 
 export const CardRules = (props: MaterialRulesProps) => {
-  const { item, legalMoves, close } = props
+  const { item, itemIndex, closeDialog } = props
   const { t } = useTranslation()
   const rules = useRules<ExpeditionRules>()!
+  const discard = useLegalMove((move: MaterialMove) =>
+    isMoveItem(move, MaterialType.Card, itemIndex) && move.position.location?.type === LocationType.Deck
+  )
+  const draw = useLegalMove((move: MaterialMove) => isCustomMove(move, CustomMoveType.ExchangeCard))
   const player = usePlayerId<Color>()
   const deck = item.location?.type === LocationType.Deck
   const hand = item.location?.type === LocationType.Hand
@@ -26,18 +31,13 @@ export const CardRules = (props: MaterialRulesProps) => {
   return <>
     <h2>{t('rules.card.title')}</h2>
     <p>{t('rules.card.purpose')}</p>
-    {deck &&
-      <p>{t('rules.card.deck', { number: rules.material(MaterialType.Card).location(LocationType.Deck).length })}</p>}
+    {deck && <p>{t('rules.card.deck', { number: rules.material(MaterialType.Card).location(LocationType.Deck).length })}</p>}
     {hand && <HandCardRules {...props}/>}
     {common && <p>{t('rules.card.common')}</p>}
     {scored && item.location?.player === player && <p>{t('rules.card.scored')}</p>}
-    {scored && item.location?.player !== player &&
-      <p>{t('rules.card.scored.other', { player: playerName })}</p>}
-    {legalMoves.length === 1 &&
-      <PlayMoveButton move={legalMoves[0]} onPlay={close}>
-        {deck ? t('rules.card.draw') : t('rules.card.discard')}
-      </PlayMoveButton>
-    }
+    {scored && item.location?.player !== player && <p>{t('rules.card.scored.other', { player: playerName })}</p>}
+    {draw && <PlayMoveButton move={draw} onPlay={closeDialog}>{t('rules.card.draw')}</PlayMoveButton>}
+    {discard && <PlayMoveButton move={discard} onPlay={closeDialog}>{t('rules.card.discard')}</PlayMoveButton>}
     <hr/>
     {item.id !== undefined &&
       <section css={cardText}>
@@ -55,7 +55,7 @@ export const CardRules = (props: MaterialRulesProps) => {
   </>
 }
 
-const HandCardRules = ({ item, close }: MaterialRulesProps) => {
+const HandCardRules = ({ item, closeDialog }: MaterialRulesProps) => {
   const { t } = useTranslation()
   const player = usePlayerId<Color>()
   const rules = useRules<ExpeditionRules>()!
@@ -69,7 +69,7 @@ const HandCardRules = ({ item, close }: MaterialRulesProps) => {
     {mine && isRevealed && <p>{t('rules.card.hand.revealed')}</p>}
     {placeTokenMove &&
       <Trans defaults="rules.card.hand.place.token" components={[
-        <PlayMoveButton move={placeTokenMove} onPlay={close}/>
+        <PlayMoveButton move={placeTokenMove} onPlay={closeDialog}/>
       ]}/>
     }
     {rules.game.rule?.id === RuleId.SetupKeyPlaces && rules.game.rule.player === player && places2StepsFromStart.includes(item.id) &&
