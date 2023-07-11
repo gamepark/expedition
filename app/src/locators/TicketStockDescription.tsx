@@ -6,7 +6,7 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { ticketDescription } from '../material/TicketDescription'
 
 export class TicketStockDescription extends LocationDescription<Color, MaterialType, LocationType> {
-  locations = [{ type: LocationType.TicketStock }]
+  location = { type: LocationType.TicketStock }
   width = ticketDescription.width + 6
   ratio = 1
   borderRadius = this.width / 2
