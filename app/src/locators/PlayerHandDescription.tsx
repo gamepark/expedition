@@ -7,7 +7,7 @@ import { Location } from '@gamepark/rules-api'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 
 export class PlayerHandDescription extends LocationDescription<Color, MaterialType, LocationType> {
-  locations = [{ type: LocationType.Hand }]
+  location = { type: LocationType.Hand }
   width = 60
   height = 11
   borderRadius = 0.5

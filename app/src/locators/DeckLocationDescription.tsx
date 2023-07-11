@@ -6,7 +6,7 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { placeCardDescription } from '../material/PlaceCardDescription'
 
 export class DeckLocationDescription extends LocationDescription<Color, MaterialType, LocationType> {
-  locations = [{ type: LocationType.Deck }]
+  location = { type: LocationType.Deck }
   width = placeCardDescription.width + 1
   height = placeCardDescription.width / placeCardDescription.ratio + 1
   borderRadius = placeCardDescription.borderRadius
