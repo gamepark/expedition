@@ -1,22 +1,23 @@
 /** @jsxImportSource @emotion/react */
-import { linkButtonCss, LocationRulesProps, MaterialComponent, PlayMoveButton, useLegalMoves, usePlayerId, useRules } from '@gamepark/react-game'
-import Color from '@gamepark/expedition/Color'
+import { linkButtonCss, LocationRulesProps, MaterialComponent, PlayMoveButton, useLegalMove, useLegalMoves, usePlayerId, useRules } from '@gamepark/react-game'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { Trans, useTranslation } from 'react-i18next'
 import { isBlueNode, isGreenNode, isRedNode, isRoadToNode, Node, RedNode } from '@gamepark/expedition/material/Road'
 import { TFunction } from 'i18next'
-import { displayMaterialRules, isMoveItemLocation, MoveItem } from '@gamepark/rules-api'
+import { displayMaterialRules, isMoveItem, isMoveItemLocation, MaterialMove, MoveItem } from '@gamepark/rules-api'
 import { arrowColors } from '@gamepark/expedition/material/ArrowColor'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { css } from '@emotion/react'
 import { Place, places2StepsFromStart } from '@gamepark/expedition/material/Place'
 import { RuleId } from '@gamepark/expedition/rules/RuleId'
+import equal from 'fast-deep-equal'
 
-export const PlaceRules = ({ location, legalMoves, close }: LocationRulesProps<Color, MaterialType, LocationType>) => {
+export const PlaceRules = ({ location, closeDialog }: LocationRulesProps) => {
   const { t } = useTranslation()
   const player = usePlayerId()
   const rules = useRules<ExpeditionRules>()
+  const placeToken = useLegalMove((move: MaterialMove) => isMoveItem(move, MaterialType.Token) && equal(move.position.location, location))
   const arrowMoves = useLegalMoves<MoveItem>(move =>
     isMoveItemLocation(move, MaterialType.Arrow) && isRoadToNode(location.id, move.position.location, move.position.rotation?.z === 1)
   )
@@ -27,9 +28,9 @@ export const PlaceRules = ({ location, legalMoves, close }: LocationRulesProps<C
       <p>{t('rules.place.red.border')}</p>
     }
     {isGreenNode(location.id) && <GreenPlaceDetails place={location.id}/>}
-    {legalMoves.length > 0 &&
+    {placeToken &&
       <p>
-        <PlayMoveButton move={legalMoves[0]} onPlay={close}>
+        <PlayMoveButton move={placeToken} onPlay={closeDialog}>
           {t('rules.place.token')}
         </PlayMoveButton>
       </p>
@@ -41,7 +42,7 @@ export const PlaceRules = ({ location, legalMoves, close }: LocationRulesProps<C
       const move = arrowMoves.find(move => rules?.items(MaterialType.Arrow)[move.itemIndex].id === color)
       return move ?
         <p key={color}>
-          <PlayMoveButton move={move} css={placeArrowButton} onPlay={close}>
+          <PlayMoveButton move={move} css={placeArrowButton} onPlay={closeDialog}>
             <MaterialComponent type={MaterialType.Arrow} itemId={color} css={buttonArrowCss}/>
             {t('rules.place.arrow', { color })}
           </PlayMoveButton>

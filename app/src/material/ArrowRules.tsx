@@ -23,7 +23,7 @@ export const ArrowRules = ({ item, itemIndex, closeDialog }: MaterialRulesProps)
     }
     <hr/>
     <p><Trans defaults="rules.arrow.purpose" components={[<strong/>]}/></p>
-    {item.location?.type === LocationType.Road && <RoadMovesButtons road={item.location.id} close={closeDialog}/>}
+    {item.location?.type === LocationType.Road && <RoadMovesButtons road={item.location.id} closeDialog={closeDialog}/>}
   </>
 }
 

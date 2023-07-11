@@ -11,10 +11,10 @@ import equal from 'fast-deep-equal'
 
 type RoadMovesButtonsProps = {
   road: Road
-  close: () => void
+  closeDialog: () => void
 }
 
-export const RoadMovesButtons = ({ road, close }: RoadMovesButtonsProps) => {
+export const RoadMovesButtons = ({ road, closeDialog }: RoadMovesButtonsProps) => {
   const { t } = useTranslation()
   const rules = useRules<ExpeditionRules>()
   const legalMoves = useLegalMoves<MoveItem>(move => isMoveItem(move, MaterialType.Arrow)
@@ -24,7 +24,7 @@ export const RoadMovesButtons = ({ road, close }: RoadMovesButtonsProps) => {
       const color = rules?.items(MaterialType.Arrow)[(move as MoveItem).itemIndex].id
       return (
         <p key={color}>
-          <PlayMoveButton move={move} css={placeArrowButton} onPlay={close}>
+          <PlayMoveButton move={move} css={placeArrowButton} onPlay={closeDialog}>
             <MaterialComponent type={MaterialType.Arrow} itemId={color} css={buttonArrowCss}/>
             {t('rules.road.placeArrow', { color })}
           </PlayMoveButton>
