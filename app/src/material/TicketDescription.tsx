@@ -9,16 +9,8 @@ class TicketDescription extends TokenDescription {
   height = 2
   width = 3.25
   image = ticket
-
   rules = TicketRules
-
-  item = {
-    quantity: 10,
-    location: {
-      type: LocationType.TicketStock
-    }
-  }
-
+  staticItem = { quantity: 10, location: { type: LocationType.TicketStock } }
   stockLocation = ticketStockLocation
 }
 

@@ -11,7 +11,7 @@ class ExpeditionBoardDescription extends BoardDescription {
   image = board
   height = 56
   width = 74
-  item = { location: { type: LocationType.Board } }
+  staticItem = { location: { type: LocationType.Board } }
   thickness = 0 // Can be removed once the animations are parabolic so that the material do not pass under the board
   locations = nodes.map<Location>(place => ({ type: LocationType.Place, id: place }))
     .concat([

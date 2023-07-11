@@ -52,7 +52,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
         position: { x: 45, y: 0 }
       },
       focus: () => [
-        { type: MaterialType.Board, item: boardDescription.item },
+        { type: MaterialType.Board, item: boardDescription.staticItem },
         ...places.map(place => this.location(LocationType.Place).id(place))
       ]
     },
@@ -62,7 +62,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
         position: { x: 45, y: 0 }
       },
       focus: (game: MaterialGame) => [
-        { type: MaterialType.Board, item: boardDescription.item },
+        { type: MaterialType.Board, item: boardDescription.staticItem },
         ...this.material(game, MaterialType.Card).player(Color.Blue).getItems().map(card =>
           this.location(LocationType.Place).id(card.id)
         )

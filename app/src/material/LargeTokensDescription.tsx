@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { LargeTokenRules } from './LargeTokenRules'
-import { MaterialGame } from '@gamepark/rules-api'
 import { PlayerTokenDescription } from './PlayerTokenDescription'
+import { MaterialContext } from '@gamepark/react-game'
 
 export class LargeTokenDescription extends PlayerTokenDescription {
   diameter = 3.5
 
-  getItems(game: MaterialGame) {
+  getStaticItems({ game }: MaterialContext) {
     return game.players.map(color => ({
       id: color,
       location: { type: LocationType.PlayerArea, player: color }
