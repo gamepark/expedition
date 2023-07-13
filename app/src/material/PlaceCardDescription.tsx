@@ -81,9 +81,14 @@ import Perth from '../images/cards/en/78-Perth.jpg'
 import Tasmania from '../images/cards/en/79-Tasmania.jpg'
 import FiordlandNationalPark from '../images/cards/en/80-FiordlandNationalPark.jpg'
 
-import { CardDescription } from '@gamepark/react-game'
+import { CardDescription, ItemContext } from '@gamepark/react-game'
 import { Place } from '@gamepark/expedition/material/Place'
 import { CardRules } from './CardRules'
+import { isCustomMove, MaterialMove } from '@gamepark/rules-api'
+import { CustomMoveType } from '@gamepark/expedition/rules/CustomMoveType'
+import { LocationType } from '@gamepark/expedition/material/LocationType'
+import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
+import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 
 export class PlaceCardDescription extends CardDescription {
   backImage = back
@@ -172,6 +177,16 @@ export class PlaceCardDescription extends CardDescription {
   }
 
   rules = CardRules
+
+  canDrag(move: MaterialMove, context: ItemContext): boolean {
+    return super.canDrag(move, context) || this.canDrawCard(move, context)
+  }
+
+  canDrawCard(move: MaterialMove, { game, index }: ItemContext) {
+    if (!isCustomMove(move, CustomMoveType.ExchangeCard)) return false
+    const topDeckCard = new ExpeditionRules(game).material(MaterialType.Card).location(LocationType.Deck).maxBy(item => item.location.x!)
+    return topDeckCard.getIndex() === index
+  }
 }
 
 export const placeCardDescription = new PlaceCardDescription()
