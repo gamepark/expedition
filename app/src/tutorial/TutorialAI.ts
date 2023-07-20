@@ -1,4 +1,4 @@
-import { GameAI } from '@gamepark/react-client'
+import { GameAI } from '@gamepark/react-game'
 import { isEndGame, isMoveItem, isStartPlayerTurn, MaterialGame, MaterialMove, MoveKind, playAction } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
