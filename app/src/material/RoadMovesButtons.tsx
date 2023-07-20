@@ -2,12 +2,13 @@
 import { MaterialComponent, PlayMoveButton, useLegalMoves, useRules } from '@gamepark/react-game'
 import { useTranslation } from 'react-i18next'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
-import { isMoveItem, MoveItem } from '@gamepark/rules-api'
+import { isMoveItem, ItemPosition, MoveItem } from '@gamepark/rules-api'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { css } from '@emotion/react'
-import { Road } from '@gamepark/expedition/material/Road'
+import { arrowRoad, Road } from '@gamepark/expedition/material/Road'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import equal from 'fast-deep-equal'
+import { getPlaceTitle } from '../locators/PlaceRules'
 
 type RoadMovesButtonsProps = {
   road: Road
@@ -23,10 +24,10 @@ export const RoadMovesButtons = ({ road, closeDialog }: RoadMovesButtonsProps) =
     {legalMoves.map(move => {
       const color = rules?.items(MaterialType.Arrow)[(move as MoveItem).itemIndex].id
       return (
-        <p key={color}>
+        <p key={JSON.stringify(move)}>
           <PlayMoveButton move={move} css={placeArrowButton} onPlay={closeDialog}>
             <MaterialComponent type={MaterialType.Arrow} itemId={color} css={buttonArrowCss}/>
-            {t('rules.road.placeArrow', { color })}
+            {t('rules.place.arrow', { color, destination: getPlaceTitle(t, arrowRoad(move.position as ItemPosition)[1]) })}
           </PlayMoveButton>
         </p>
       )

@@ -44,7 +44,7 @@ export const PlaceRules = ({ location, closeDialog }: LocationRulesProps) => {
         <p key={color}>
           <PlayMoveButton move={move} css={placeArrowButton} onPlay={closeDialog}>
             <MaterialComponent type={MaterialType.Arrow} itemId={color} css={buttonArrowCss}/>
-            {t('rules.place.arrow', { color })}
+            {t('rules.place.arrow', { color, destination: getPlaceTitle(t, location.id) })}
           </PlayMoveButton>
         </p>
         : null
@@ -75,7 +75,7 @@ const buttonArrowCss = css`
   transform: translate(-3.2em, -1.7em) rotate(90deg);
 `
 
-const getPlaceTitle = (t: TFunction, place: Node) => {
+export const getPlaceTitle = (t: TFunction, place: Node) => {
   if (isBlueNode(place)) return t('rules.place.blue.title')
   else if (isRedNode(place)) return t('rules.place.red.title')
   else if (isGreenNode(place)) return t(`place.${place}.name`)
