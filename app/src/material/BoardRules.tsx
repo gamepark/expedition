@@ -11,9 +11,11 @@ export const BoardRules = () => {
     <p>{t('rules.board.place.compass')}</p>
     <p>{t('rules.board.place.green')}</p>
     <p>{t('rules.board.place.blue')}</p>
-    <p><Trans defaults="rules.board.place.red" components={[
-      <PlayMoveButton css={linkButtonCss} move={displayMaterialRules(MaterialType.Ticket)} local/>
-    ]}/></p>
+    <p>
+      <Trans defaults="rules.board.place.red">
+        <PlayMoveButton css={linkButtonCss} move={displayMaterialRules(MaterialType.Ticket)} local/>
+      </Trans>
+    </p>
     <p>{t('rules.board.road')}</p>
   </>
 }

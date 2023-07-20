@@ -19,22 +19,29 @@ export const PlayerTurnHeader = () => {
   const canPlaceArrow = legalMoves.some(move => isMoveItem(move, MaterialType.Arrow))
   if (!passMove) {
     if (playTicket) {
-      return <Trans defaults="header.turn.arrowTicket" components={[<PlayMoveButton move={playTicket}/>]}/>
+      return <Trans defaults="header.turn.arrowTicket"><PlayMoveButton move={playTicket}/></Trans>
     } else {
       return <>{t('header.turn.arrow')}</>
     }
   } else if (canPlaceArrow) {
     if (playTicket) {
-      return <Trans defaults="header.turn.extraArrowTicket" components={[<PlayMoveButton move={playTicket}/>,
-        <PlayMoveButton move={passMove} confirmation={{ text: t('header.turn.confirm-pass')! }}/>]}/>
+      return (
+        <Trans defaults="header.turn.extraArrowTicket">
+          <PlayMoveButton move={playTicket}/>
+          <PlayMoveButton move={passMove} confirmation={{ text: t('header.turn.confirm-pass')! }}/>
+        </Trans>
+      )
     } else {
-      return <Trans defaults="header.turn.extraArrow"
-                    components={[<PlayMoveButton move={passMove} confirmation={{ text: t('header.turn.confirm-pass')! }}/>]}/>
+      return <Trans defaults="header.turn.extraArrow"><PlayMoveButton move={passMove} confirmation={{ text: t('header.turn.confirm-pass')! }}/></Trans>
     }
   } else if (playTicket) {
-    return <Trans defaults="header.turn.ticket"
-                  components={[<PlayMoveButton move={playTicket}/>, <PlayMoveButton move={passMove}/>]}/>
+    return (
+      <Trans defaults="header.turn.ticket">
+        <PlayMoveButton move={playTicket}/>
+        <PlayMoveButton move={passMove}/>
+      </Trans>
+    )
   } else {
-    return <Trans defaults="header.turn.pass" components={[<PlayMoveButton move={passMove}/>]}/>
+    return <Trans defaults="header.turn.pass"><PlayMoveButton move={passMove}/></Trans>
   }
 }

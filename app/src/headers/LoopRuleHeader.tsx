@@ -14,5 +14,9 @@ export const LoopRuleHeader = () => {
   if (!passMove) {
     return <>{t('header.loop', { player: playerName, arrow: expeditionColor })}</>
   }
-  return <Trans defaults="header.loop.me" components={[<PlayMoveButton move={passMove}/>]} values={{ arrow: expeditionColor }}/>
+  return (
+    <Trans defaults="header.loop.me" values={{ arrow: expeditionColor }}>
+      <PlayMoveButton move={passMove}/>
+    </Trans>
+  )
 }

@@ -84,9 +84,11 @@ const getPlaceTitle = (t: TFunction, place: Node) => {
 
 const getPlaceText = (t: TFunction, place: Node) => {
   if (isBlueNode(place)) return t('rules.board.place.blue')
-  else if (isRedNode(place)) return <Trans defaults="rules.board.place.red" components={[
-    <PlayMoveButton css={linkButtonCss} move={displayMaterialRules(MaterialType.Ticket)} local/>
-  ]}/>
+  else if (isRedNode(place)) return (
+    <Trans defaults="rules.board.place.red">
+      <PlayMoveButton css={linkButtonCss} move={displayMaterialRules(MaterialType.Ticket)} local/>
+    </Trans>
+  )
   else if (isGreenNode(place)) return t('rules.board.place.green')
   else return t('rules.board.place.compass')
 }

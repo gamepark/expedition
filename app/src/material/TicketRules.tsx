@@ -23,6 +23,6 @@ export const TicketRules = ({ item, itemIndex, closeDialog }: MaterialRulesProps
     {owner !== undefined && !mine &&
       <p>{t('rules.ticket.other', { number: item.quantity, player: playerName })}</p>}
     <hr/>
-    <p><Trans defaults="rules.ticket.purpose" components={[<strong/>]}/></p>
+    <p><Trans defaults="rules.ticket.purpose"><strong/></Trans></p>
   </>
 }

@@ -37,7 +37,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
 
   steps: TutorialStep<Color, MaterialType, LocationType>[] = [
     {
-      popup: { text: () => <Trans defaults="tuto.welcome" components={[<strong/>]}/> }
+      popup: { text: () => <Trans defaults="tuto.welcome"><strong/></Trans> }
     },
     {
       popup: { text: (t: TFunction) => t('tuto.goal') }
@@ -258,7 +258,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     },
     {
       popup: {
-        text: () => <Trans defaults="tuto.loop" components={[<strong/>]}/>
+        text: () => <Trans defaults="tuto.loop"><strong/></Trans>
       }
     },
     {

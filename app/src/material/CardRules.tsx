@@ -68,9 +68,9 @@ const HandCardRules = ({ item, closeDialog }: MaterialRulesProps) => {
     {mine && !isRevealed && <p>{t('rules.card.hand.private')}</p>}
     {mine && isRevealed && <p>{t('rules.card.hand.revealed')}</p>}
     {placeTokenMove &&
-      <Trans defaults="rules.card.hand.place.token" components={[
+      <Trans defaults="rules.card.hand.place.token">
         <PlayMoveButton move={placeTokenMove} onPlay={closeDialog}/>
-      ]}/>
+      </Trans>
     }
     {rules.game.rule?.id === RuleId.SetupKeyPlaces && rules.game.rule.player === player && places2StepsFromStart.includes(item.id) &&
       <p>{t('rules.place.token.forbidden')}</p>

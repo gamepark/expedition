@@ -14,7 +14,7 @@ export const TicketRuleHeader = () => {
   const exchangeCard = legalMoves.find(move => isCustomMove(move, CustomMoveType.ExchangeCard))
   const playerName = usePlayerName(rule.player!)
   if (legalMoves.length) {
-    return <Trans defaults="header.ticket.me" components={[<PlayMoveButton move={exchangeCard}/>]}/>
+    return <Trans defaults="header.ticket.me"><PlayMoveButton move={exchangeCard}/></Trans>
   } else {
     return <>{t('header.ticket', { player: playerName })}</>
   }

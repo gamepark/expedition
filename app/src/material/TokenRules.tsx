@@ -7,6 +7,6 @@ export const TokenRules = ({ item }: MaterialRulesProps) => {
   const playerName = usePlayerName(item.id!)
   return <>
     <h2>{t('rules.token.title', { player: playerName })}</h2>
-    <p><Trans defaults="rules.token.purpose" components={[<strong/>]}/></p>
+    <p><Trans defaults="rules.token.purpose"><strong/></Trans></p>
   </>
 }
