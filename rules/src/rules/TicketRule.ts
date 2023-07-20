@@ -1,4 +1,4 @@
-import { CustomMove, isStartRule, ItemMove, ItemMoveType, MaterialMove, MoveItem } from '@gamepark/rules-api'
+import { CustomMove, ItemMove, ItemMoveType, MaterialMove } from '@gamepark/rules-api'
 import { MaterialType } from '../material/ExpeditionMaterial'
 import { LocationType } from '../material/LocationType'
 import Color from '../Color'
@@ -39,12 +39,8 @@ export class TicketRule extends PlayerTurn {
     return []
   }
 
-  afterArrowMove(move: MoveItem<Color, MaterialType, LocationType>) {
-    const consequences = super.afterArrowMove(move)
-    if (!consequences.some(move => isStartRule(move))) {
-      consequences.push(this.rules().startRule(RuleId.PlayerTurn))
-    }
-    return consequences
+  getRuleAfterArrowMove(): RuleId | undefined {
+    return super.getRuleAfterArrowMove() ?? RuleId.PlayerTurn
   }
 
   onCustomMove(move: CustomMove) {

@@ -120,11 +120,20 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
         this.memorizeOnGame({ lastTurn: true })
       }
     }
-    const { expeditionColor } = this.getMemory<PlayerTurnMemory>()
-    if (expeditionColor && new Expedition(expeditionColor, this.material(MaterialType.Arrow)).loop) {
-      consequences.push(this.rules().startRule(RuleId.LoopRule, this.player))
+    const newRule = this.getRuleAfterArrowMove()
+    if (newRule !== undefined) {
+      consequences.push(this.rules().startRule(newRule))
     }
     return consequences
+  }
+
+  getRuleAfterArrowMove(): RuleId | undefined {
+    return this.loopCreated() ? RuleId.LoopRule : undefined
+  }
+
+  loopCreated() {
+    const { expeditionColor } = this.getMemory<PlayerTurnMemory>()
+    return expeditionColor && new Expedition(expeditionColor, this.material(MaterialType.Arrow)).loop
   }
 
   onReachNode(node: Node) {
