@@ -24,7 +24,7 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
   }
 
   giveTime(): number {
-    return 30
+    return 40
   }
 
   rankPlayers(playerA: Color, playerB: Color): number {
