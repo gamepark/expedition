@@ -5,7 +5,7 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { Trans, useTranslation } from 'react-i18next'
 import { isBlueNode, isGreenNode, isRedNode, isRoadToNode, Node, RedNode } from '@gamepark/expedition/material/Road'
 import { TFunction } from 'i18next'
-import { displayMaterialRules, isMoveItem, isMoveItemLocation, MaterialMove, MoveItem } from '@gamepark/rules-api'
+import { displayMaterialRules, isMoveItemType, isMoveItemTypeLocation, MaterialMove, MoveItem } from '@gamepark/rules-api'
 import { arrowColors } from '@gamepark/expedition/material/ArrowColor'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { css } from '@emotion/react'
@@ -17,9 +17,9 @@ export const PlaceRules = ({ location, closeDialog }: LocationRulesProps) => {
   const { t } = useTranslation()
   const player = usePlayerId()
   const rules = useRules<ExpeditionRules>()
-  const placeToken = useLegalMove((move: MaterialMove) => isMoveItem(move, MaterialType.Token) && equal(move.position.location, location))
+  const placeToken = useLegalMove((move: MaterialMove) => isMoveItemType(MaterialType.Token)(move) && equal(move.position.location, location))
   const arrowMoves = useLegalMoves<MoveItem>(move =>
-    isMoveItemLocation(move, MaterialType.Arrow) && isRoadToNode(location.id, move.position.location, move.position.rotation?.z === 1)
+    isMoveItemTypeLocation(MaterialType.Arrow)(move) && isRoadToNode(location.id, move.position.location, move.position.rotation?.z === 1)
   )
   return <>
     <h2>{getPlaceTitle(t, location.id)}</h2>

@@ -2,7 +2,7 @@
 import { MaterialComponent, PlayMoveButton, useLegalMoves, useRules } from '@gamepark/react-game'
 import { useTranslation } from 'react-i18next'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
-import { isMoveItem, ItemPosition, MoveItem } from '@gamepark/rules-api'
+import { isMoveItemType, ItemPosition, MoveItem } from '@gamepark/rules-api'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { css } from '@emotion/react'
 import { arrowRoad, Road } from '@gamepark/expedition/material/Road'
@@ -18,7 +18,7 @@ type RoadMovesButtonsProps = {
 export const RoadMovesButtons = ({ road, closeDialog }: RoadMovesButtonsProps) => {
   const { t } = useTranslation()
   const rules = useRules<ExpeditionRules>()
-  const legalMoves = useLegalMoves<MoveItem>(move => isMoveItem(move, MaterialType.Arrow)
+  const legalMoves = useLegalMoves<MoveItem>(move => isMoveItemType(MaterialType.Arrow)(move)
     && move.position.location?.type === LocationType.Road && equal(move.position.location.id, road))
   return <>
     {legalMoves.map(move => {

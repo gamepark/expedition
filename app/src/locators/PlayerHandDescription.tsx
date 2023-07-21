@@ -20,6 +20,6 @@ export class PlayerHandDescription extends LocationDescription<Color, MaterialTy
   }
 
   canDrop(move: MaterialMove): boolean {
-    return isCustomMove(move, CustomMoveType.ExchangeCard)
+    return isCustomMove(move) && move.type === CustomMoveType.ExchangeCard
   }
 }

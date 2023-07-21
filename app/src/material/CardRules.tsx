@@ -4,7 +4,7 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { Trans, useTranslation } from 'react-i18next'
 import Color from '@gamepark/expedition/Color'
-import { isCustomMove, isMoveItem, isMoveItemLocation, MaterialMove, MoveItem } from '@gamepark/rules-api'
+import { isCustomMoveType, isMoveItemType, isMoveItemTypeLocation, MaterialMove, MoveItem } from '@gamepark/rules-api'
 import { RuleId } from '@gamepark/expedition/rules/RuleId'
 import { Place, places2StepsFromStart } from '@gamepark/expedition/material/Place'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
@@ -17,9 +17,9 @@ export const CardRules = (props: MaterialRulesProps) => {
   const { t } = useTranslation()
   const rules = useRules<ExpeditionRules>()!
   const discard = useLegalMove((move: MaterialMove) =>
-    isMoveItem(move, MaterialType.Card, itemIndex) && move.position.location?.type === LocationType.Deck
+    isMoveItemType(MaterialType.Card, itemIndex)(move) && move.position.location?.type === LocationType.Deck
   )
-  const draw = useLegalMove((move: MaterialMove) => isCustomMove(move, CustomMoveType.ExchangeCard))
+  const draw = useLegalMove(isCustomMoveType(CustomMoveType.ExchangeCard))
   const player = usePlayerId<Color>()
   const deck = item.location?.type === LocationType.Deck
   const hand = item.location?.type === LocationType.Hand
@@ -60,7 +60,7 @@ const HandCardRules = ({ item, closeDialog }: MaterialRulesProps) => {
   const player = usePlayerId<Color>()
   const rules = useRules<ExpeditionRules>()!
   const mine = player !== undefined && item.location?.player === player
-  const placeTokenMove = useLegalMove<MoveItem>(move => isMoveItemLocation(move, MaterialType.Token) && move.position.location.id === item.id)
+  const placeTokenMove = useLegalMove<MoveItem>(move => isMoveItemTypeLocation(MaterialType.Token)(move) && move.position.location.id === item.id)
   const tokens = rules.material(MaterialType.Token)
   const isRevealed = mine && tokens.location(LocationType.Place).locationId(item.id).length > 0
   const playerName = usePlayerName(item.location!.player!)

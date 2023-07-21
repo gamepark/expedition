@@ -5,13 +5,13 @@ import { TFunction } from 'i18next'
 import { Trans, useTranslation } from 'react-i18next'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { RoadMovesButtons } from './RoadMovesButtons'
-import { isMoveItem, MaterialMove } from '@gamepark/rules-api'
+import { isMoveItemType, MaterialMove } from '@gamepark/rules-api'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 
 export const ArrowRules = ({ item, itemIndex, closeDialog }: MaterialRulesProps) => {
   const { t } = useTranslation()
   const removeArrow = useLegalMove((move: MaterialMove) =>
-    isMoveItem(move, MaterialType.Arrow, itemIndex) && move.position.location?.type === LocationType.ArrowsStock
+    isMoveItemType(MaterialType.Arrow, itemIndex)(move) && move.position.location?.type === LocationType.ArrowsStock
   )
   return <>
     <h2>{arrowTitle[item.id!](t)}</h2>

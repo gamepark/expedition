@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { TutorialSetup } from './TutorialSetup'
 import { TFunction } from 'i18next'
-import { isDeleteItem, isMoveItem, isStartPlayerTurn, MaterialGame, MaterialMove } from '@gamepark/rules-api'
+import { isDeleteItemType, isMoveItem, isStartPlayerTurn, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { MaterialTutorial, TutorialStep } from '@gamepark/react-game'
 import { Place, places } from '@gamepark/expedition/material/Place'
 import Color from '@gamepark/expedition/Color'
@@ -234,7 +234,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
       },
       focus: (game: MaterialGame) => this.material(game, MaterialType.Ticket).player(Color.Blue),
       move: {
-        filter: (move: MaterialMove) => isDeleteItem(move, MaterialType.Ticket)
+        filter: (move: MaterialMove) => isDeleteItemType(MaterialType.Ticket)(move)
       }
     },
     {

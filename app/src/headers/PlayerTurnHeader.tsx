@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { Trans, useTranslation } from 'react-i18next'
-import { isDeleteItem, isEndGame, isMoveItem, isStartPlayerTurn, MaterialGame, MaterialMove } from '@gamepark/rules-api'
+import { isDeleteItemType, isEndGame, isMoveItemType, isStartPlayerTurn, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { PlayMoveButton, useGame, useLegalMoves, usePlayerName } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
@@ -15,8 +15,8 @@ export const PlayerTurnHeader = () => {
     return <>{t('header.turn', { player: playerName })}</>
   }
   const passMove = legalMoves.find(move => isStartPlayerTurn(move) || isEndGame(move))
-  const playTicket = legalMoves.find(move => isDeleteItem(move, MaterialType.Ticket))
-  const canPlaceArrow = legalMoves.some(move => isMoveItem(move, MaterialType.Arrow))
+  const playTicket = legalMoves.find(isDeleteItemType(MaterialType.Ticket))
+  const canPlaceArrow = legalMoves.some(isMoveItemType(MaterialType.Arrow))
   if (!passMove) {
     if (playTicket) {
       return <Trans defaults="header.turn.arrowTicket"><PlayMoveButton move={playTicket}/></Trans>

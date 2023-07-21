@@ -1,5 +1,5 @@
 import { GameAI } from '@gamepark/react-game'
-import { isEndGame, isMoveItem, isStartPlayerTurn, MaterialGame, MaterialMove, MoveKind, playAction } from '@gamepark/rules-api'
+import { isEndGame, isMoveItemType, isStartPlayerTurn, MaterialGame, MaterialMove, MoveKind, playAction } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
@@ -71,7 +71,7 @@ const isPassWhenICanPlaceArrow = (move: MaterialMove, legalMoves: MaterialMove[]
 
 const isPass = (move: MaterialMove) => isStartPlayerTurn(move) || isEndGame(move)
 
-const isPlaceArrow = (move: MaterialMove) => isMoveItem(move, MaterialType.Arrow) && move.position.location?.type === LocationType.Road
+const isPlaceArrow = (move: MaterialMove) => isMoveItemType(MaterialType.Arrow)(move) && move.position.location?.type === LocationType.Road
 
 const isPlaceFirstArrowWithTicket = (rules: ExpeditionRules, move: MaterialMove) =>
   !arrowWasPlaced(rules) && rules.game.rule?.id === RuleId.TicketRule && isPlaceArrow(move)
@@ -80,7 +80,7 @@ const isRemoveArrowAfterPlacingArrow = (rules: ExpeditionRules, move: MaterialMo
 
 const arrowWasPlaced = (rules: ExpeditionRules) => rules.rulesStep?.getMemory<PlayerTurnMemory>().arrowPlaced
 
-const isRemoveArrow = (move: MaterialMove) => isMoveItem(move, MaterialType.Arrow) && move.position.location?.type === LocationType.ArrowsStock
+const isRemoveArrow = (move: MaterialMove) => isMoveItemType(MaterialType.Arrow)(move) && move.position.location?.type === LocationType.ArrowsStock
 
 
 

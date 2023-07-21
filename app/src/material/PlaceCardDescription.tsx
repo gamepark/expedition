@@ -183,7 +183,7 @@ export class PlaceCardDescription extends CardDescription {
   }
 
   canDrawCard(move: MaterialMove, { game, index }: ItemContext) {
-    if (!isCustomMove(move, CustomMoveType.ExchangeCard)) return false
+    if (!isCustomMove(move) || move.type !== CustomMoveType.ExchangeCard) return false
     const topDeckCard = new ExpeditionRules(game).material(MaterialType.Card).location(LocationType.Deck).maxBy(item => item.location.x!)
     return topDeckCard.getIndex() === index
   }

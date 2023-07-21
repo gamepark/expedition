@@ -2,12 +2,12 @@
 import { MaterialRulesProps, PlayMoveButton, useLegalMove, usePlayerId, usePlayerName } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { Trans, useTranslation } from 'react-i18next'
-import { isDeleteItem, MaterialMove } from '@gamepark/rules-api'
+import { DeleteItem, isDeleteItemType } from '@gamepark/rules-api'
 import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
 
 export const TicketRules = ({ item, itemIndex, closeDialog }: MaterialRulesProps) => {
   const { t } = useTranslation()
-  const legalMove = useLegalMove((move: MaterialMove) => isDeleteItem(move, MaterialType.Ticket, itemIndex))
+  const legalMove = useLegalMove<DeleteItem>(isDeleteItemType(MaterialType.Ticket, itemIndex))
   const player = usePlayerId<Color>()
   const owner = item.location?.player
   const mine = owner !== undefined && owner === player
