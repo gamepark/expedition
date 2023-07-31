@@ -1,16 +1,16 @@
 import { MaterialType } from '../material/ExpeditionMaterial'
 import { Expedition } from './Expedition'
-import { PlayerTurn, PlayerTurnMemory } from './PlayerTurn'
+import { PlayerTurn } from './PlayerTurn'
 import { RuleId } from './RuleId'
+import { Memory } from './Memory'
 
 export class LoopRule extends PlayerTurn {
   isFreeArrow = true
 
   getPlayerMoves() {
-    const { expeditionColor } = this.getMemory<PlayerTurnMemory>()
     return [
       this.passMove,
-      ...new Expedition(expeditionColor!, this.material(MaterialType.Arrow)).getLegalMoves()
+      ...new Expedition(this.remind(Memory.LastArrowMoved), this.material(MaterialType.Arrow)).getLegalMoves()
     ]
   }
 

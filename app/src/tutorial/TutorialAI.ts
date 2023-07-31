@@ -7,7 +7,7 @@ import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import maxBy from 'lodash/maxBy'
 import { CustomMoveType } from '@gamepark/expedition/rules/CustomMoveType'
 import { RuleId } from '@gamepark/expedition/rules/RuleId'
-import { PlayerTurnMemory } from '@gamepark/expedition/rules/PlayerTurn'
+import { Memory } from '@gamepark/expedition/rules/Memory'
 
 const TICKET_WEIGHT = 1
 type Path = { moves: MaterialMove<Color, MaterialType, LocationType>[], score: number }
@@ -27,7 +27,7 @@ const computeBestPath = (game: MaterialGame, bot: Color, path: MaterialMove[] = 
   const legalMoves = rules.getLegalMoves(bot)
   if (legalMoves.length === 0 || iteration >= 4) {
     const botScore = rules.getScore(bot)
-    const ticketsPotential = rules.isLastTurn ? 0 : countPlayerTickets(rules, bot) * TICKET_WEIGHT
+    const ticketsPotential = rules.remind(Memory.LastTurn) ? 0 : countPlayerTickets(rules, bot) * TICKET_WEIGHT
     return {
       moves: path,
       score: botScore + ticketsPotential
@@ -78,7 +78,7 @@ const isPlaceFirstArrowWithTicket = (rules: ExpeditionRules, move: MaterialMove)
 
 const isRemoveArrowAfterPlacingArrow = (rules: ExpeditionRules, move: MaterialMove) => arrowWasPlaced(rules) && isRemoveArrow(move)
 
-const arrowWasPlaced = (rules: ExpeditionRules) => rules.rulesStep?.getMemory<PlayerTurnMemory>().arrowPlaced
+const arrowWasPlaced = (rules: ExpeditionRules) => rules.rulesStep?.remind(Memory.ArrowPlaced)
 
 const isRemoveArrow = (move: MaterialMove) => isMoveItemType(MaterialType.Arrow)(move) && move.position.location?.type === LocationType.ArrowsStock
 

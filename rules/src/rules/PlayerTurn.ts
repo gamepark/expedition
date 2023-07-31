@@ -1,40 +1,33 @@
-import { isMoveItemLocation, ItemMove, ItemMoveType, MaterialMove, MoveItem, PlayerTurnRule, RuleMove, RuleMoveType, RuleStep } from '@gamepark/rules-api'
+import { isMoveItemLocation, ItemMove, ItemMoveType, MaterialMove, MoveItem, PlayerTurnRule, RuleMove, RuleMoveType } from '@gamepark/rules-api'
 import Color from '../Color'
 import { MaterialType } from '../material/ExpeditionMaterial'
 import { LocationType } from '../material/LocationType'
-import { ArrowColor, arrowColors } from '../material/ArrowColor'
+import { arrowColors } from '../material/ArrowColor'
 import { RuleId } from './RuleId'
 import { Expedition } from './Expedition'
 import { arrowRoad, isBlueNode, isGreenNode, isRedNode, Node } from '../material/Road'
 import { Place } from '../material/Place'
-
-export type PlayerTurnMemory = {
-  arrowsLeft: number
-  ticketsPlayed: number
-  arrowPlaced?: boolean
-  expeditionColor?: ArrowColor
-}
+import { Memory } from './Memory'
 
 export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType> {
   isFreeArrow = false
 
-  onRuleStart(move: RuleMove, previousRule?: RuleStep) {
+  onRuleStart(move: RuleMove) {
     if (move.type === RuleMoveType.StartPlayerTurn) {
-      this.memorize<PlayerTurnMemory>({ arrowsLeft: 1, ticketsPlayed: 0 })
-    } else if (move.type === RuleMoveType.StartRule) {
-      this.memorize(previousRule?.memory)
-      this.memorize(move.memory)
+      this.memorize(Memory.ArrowsLeft, 1)
+      this.memorize(Memory.TicketsPlayed, 0)
+      this.forget(Memory.ArrowPlaced)
+      this.forget(Memory.LastArrowMoved)
     }
     return []
   }
 
   getPlayerMoves() {
     const moves: MaterialMove[] = []
-    const { arrowsLeft, arrowPlaced } = this.getMemory<PlayerTurnMemory>()
-    if (arrowPlaced || !this.arrowLeft) {
+    if (this.remind(Memory.ArrowPlaced)) {
       moves.push(this.passMove)
     }
-    if (arrowsLeft > 0) {
+    if (this.remind(Memory.ArrowsLeft) > 0) {
       moves.push(...this.placeArrowMoves)
     }
     if (this.canPlayTicket) {
@@ -46,8 +39,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
   }
 
   get canPlayTicket(): boolean {
-    const { ticketsPlayed } = this.getMemory<PlayerTurnMemory>()
-    if (ticketsPlayed >= 2) return false
+    if (this.remind(Memory.TicketsPlayed) >= 2) return false
     const playerTickets = this.material(MaterialType.Ticket).location(LocationType.PlayerArea).player(this.player)
     if (!playerTickets.length) return false
     return this.arrowLeft || this.deckHasCard
@@ -67,9 +59,8 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
   }
 
   get passMove() {
-    const { lastTurn } = this.getGameMemory<{ lastTurn?: boolean }>()
     const nextPlayer = this.nextPlayer
-    if (!lastTurn || nextPlayer !== this.game.players[0]) {
+    if (nextPlayer !== this.game.players[0] || !this.remind(Memory.LastTurn)) {
       return this.rules().startPlayerTurn(RuleId.PlayerTurn, nextPlayer)
     } else {
       return this.rules().endGame()
@@ -78,7 +69,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
 
   beforeItemMove(move: ItemMove<Color, MaterialType, LocationType>): MaterialMove[] {
     if (move.itemType === MaterialType.Arrow && move.type === ItemMoveType.Move) {
-      this.memorize<PlayerTurnMemory>({ expeditionColor: this.material(MaterialType.Arrow).getItem(move.itemIndex)?.id })
+      this.memorize(Memory.LastArrowMoved, this.material(MaterialType.Arrow).getItem(move.itemIndex)?.id)
     }
     return []
   }
@@ -93,14 +84,14 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
         break
       case MaterialType.Ticket:
         if (move.type === ItemMoveType.Delete) {
-          this.getMemory<PlayerTurnMemory>().ticketsPlayed++
+          this.memorize(Memory.TicketsPlayed, ticketsPlayed => ticketsPlayed + 1)
           consequences.push(this.rules().startRule(RuleId.TicketRule))
         }
         break
       case MaterialType.Card:
         if (move.type === ItemMoveType.Move && move.position.location?.type === LocationType.PlayerArea) {
           if (this.material(MaterialType.Card).location(LocationType.Hand).player(move.position.location.player).length === 0) {
-            this.memorizeOnGame({ lastTurn: true })
+            this.memorize(Memory.LastTurn, true)
           }
         }
     }
@@ -110,14 +101,14 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
   afterArrowMove(move: MoveItem<Color, MaterialType, LocationType>) {
     const consequences: MaterialMove[] = []
     if (isMoveItemLocation(move) && move.position.location.type === LocationType.Road) {
-      this.memorize<PlayerTurnMemory>({ arrowPlaced: true })
+      this.memorize(Memory.ArrowPlaced, true)
       if (!this.isFreeArrow) {
-        this.getMemory<PlayerTurnMemory>().arrowsLeft--
+        this.memorize(Memory.ArrowsLeft, arrowsLeft => arrowsLeft - 1)
       }
       const destination = arrowRoad(move.position)[1]
       consequences.push(...this.onReachNode(destination))
       if (!this.arrowLeft) {
-        this.memorizeOnGame({ lastTurn: true })
+        this.memorize(Memory.LastTurn, true)
       }
     }
     const newRule = this.getRuleAfterArrowMove()
@@ -132,8 +123,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
   }
 
   loopCreated() {
-    const { expeditionColor } = this.getMemory<PlayerTurnMemory>()
-    return expeditionColor && new Expedition(expeditionColor, this.material(MaterialType.Arrow)).loop
+    return new Expedition(this.remind(Memory.LastArrowMoved), this.material(MaterialType.Arrow)).loop
   }
 
   onReachNode(node: Node) {
@@ -141,7 +131,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
     if (isGreenNode(node)) {
       consequences.push(...this.onReachPlace(node))
     } else if (isBlueNode(node)) {
-      this.getMemory<PlayerTurnMemory>().arrowsLeft++
+      this.memorize(Memory.ArrowsLeft, arrowsLeft => arrowsLeft + 1)
     } else if (isRedNode(node)) {
       consequences.push(this.material(MaterialType.Ticket).createItem({
         location: { type: LocationType.PlayerArea, player: this.player }

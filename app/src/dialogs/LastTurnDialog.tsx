@@ -5,11 +5,12 @@ import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { useTranslation } from 'react-i18next'
 import Color from '@gamepark/expedition/Color'
 import { css } from '@emotion/react'
+import { Memory } from '@gamepark/expedition/rules/Memory'
 
 export const LastTurnDialog = () => {
   const { t } = useTranslation()
   const rules = useRules<ExpeditionRules>()
-  const lastTurn = !rules?.isOver() && rules?.isLastTurn
+  const lastTurn = !rules?.isOver() && rules?.remind(Memory.LastTurn)
   const [explainLastTurn, setExplainLastTurn] = useState(false)
   const lastPlayer = rules ? rules.game.players[rules.game.players.length - 1] : Color.Red
   const lastPlayerName = usePlayerName(lastPlayer)

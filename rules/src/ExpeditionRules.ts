@@ -19,10 +19,6 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
   locationsStrategies = locationsStrategies
   hidingStrategies = hidingStrategies
 
-  get isLastTurn() {
-    return this.getMemory<{ lastTurn?: boolean }>().lastTurn
-  }
-
   giveTime(): number {
     return 40
   }

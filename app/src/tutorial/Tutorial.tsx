@@ -17,6 +17,7 @@ import ClotheColorName from '@gamepark/avataaars/dist/avatar/clothes/ClotheColor
 import SkinColor from '@gamepark/avataaars/dist/avatar/SkinColor'
 
 export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType> {
+  version = 1
   options = { players: [{ id: Color.Blue }, { id: Color.Red }] }
   setup = new TutorialSetup()
 
