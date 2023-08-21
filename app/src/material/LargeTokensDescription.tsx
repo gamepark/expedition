@@ -7,8 +7,8 @@ import { MaterialContext } from '@gamepark/react-game'
 export class LargeTokenDescription extends PlayerTokenDescription {
   diameter = 3.5
 
-  getStaticItems({ game }: MaterialContext) {
-    return game.players.map(color => ({
+  getStaticItems({ rules }: MaterialContext) {
+    return rules.players.map(color => ({
       id: color,
       location: { type: LocationType.PlayerArea, player: color }
     }))

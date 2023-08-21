@@ -12,7 +12,7 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
     if (context.player === undefined) {
       return this.getRelativePlayerIndex(context, player)
     } else {
-      const players = context.game.players.length
+      const players = context.rules.players.length
       return (this.getRelativePlayerIndex(context, player) + players - 1) % players
     }
   }
@@ -27,7 +27,7 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
       return { x: -55 + count * 3, y: 28, z: 10 }
     } else {
       const index = this.getDisplayIndex(location.player!, context)
-      const baseLocation = index * 54.5 / (context.game.players.length - 1)
+      const baseLocation = index * 54.5 / (context.rules.players.length - 1)
       return { x: 45, y: -27 + baseLocation, z: 10 }
     }
   }

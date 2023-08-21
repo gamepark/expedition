@@ -7,7 +7,6 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { css } from '@emotion/react'
 import { isGreenNode, Node } from '@gamepark/expedition/material/Road'
 import { PlaceRules } from './PlaceRules'
-import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 
 export class PlaceDescription extends LocationDescription<Color, MaterialType, LocationType> {
   width = 1.8
@@ -20,8 +19,8 @@ export class PlaceDescription extends LocationDescription<Color, MaterialType, L
     return super.getSize(location, context)
   }
 
-  getExtraCss(location: Location<Color, LocationType>, { game }: MaterialContext<Color, MaterialType, LocationType>) {
-    const borderColor = this.getObjectiveColor(new ExpeditionRules(game).material(MaterialType.Card), location.id)
+  getExtraCss(location: Location<Color, LocationType>, { rules }: MaterialContext<Color, MaterialType, LocationType>) {
+    const borderColor = this.getObjectiveColor(rules.material(MaterialType.Card), location.id)
     return borderColor && borderCss(borderColor)
   }
 

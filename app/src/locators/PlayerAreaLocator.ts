@@ -9,14 +9,14 @@ export class PlayerAreaLocator extends LineLocator<Color, MaterialType, Location
     if (context.player === undefined) {
       return this.getRelativePlayerIndex(context, player)
     } else {
-      const players = context.game.players.length
+      const players = context.rules.players.length
       return (this.getRelativePlayerIndex(context, player) + players - 1) % players
     }
   }
 
   getCoordinates({ location }: MaterialItem<Color, LocationType>, context: ItemContext<Color, MaterialType, LocationType>): Coordinates {
     const index = this.getDisplayIndex(location.player!, context)
-    const baseLocation = index * 54.5 / (context.game.players.length - 1)
+    const baseLocation = index * 54.5 / (context.rules.players.length - 1)
     switch (context.type) {
       case MaterialType.Token:
         return { x: 30, y: -30 + baseLocation, z: 0 }
