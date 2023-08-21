@@ -6,7 +6,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { RoadMovesButtons } from './RoadMovesButtons'
 import { isMoveItemType, MaterialMove } from '@gamepark/rules-api'
-import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 
 export const ArrowRules = ({ item, itemIndex, closeDialog }: MaterialRulesProps) => {
   const { t } = useTranslation()

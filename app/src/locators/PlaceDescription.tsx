@@ -2,7 +2,7 @@
 import { LocationDescription, MaterialContext } from '@gamepark/react-game'
 import { Location, Material } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
-import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { css } from '@emotion/react'
 import { isGreenNode, Node } from '@gamepark/expedition/material/Road'

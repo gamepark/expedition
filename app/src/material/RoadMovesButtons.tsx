@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { MaterialComponent, PlayMoveButton, useLegalMoves, useRules } from '@gamepark/react-game'
 import { useTranslation } from 'react-i18next'
-import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { isMoveItemType, ItemPosition, MoveItem } from '@gamepark/rules-api'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { css } from '@emotion/react'

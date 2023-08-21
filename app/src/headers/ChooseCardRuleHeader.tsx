@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { MaterialGame } from '@gamepark/rules-api'
 import { useGame, usePlayerId, usePlayerName } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
-import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 
 export const ChooseCardRuleHeader = () => {

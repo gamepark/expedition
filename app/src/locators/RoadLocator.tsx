@@ -2,7 +2,7 @@
 import { ItemContext, ItemLocator } from '@gamepark/react-game'
 import { Location, MaterialItem, XYCoordinates } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
-import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { arrowRoad, Road } from '@gamepark/expedition/material/Road'
 import { RoadDescription } from './RoadDescription'

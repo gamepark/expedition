@@ -1,4 +1,4 @@
-import { MaterialType } from './ExpeditionMaterial'
+import { MaterialType } from './MaterialType'
 import { LocationType } from './LocationType'
 import { FillGapStrategy, PositiveSequenceStrategy } from '@gamepark/rules-api'
 

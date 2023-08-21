@@ -1,5 +1,5 @@
 import { ExpeditionSetup } from '@gamepark/expedition/ExpeditionSetup'
-import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { Place } from '@gamepark/expedition/material/Place'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import Color from '@gamepark/expedition/Color'

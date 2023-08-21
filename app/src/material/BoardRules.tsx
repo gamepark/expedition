@@ -2,7 +2,7 @@
 import { linkButtonCss, PlayMoveButton } from '@gamepark/react-game'
 import { Trans, useTranslation } from 'react-i18next'
 import { displayMaterialRules } from '@gamepark/rules-api'
-import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 
 export const BoardRules = () => {
   const { t } = useTranslation()

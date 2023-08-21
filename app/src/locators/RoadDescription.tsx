@@ -2,7 +2,7 @@
 import { LocationDescription } from '@gamepark/react-game'
 import { Location, XYCoordinates } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
-import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { Road } from '@gamepark/expedition/material/Road'
 import { boardDescription, boardRatio } from '../material/BoardDescription'

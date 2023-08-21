@@ -2,7 +2,7 @@
 import { ItemLocator } from '@gamepark/react-game'
 import { Location, XYCoordinates } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
-import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { Place } from '@gamepark/expedition/material/Place'
 import { BlueNode, Node, RedNode, StartNode } from '@gamepark/expedition/material/Road'

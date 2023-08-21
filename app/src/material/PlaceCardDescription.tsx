@@ -87,7 +87,7 @@ import { CardRules } from './CardRules'
 import { isCustomMove, MaterialMove } from '@gamepark/rules-api'
 import { CustomMoveType } from '@gamepark/expedition/rules/CustomMoveType'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
-import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 
 export class PlaceCardDescription extends CardDescription {
   backImage = back

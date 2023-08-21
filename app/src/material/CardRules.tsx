@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { MaterialRulesProps, PlayMoveButton, useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
-import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { Trans, useTranslation } from 'react-i18next'
 import Color from '@gamepark/expedition/Color'
 import { isCustomMoveType, isMoveItemType, isMoveItemTypeLocation, MaterialMove, MoveItem } from '@gamepark/rules-api'

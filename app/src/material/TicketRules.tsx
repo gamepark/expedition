@@ -3,7 +3,7 @@ import { MaterialRulesProps, PlayMoveButton, useLegalMove, usePlayerId, usePlaye
 import Color from '@gamepark/expedition/Color'
 import { Trans, useTranslation } from 'react-i18next'
 import { DeleteItem, isDeleteItemType } from '@gamepark/rules-api'
-import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 
 export const TicketRules = ({ item, itemIndex, closeDialog }: MaterialRulesProps) => {
   const { t } = useTranslation()

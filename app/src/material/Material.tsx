@@ -1,4 +1,4 @@
-import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { placeCardDescription } from './PlaceCardDescription'
 import { boardDescription, frenchBoardDescription } from './BoardDescription'
 import { MaterialDescription } from '@gamepark/react-game'

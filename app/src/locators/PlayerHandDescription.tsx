@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { LocationDescription, MaterialContext } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
-import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { isCustomMove, Location, MaterialMove } from '@gamepark/rules-api'
 import { CustomMoveType } from '@gamepark/expedition/rules/CustomMoveType'

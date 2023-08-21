@@ -1,4 +1,4 @@
-import { MaterialType } from '../material/ExpeditionMaterial'
+import { MaterialType } from '../material/MaterialType'
 import { Expedition } from './Expedition'
 import { PlayerTurn } from './PlayerTurn'
 import { RuleId } from './RuleId'

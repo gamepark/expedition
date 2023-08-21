@@ -1,5 +1,5 @@
 import { CustomMove, ItemMove, ItemMoveType, MaterialMove } from '@gamepark/rules-api'
-import { MaterialType } from '../material/ExpeditionMaterial'
+import { MaterialType } from '../material/MaterialType'
 import { LocationType } from '../material/LocationType'
 import Color from '../Color'
 import { Expedition } from './Expedition'

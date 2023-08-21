@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { LocationDescription } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
-import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { ArrowColor, arrowColors } from '@gamepark/expedition/material/ArrowColor'
 import { Coordinates, Location } from '@gamepark/rules-api'

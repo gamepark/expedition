@@ -1,5 +1,5 @@
 import Color from './Color'
-import { MaterialType } from './material/ExpeditionMaterial'
+import { MaterialType } from './material/MaterialType'
 import { LocationType } from './material/LocationType'
 import { Place, places, places2StepsFromStart } from './material/Place'
 import { MaterialGameSetup } from '@gamepark/rules-api'

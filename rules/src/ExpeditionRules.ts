@@ -1,5 +1,5 @@
 import Color from './Color'
-import { MaterialType } from './material/ExpeditionMaterial'
+import { MaterialType } from './material/MaterialType'
 import { LocationType } from './material/LocationType'
 import { Competitive, hideItemId, hideItemIdToOthers, MaterialGame, MaterialMove, SecretMaterialRules, TimeLimit } from '@gamepark/rules-api'
 import { RuleId } from './rules/RuleId'

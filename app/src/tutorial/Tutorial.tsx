@@ -5,7 +5,7 @@ import { isDeleteItemType, isMoveItem, isStartPlayerTurn, MaterialGame, Material
 import { MaterialTutorial, TutorialStep } from '@gamepark/react-game'
 import { Place, places } from '@gamepark/expedition/material/Place'
 import Color from '@gamepark/expedition/Color'
-import { MaterialType } from '@gamepark/expedition/material/ExpeditionMaterial'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { ArrowColor } from '@gamepark/expedition/material/ArrowColor'
 import { BlueNode, RedNode, StartNode } from '@gamepark/expedition/material/Road'

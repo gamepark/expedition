@@ -1,5 +1,5 @@
 import { ItemMove, PlayerTurnRule } from '@gamepark/rules-api'
-import { MaterialType } from '../material/ExpeditionMaterial'
+import { MaterialType } from '../material/MaterialType'
 import { LocationType } from '../material/LocationType'
 import Color from '../Color'
 import { RuleId } from './RuleId'

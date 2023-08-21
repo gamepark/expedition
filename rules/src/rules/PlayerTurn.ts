@@ -1,6 +1,6 @@
 import { isMoveItemLocation, ItemMove, ItemMoveType, MaterialMove, MoveItem, PlayerTurnRule, RuleMove, RuleMoveType } from '@gamepark/rules-api'
 import Color from '../Color'
-import { MaterialType } from '../material/ExpeditionMaterial'
+import { MaterialType } from '../material/MaterialType'
 import { LocationType } from '../material/LocationType'
 import { arrowColors } from '../material/ArrowColor'
 import { RuleId } from './RuleId'
