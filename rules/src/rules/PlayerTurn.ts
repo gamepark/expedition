@@ -153,7 +153,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
         }
       } else if (this.deckHasCard) {
         const topDeckCard = this.material(MaterialType.Card).location(LocationType.Deck).maxBy(item => item.location.x!)
-        consequences.push(topDeckCard.moveItem({ location: { type: LocationType.CommonObjectives, x: cardLocation.x } }))
+        consequences.push(topDeckCard.moveItem({ location: { type: LocationType.CommonObjectives } }))
       }
     }
     return consequences

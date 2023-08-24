@@ -10,7 +10,7 @@ export class TicketStockDescription extends LocationDescription<Color, MaterialT
   width = ticketDescription.width + 6
   ratio = 1
   borderRadius = this.width / 2
-  coordinates = { x: -59, y: 18, z: 20 }
+  coordinates = { x: -59, y: 18, z: 0 }
 }
 
 export const ticketStockLocation = { type: LocationType.TicketStock }
