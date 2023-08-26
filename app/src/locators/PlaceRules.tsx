@@ -39,7 +39,7 @@ export const PlaceRules = ({ location, closeDialog }: LocationRulesProps) => {
       <p>{t('rules.place.token.forbidden')}</p>
     }
     {arrowMoves.length > 0 && arrowColors.map(color => {
-      const move = arrowMoves.find(move => rules?.items(MaterialType.Arrow)[move.itemIndex].id === color)
+      const move = arrowMoves.find(move => rules?.material(MaterialType.Arrow).getItem(move.itemIndex)?.id === color)
       return move ?
         <p key={color}>
           <PlayMoveButton move={move} css={placeArrowButton} onPlay={closeDialog}>

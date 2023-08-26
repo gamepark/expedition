@@ -22,7 +22,7 @@ export const RoadMovesButtons = ({ road, closeDialog }: RoadMovesButtonsProps) =
     && move.position.location?.type === LocationType.Road && equal(move.position.location.id, road))
   return <>
     {legalMoves.map(move => {
-      const color = rules?.items(MaterialType.Arrow)[(move as MoveItem).itemIndex].id
+      const color = rules?.material(MaterialType.Arrow).getItem((move as MoveItem).itemIndex)?.id
       return (
         <p key={JSON.stringify(move)}>
           <PlayMoveButton move={move} css={placeArrowButton} onPlay={closeDialog}>
