@@ -7,7 +7,6 @@ import { PileLocator } from '@gamepark/react-game'
 import { ArrowStockDescription } from './ArrowStockDescription'
 
 export class ArrowsStockLocator extends PileLocator<Color, MaterialType, LocationType> {
-  rotate = true
   radius = 3
   locationDescription = new ArrowStockDescription()
 
