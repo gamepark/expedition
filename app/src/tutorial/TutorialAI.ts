@@ -26,7 +26,7 @@ const computeBestPath = (game: MaterialGame, bot: Color, path: MaterialMove[] = 
   const rules = new ExpeditionRules(game)
   const legalMoves = rules.getLegalMoves(bot)
   if (legalMoves.length === 0 || iteration >= 4) {
-    const botScore = rules.getScore(bot)
+    const botScore = rules.getScore(bot)!
     const ticketsPotential = rules.remind(Memory.LastTurn) ? 0 : countPlayerTickets(rules, bot) * TICKET_WEIGHT
     return {
       moves: path,

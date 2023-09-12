@@ -1,7 +1,7 @@
 import Color from './Color'
 import { MaterialType } from './material/MaterialType'
 import { LocationType } from './material/LocationType'
-import { Competitive, hideItemId, hideItemIdToOthers, MaterialGame, MaterialMove, SecretMaterialRules, TimeLimit } from '@gamepark/rules-api'
+import { Competitive, hideItemId, hideItemIdToOthers, MaterialGame, MaterialMove, rankByScore, SecretMaterialRules, TimeLimit } from '@gamepark/rules-api'
 import { RuleId } from './rules/RuleId'
 import { SetupKeyPlaces } from './rules/SetupKeyPlaces'
 import { PlayerTurn } from './rules/PlayerTurn'
@@ -24,16 +24,17 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
   }
 
   rankPlayers(playerA: Color, playerB: Color): number {
-    const scoreA = this.getScore(playerA)
-    const scoreB = this.getScore(playerB)
-    if (scoreA !== scoreB) return scoreB - scoreA
-    const ticketsA = this.material(MaterialType.Ticket).player(playerA).getItem()?.quantity ?? 0
-    const ticketsB = this.material(MaterialType.Ticket).player(playerB).getItem()?.quantity ?? 0
-    return ticketsB - ticketsA
+    return rankByScore(playerA, playerB, this.getScore.bind(this))
   }
 
-  getScore(player: Color): number {
-    return this.getCardsDone(player) + this.getTokensOnCards(player) - this.getCardsInHand(player) - this.getTokensOnBoard(player)
+  getScore(player: Color, tieBreaker = 0) {
+    switch (tieBreaker) {
+      case 0:
+        return this.getCardsDone(player) + this.getTokensOnCards(player) - this.getCardsInHand(player) - this.getTokensOnBoard(player)
+      case 1:
+        return this.material(MaterialType.Ticket).player(player).getItem()?.quantity ?? 0
+    }
+    return
   }
 
   getCardsDone(player: Color) {
