@@ -16,6 +16,7 @@
     "linkgp": "yarn link @gamepark/react-client @gamepark/rules-api @gamepark/react-game",
     "unlinkgp": "yarn unlink @gamepark/react-client @gamepark/rules-api @gamepark/react-game",
     "start": "yarn workspace @gamepark/expedition-app run start",
-    "build": "yarn workspace @gamepark/expedition-app run build"
+    "build": "yarn workspace @gamepark/expedition-app run build",
+    "deploy": "yarn workspace @gamepark/expedition-app run deploy"
   }
 }
