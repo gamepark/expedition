@@ -7,7 +7,7 @@ import { RuleId } from '@gamepark/expedition/rules/RuleId'
 import { SetupKeyPlacesHeader } from './headers/SetupKeyPlacesHeader'
 import { PlayerTurnHeader } from './headers/PlayerTurnHeader'
 import { TicketRuleHeader } from './headers/TicketRuleHeader'
-import { GameOverHeader } from './headers/GameOverHeader'
+import { GameOverRule } from './headers/GameOverRule'
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace'
 import { LoopRuleHeader } from './headers/LoopRuleHeader'
 import { ChooseCardRuleHeader } from './headers/ChooseCardRuleHeader'
@@ -25,7 +25,7 @@ export default function App() {
     <>
       <GameDisplay/>
       <LoadingScreen display={loading} author="Wolfgang Kramer" artist="Yann Valeani" publisher="Super Meeple" developer="Game Park"/>
-      <MaterialHeader rulesStepsHeaders={RulesHeaders} GameOver={GameOverHeader} loading={loading}/>
+      <MaterialHeader rulesStepsHeaders={RulesHeaders} GameOverRule={GameOverRule} loading={loading}/>
       <MaterialImageLoader onImagesLoad={() => setImagesLoading(false)}/>
       <Menu/>
       <FailuresDialog/>

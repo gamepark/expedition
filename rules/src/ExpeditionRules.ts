@@ -1,7 +1,7 @@
 import Color from './Color'
 import { MaterialType } from './material/MaterialType'
 import { LocationType } from './material/LocationType'
-import { Competitive, hideItemId, hideItemIdToOthers, MaterialGame, MaterialMove, rankByScore, SecretMaterialRules, TimeLimit } from '@gamepark/rules-api'
+import { CompetitiveScore, hideItemId, hideItemIdToOthers, MaterialGame, MaterialMove, SecretMaterialRules, TimeLimit } from '@gamepark/rules-api'
 import { RuleId } from './rules/RuleId'
 import { SetupKeyPlaces } from './rules/SetupKeyPlaces'
 import { PlayerTurn } from './rules/PlayerTurn'
@@ -12,7 +12,7 @@ import { DiscardRule } from './rules/DiscardRule'
 import { locationsStrategies } from './material/LocationStrategies'
 
 export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, LocationType>
-  implements Competitive<MaterialGame<Color, MaterialType, LocationType>, MaterialMove<Color, MaterialType, LocationType>, Color>,
+  implements CompetitiveScore<MaterialGame<Color, MaterialType, LocationType>, MaterialMove<Color, MaterialType, LocationType>, Color>,
     TimeLimit<MaterialGame<Color, MaterialType, LocationType>, MaterialMove<Color, MaterialType, LocationType>, Color> {
 
   rules = rules
@@ -23,16 +23,13 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
     return 40
   }
 
-  rankPlayers(playerA: Color, playerB: Color): number {
-    return rankByScore(playerA, playerB, this.getScore.bind(this))
+  getScore(player: Color) {
+    return this.getCardsDone(player) + this.getTokensOnCards(player) - this.getCardsInHand(player) - this.getTokensOnBoard(player)
   }
 
-  getScore(player: Color, tieBreaker = 0) {
-    switch (tieBreaker) {
-      case 0:
-        return this.getCardsDone(player) + this.getTokensOnCards(player) - this.getCardsInHand(player) - this.getTokensOnBoard(player)
-      case 1:
-        return this.material(MaterialType.Ticket).player(player).getItem()?.quantity ?? 0
+  getTieBreaker(tieBreaker: number, player: Color) {
+    if (tieBreaker === 1) {
+      return this.material(MaterialType.Ticket).player(player).getItem()?.quantity ?? 0
     }
     return
   }
