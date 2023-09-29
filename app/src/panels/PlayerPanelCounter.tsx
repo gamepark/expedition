@@ -3,7 +3,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { FC } from 'react'
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { shadowCss } from '@gamepark/react-game/dist/css/componentSizeCss'
+import { shadowCss } from '@gamepark/react-game'
 import { css } from '@emotion/react'
 
 
