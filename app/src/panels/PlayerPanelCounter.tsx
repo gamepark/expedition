@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { shadowCss } from '@gamepark/react-game'
 import { css } from '@emotion/react'
 
-
 type PlayerPanelCounterProps = {
   icon?: IconProp;
   image?: any;
