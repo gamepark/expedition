@@ -36,7 +36,6 @@ const PlayerStats = ({ rules, player }: { rules: ExpeditionRules, player: number
 }
 
 const rulesCss = css`
-  max-width: 40em;
   margin: 1em;
   font-size: 3em;
 

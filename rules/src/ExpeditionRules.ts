@@ -1,23 +1,56 @@
+import {
+  CompetitiveScore,
+  FillGapStrategy,
+  hideItemId,
+  hideItemIdToOthers,
+  MaterialGame,
+  MaterialMove,
+  PositiveSequenceStrategy,
+  SecretMaterialRules,
+  TimeLimit
+} from '@gamepark/rules-api'
 import Color from './Color'
-import { MaterialType } from './material/MaterialType'
 import { LocationType } from './material/LocationType'
-import { CompetitiveScore, hideItemId, hideItemIdToOthers, MaterialGame, MaterialMove, SecretMaterialRules, TimeLimit } from '@gamepark/rules-api'
-import { RuleId } from './rules/RuleId'
-import { SetupKeyPlaces } from './rules/SetupKeyPlaces'
-import { PlayerTurn } from './rules/PlayerTurn'
-import { TicketRule } from './rules/TicketRule'
-import { LoopRule } from './rules/LoopRule'
+import { MaterialType } from './material/MaterialType'
 import { ChooseCardRule } from './rules/ChooseCardRule'
 import { DiscardRule } from './rules/DiscardRule'
-import { locationsStrategies } from './material/LocationStrategies'
+import { LoopRule } from './rules/LoopRule'
+import { PlayerTurn } from './rules/PlayerTurn'
+import { RuleId } from './rules/RuleId'
+import { SetupKeyPlaces } from './rules/SetupKeyPlaces'
+import { TicketRule } from './rules/TicketRule'
 
 export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, LocationType>
   implements CompetitiveScore<MaterialGame<Color, MaterialType, LocationType>, MaterialMove<Color, MaterialType, LocationType>, Color>,
     TimeLimit<MaterialGame<Color, MaterialType, LocationType>, MaterialMove<Color, MaterialType, LocationType>, Color> {
 
-  rules = rules
-  locationsStrategies = locationsStrategies
-  hidingStrategies = hidingStrategies
+  rules = {
+    [RuleId.SetupKeyPlaces]: SetupKeyPlaces,
+    [RuleId.PlayerTurn]: PlayerTurn,
+    [RuleId.TicketRule]: TicketRule,
+    [RuleId.LoopRule]: LoopRule,
+    [RuleId.ChooseCardRule]: ChooseCardRule,
+    [RuleId.DiscardRule]: DiscardRule
+  }
+
+  locationsStrategies = {
+    [MaterialType.Card]: {
+      [LocationType.Deck]: new PositiveSequenceStrategy(),
+      [LocationType.Hand]: new PositiveSequenceStrategy(),
+      [LocationType.PlayerArea]: new PositiveSequenceStrategy(),
+      [LocationType.CommonObjectives]: new FillGapStrategy()
+    },
+    [MaterialType.Arrow]: {
+      [LocationType.Road]: new PositiveSequenceStrategy()
+    }
+  }
+
+  hidingStrategies = {
+    [MaterialType.Card]: {
+      [LocationType.Deck]: hideItemId,
+      [LocationType.Hand]: hideItemIdToOthers
+    }
+  }
 
   giveTime(): number {
     return 40
@@ -55,18 +88,7 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
   }
 }
 
-const rules = {
-  [RuleId.SetupKeyPlaces]: SetupKeyPlaces,
-  [RuleId.PlayerTurn]: PlayerTurn,
-  [RuleId.TicketRule]: TicketRule,
-  [RuleId.LoopRule]: LoopRule,
-  [RuleId.ChooseCardRule]: ChooseCardRule,
-  [RuleId.DiscardRule]: DiscardRule
-}
 
-const hidingStrategies = {
-  [MaterialType.Card]: {
-    [LocationType.Deck]: hideItemId,
-    [LocationType.Hand]: hideItemIdToOthers
-  }
-}
+
+
+

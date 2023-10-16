@@ -1,12 +1,12 @@
-import Color from './Color'
-import { MaterialType } from './material/MaterialType'
-import { LocationType } from './material/LocationType'
-import { Place, places, places2StepsFromStart } from './material/Place'
 import { MaterialGameSetup } from '@gamepark/rules-api'
-import { arrowColors } from './material/ArrowColor'
-import { RuleId } from './rules/RuleId'
+import Color from './Color'
 import { ExpeditionOptions } from './ExpeditionOptions'
-import { locationsStrategies } from './material/LocationStrategies'
+import { ExpeditionRules } from './ExpeditionRules'
+import { arrowColors } from './material/ArrowColor'
+import { LocationType } from './material/LocationType'
+import { MaterialType } from './material/MaterialType'
+import { Place, places, places2StepsFromStart } from './material/Place'
+import { RuleId } from './rules/RuleId'
 
 const COMMON_OBJECTIVES = 6
 const TOKENS_PER_PLAYER = 4
@@ -14,7 +14,7 @@ const START_TICKETS = 3
 const ARROWS_PER_EXPEDITION = 45
 
 export class ExpeditionSetup extends MaterialGameSetup<Color, MaterialType, LocationType, ExpeditionOptions> {
-  locationsStrategies = locationsStrategies
+  Rules = ExpeditionRules
 
   setupMaterial() {
     this.createDeck()
@@ -95,6 +95,6 @@ export class ExpeditionSetup extends MaterialGameSetup<Color, MaterialType, Loca
   }
 
   start(options: ExpeditionOptions) {
-    return { id: RuleId.SetupKeyPlaces, player: options.players[0].id }
+    this.startPlayerTurn(RuleId.SetupKeyPlaces, options.players[0].id)
   }
 }
