@@ -1,9 +1,9 @@
-import Color from '../Color'
-import { MaterialType } from '../material/MaterialType'
-import { LocationType } from '../material/LocationType'
 import { ItemMove, PlayerTurnRule } from '@gamepark/rules-api'
-import { RuleId } from './RuleId'
+import Color from '../Color'
+import { LocationType } from '../material/LocationType'
+import { MaterialType } from '../material/MaterialType'
 import { Place, places2StepsFromStart } from '../material/Place'
+import { RuleId } from './RuleId'
 
 export class SetupKeyPlaces extends PlayerTurnRule<Color, MaterialType, LocationType> {
   getPlayerMoves() {
@@ -15,7 +15,7 @@ export class SetupKeyPlaces extends PlayerTurnRule<Color, MaterialType, Location
     const legalPlaces = playerCards.getItems<Place>(card => card.id).filter(place =>
       !placesWithToken.includes(place) && !places2StepsFromStart.includes(place)
     )
-    return legalPlaces.map(place => tokenStock.moveItem({ location: { type: LocationType.Place, id: place } }))
+    return legalPlaces.map(place => tokenStock.moveItem({ type: LocationType.Place, id: place }))
   }
 
   afterItemMove(move: ItemMove<Color, MaterialType, LocationType>) {

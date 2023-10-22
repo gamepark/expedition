@@ -13,7 +13,7 @@ export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> 
   locationDescription = new RoadDescription()
 
   getRotation(item: MaterialItem<Color, LocationType>): number {
-    return this.locationDescription.getAngle(this.locationDescription.getRoadCoordinates(arrowRoad(item)))
+    return this.locationDescription.getAngle(this.locationDescription.getRoadCoordinates(arrowRoad(item.location)))
   }
 
   getPositionOnParent(location: Location<Color, LocationType, Road>): XYCoordinates {

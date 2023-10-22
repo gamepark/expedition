@@ -1,20 +1,20 @@
 /** @jsxImportSource @emotion/react */
-import { TutorialSetup } from './TutorialSetup'
-import { TFunction } from 'i18next'
-import { isDeleteItemType, isMoveItem, isStartPlayerTurn, MaterialGame, MaterialMove } from '@gamepark/rules-api'
-import { MaterialTutorial, TutorialStep } from '@gamepark/react-game'
-import { Place, places } from '@gamepark/expedition/material/Place'
-import Color from '@gamepark/expedition/Color'
-import { MaterialType } from '@gamepark/expedition/material/MaterialType'
-import { LocationType } from '@gamepark/expedition/material/LocationType'
-import { ArrowColor } from '@gamepark/expedition/material/ArrowColor'
-import { BlueNode, RedNode, StartNode } from '@gamepark/expedition/material/Road'
-import { Trans } from 'react-i18next'
-import { boardDescription } from '../material/BoardDescription'
 import { ClotheType, EyebrowType, EyeType, FacialHairType, GraphicType, MouthType, TopType } from '@gamepark/avataaars'
-import HairColorName from '@gamepark/avataaars/dist/avatar/top/HairColorName'
 import ClotheColorName from '@gamepark/avataaars/dist/avatar/clothes/ClotheColorName'
 import SkinColor from '@gamepark/avataaars/dist/avatar/SkinColor'
+import HairColorName from '@gamepark/avataaars/dist/avatar/top/HairColorName'
+import Color from '@gamepark/expedition/Color'
+import { ArrowColor } from '@gamepark/expedition/material/ArrowColor'
+import { LocationType } from '@gamepark/expedition/material/LocationType'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
+import { Place, places } from '@gamepark/expedition/material/Place'
+import { BlueNode, RedNode, StartNode } from '@gamepark/expedition/material/Road'
+import { MaterialTutorial, TutorialStep } from '@gamepark/react-game'
+import { isDeleteItemType, isMoveItem, isStartPlayerTurn, MaterialGame, MaterialMove } from '@gamepark/rules-api'
+import { TFunction } from 'i18next'
+import { Trans } from 'react-i18next'
+import { boardDescription } from '../material/BoardDescription'
+import { TutorialSetup } from './TutorialSetup'
 
 export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType> {
   version = 1
@@ -98,14 +98,14 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
         position: { x: -15, y: -25 }
       },
       move: {
-        filter: (move: MaterialMove) => isMoveItem(move) && move.position.location?.id === Place.CanaryIslands
+        filter: (move: MaterialMove) => isMoveItem(move) && move.location.id === Place.CanaryIslands
       },
       focus: () => this.location(LocationType.Place).id(Place.CanaryIslands)
     },
     {
       move: {
         player: Color.Red,
-        filter: (move: MaterialMove) => isMoveItem(move) && move.position.location?.id === Place.NorthwestPassage
+        filter: (move: MaterialMove) => isMoveItem(move) && move.location.id === Place.NorthwestPassage
       }
     },
     {
@@ -141,7 +141,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
       },
       focus: () => [this.location(LocationType.Place).id(Place.Rome), this.location(LocationType.Road).id([StartNode, Place.Rome])],
       move: {
-        filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.position.location?.id[1] === Place.Rome
+        filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.location.id[1] === Place.Rome
       }
     },
     {
@@ -155,7 +155,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     {
       move: {
         player: Color.Red,
-        filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 1 && move.position.location?.id[1] === Place.Thingvellir
+        filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 1 && move.location.id[1] === Place.Thingvellir
       }
     },
     {
@@ -171,7 +171,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
       },
       focus: () => [this.location(LocationType.Place).id(BlueNode.Rome_West), this.location(LocationType.Road).id([Place.Rome, BlueNode.Rome_West])],
       move: {
-        filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.position.location?.id[1] === BlueNode.Rome_West
+        filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.location.id[1] === BlueNode.Rome_West
       }
     },
     {
@@ -185,7 +185,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
         this.material(game, MaterialType.Token).location(LocationType.Place).locationId(Place.CanaryIslands)
       ],
       move: {
-        filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.position.location?.id[1] === Place.CanaryIslands
+        filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.location.id[1] === Place.CanaryIslands
       }
     },
     {
@@ -204,13 +204,13 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     {
       move: {
         player: Color.Red,
-        filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 1 && move.position.location?.id[1] === BlueNode.Thingvellir_West
+        filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 1 && move.location.id[1] === BlueNode.Thingvellir_West
       }
     },
     {
       move: {
         player: Color.Red,
-        filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 1 && move.position.location?.id[1] === Place.NorthwestPassage
+        filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 1 && move.location.id[1] === Place.NorthwestPassage
       }
     },
     {
@@ -229,7 +229,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
         this.location(LocationType.Road).id([Place.CanaryIslands, RedNode.Tombouctou_West])
       ],
       move: {
-        filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.position.location?.id[1] === RedNode.Tombouctou_West
+        filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.location.id[1] === RedNode.Tombouctou_West
       }
     },
     {
@@ -253,7 +253,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
         this.material(game, MaterialType.Token).location(LocationType.Place).locationId(Place.PuertoRico)
       ],
       move: {
-        filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.position.location?.id[1] === Place.PuertoRico
+        filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.location.id[1] === Place.PuertoRico
       }
     },
     {

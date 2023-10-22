@@ -1,23 +1,23 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialRulesProps, PlayMoveButton, useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
+import { css } from '@emotion/react'
+import Color from '@gamepark/expedition/Color'
+import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
-import { Trans, useTranslation } from 'react-i18next'
-import Color from '@gamepark/expedition/Color'
-import { isCustomMoveType, isMoveItemType, isMoveItemTypeLocation, MaterialMove, MoveItem } from '@gamepark/rules-api'
-import { RuleId } from '@gamepark/expedition/rules/RuleId'
 import { Place, places2StepsFromStart } from '@gamepark/expedition/material/Place'
-import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
-import { css } from '@emotion/react'
-import { TFunction } from 'i18next'
 import { CustomMoveType } from '@gamepark/expedition/rules/CustomMoveType'
+import { RuleId } from '@gamepark/expedition/rules/RuleId'
+import { MaterialRulesProps, PlayMoveButton, useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
+import { isCustomMoveType, isMoveItemType, MaterialMove, MoveItem } from '@gamepark/rules-api'
+import { TFunction } from 'i18next'
+import { Trans, useTranslation } from 'react-i18next'
 
 export const CardRules = (props: MaterialRulesProps) => {
   const { item, itemIndex, closeDialog } = props
   const { t } = useTranslation()
   const rules = useRules<ExpeditionRules>()!
   const discard = useLegalMove((move: MaterialMove) =>
-    isMoveItemType(MaterialType.Card, itemIndex)(move) && move.position.location?.type === LocationType.Deck
+    isMoveItemType(MaterialType.Card, itemIndex)(move) && move.location.type === LocationType.Deck
   )
   const draw = useLegalMove(isCustomMoveType(CustomMoveType.ExchangeCard))
   const player = usePlayerId<Color>()
@@ -60,7 +60,7 @@ const HandCardRules = ({ item, closeDialog }: MaterialRulesProps) => {
   const player = usePlayerId<Color>()
   const rules = useRules<ExpeditionRules>()!
   const mine = player !== undefined && item.location?.player === player
-  const placeTokenMove = useLegalMove<MoveItem>(move => isMoveItemTypeLocation(MaterialType.Token)(move) && move.position.location.id === item.id)
+  const placeTokenMove = useLegalMove<MoveItem>(move => isMoveItemType(MaterialType.Token)(move) && move.location.id === item.id)
   const tokens = rules.material(MaterialType.Token)
   const isRevealed = mine && tokens.location(LocationType.Place).locationId(item.id).length > 0
   const playerName = usePlayerName(item.location!.player!)

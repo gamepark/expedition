@@ -11,7 +11,7 @@ import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 export const ArrowRules = ({ item, itemIndex, closeDialog }: MaterialRulesProps) => {
   const { t } = useTranslation()
   const removeArrow = useLegalMove((move: MaterialMove) =>
-    isMoveItemType(MaterialType.Arrow, itemIndex)(move) && move.position.location?.type === LocationType.ArrowsStock
+    isMoveItemType(MaterialType.Arrow, itemIndex)(move) && move.location.type === LocationType.ArrowsStock
   )
   return <>
     <h2>{arrowTitle[item.id!](t)}</h2>

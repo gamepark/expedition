@@ -1,25 +1,25 @@
 /** @jsxImportSource @emotion/react */
-import { linkButtonCss, LocationRulesProps, MaterialComponent, PlayMoveButton, useLegalMove, useLegalMoves, usePlayerId, useRules } from '@gamepark/react-game'
-import { MaterialType } from '@gamepark/expedition/material/MaterialType'
-import { LocationType } from '@gamepark/expedition/material/LocationType'
-import { Trans, useTranslation } from 'react-i18next'
-import { isBlueNode, isGreenNode, isRedNode, isRoadToNode, Node, RedNode } from '@gamepark/expedition/material/Road'
-import { TFunction } from 'i18next'
-import { displayMaterialRules, isMoveItemType, isMoveItemTypeLocation, MaterialMove, MoveItem } from '@gamepark/rules-api'
-import { arrowColors } from '@gamepark/expedition/material/ArrowColor'
-import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { css } from '@emotion/react'
+import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
+import { arrowColors } from '@gamepark/expedition/material/ArrowColor'
+import { LocationType } from '@gamepark/expedition/material/LocationType'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { Place, places2StepsFromStart } from '@gamepark/expedition/material/Place'
+import { isBlueNode, isGreenNode, isRedNode, isRoadToNode, Node, RedNode } from '@gamepark/expedition/material/Road'
 import { RuleId } from '@gamepark/expedition/rules/RuleId'
+import { linkButtonCss, LocationRulesProps, MaterialComponent, PlayMoveButton, useLegalMove, useLegalMoves, usePlayerId, useRules } from '@gamepark/react-game'
+import { displayMaterialRules, isMoveItemType, MaterialMove, MoveItem } from '@gamepark/rules-api'
 import equal from 'fast-deep-equal'
+import { TFunction } from 'i18next'
+import { Trans, useTranslation } from 'react-i18next'
 
 export const PlaceRules = ({ location, closeDialog }: LocationRulesProps) => {
   const { t } = useTranslation()
   const player = usePlayerId()
   const rules = useRules<ExpeditionRules>()
-  const placeToken = useLegalMove((move: MaterialMove) => isMoveItemType(MaterialType.Token)(move) && equal(move.position.location, location))
+  const placeToken = useLegalMove((move: MaterialMove) => isMoveItemType(MaterialType.Token)(move) && equal(move.location, location))
   const arrowMoves = useLegalMoves<MoveItem>(move =>
-    isMoveItemTypeLocation(MaterialType.Arrow)(move) && isRoadToNode(location.id, move.position.location, move.position.rotation?.z === 1)
+    isMoveItemType(MaterialType.Arrow)(move) && isRoadToNode(location.id, move.location)
   )
   return <>
     <h2>{getPlaceTitle(t, location.id)}</h2>

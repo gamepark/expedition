@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialComponent, PlayMoveButton, useLegalMoves, useRules } from '@gamepark/react-game'
-import { useTranslation } from 'react-i18next'
-import { MaterialType } from '@gamepark/expedition/material/MaterialType'
-import { isMoveItemType, ItemPosition, MoveItem } from '@gamepark/rules-api'
-import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { css } from '@emotion/react'
-import { arrowRoad, Road } from '@gamepark/expedition/material/Road'
+import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
+import { arrowRoad, Road } from '@gamepark/expedition/material/Road'
+import { MaterialComponent, PlayMoveButton, useLegalMoves, useRules } from '@gamepark/react-game'
+import { isMoveItemType, MoveItem } from '@gamepark/rules-api'
 import equal from 'fast-deep-equal'
+import { useTranslation } from 'react-i18next'
 import { getPlaceTitle } from '../locators/PlaceRules'
 
 type RoadMovesButtonsProps = {
@@ -19,7 +19,7 @@ export const RoadMovesButtons = ({ road, closeDialog }: RoadMovesButtonsProps) =
   const { t } = useTranslation()
   const rules = useRules<ExpeditionRules>()
   const legalMoves = useLegalMoves<MoveItem>(move => isMoveItemType(MaterialType.Arrow)(move)
-    && move.position.location?.type === LocationType.Road && equal(move.position.location.id, road))
+    && move.location.type === LocationType.Road && equal(move.location.id, road))
   return <>
     {legalMoves.map(move => {
       const color = rules?.material(MaterialType.Arrow).getItem((move as MoveItem).itemIndex)?.id
@@ -27,7 +27,7 @@ export const RoadMovesButtons = ({ road, closeDialog }: RoadMovesButtonsProps) =
         <p key={JSON.stringify(move)}>
           <PlayMoveButton move={move} css={placeArrowButton} onPlay={closeDialog}>
             <MaterialComponent type={MaterialType.Arrow} itemId={color} css={buttonArrowCss}/>
-            {t('rules.place.arrow', { color, destination: getPlaceTitle(t, arrowRoad(move.position as ItemPosition)[1]) })}
+            {t('rules.place.arrow', { color, destination: getPlaceTitle(t, arrowRoad(move.location)[1]) })}
           </PlayMoveButton>
         </p>
       )
