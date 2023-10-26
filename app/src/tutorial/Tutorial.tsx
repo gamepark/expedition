@@ -17,7 +17,7 @@ import { boardDescription } from '../material/BoardDescription'
 import { TutorialSetup } from './TutorialSetup'
 
 export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType> {
-  version = 1
+  version = 2
   options = { players: [{ id: Color.Blue }, { id: Color.Red }] }
   setup = new TutorialSetup()
 

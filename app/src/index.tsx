@@ -18,7 +18,7 @@ ReactDOM.render(
   <StrictMode>
     <GameProvider game="expedition" GameSetup={ExpeditionSetup} Rules={ExpeditionRules} optionsSpec={ExpeditionOptionsSpec}
                   material={material} locators={Locators} animations={new MaterialGameAnimations()} tutorial={new Tutorial()}
-                  materialI18n={materialI18n} ai={ai}>
+                  materialI18n={materialI18n} ai={ai} version={2}>
       <App/>
     </GameProvider>
   </StrictMode>,
