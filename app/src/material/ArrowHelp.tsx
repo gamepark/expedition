@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialRulesProps, PlayMoveButton, useLegalMove } from '@gamepark/react-game'
+import { MaterialHelpProps, PlayMoveButton, useLegalMove } from '@gamepark/react-game'
 import { ArrowColor } from '@gamepark/expedition/material/ArrowColor'
 import { TFunction } from 'i18next'
 import { Trans, useTranslation } from 'react-i18next'
@@ -8,7 +8,7 @@ import { RoadMovesButtons } from './RoadMovesButtons'
 import { isMoveItemType, MaterialMove } from '@gamepark/rules-api'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 
-export const ArrowRules = ({ item, itemIndex, closeDialog }: MaterialRulesProps) => {
+export const ArrowHelp = ({ item, itemIndex, closeDialog }: MaterialHelpProps) => {
   const { t } = useTranslation()
   const removeArrow = useLegalMove((move: MaterialMove) =>
     isMoveItemType(MaterialType.Arrow, itemIndex)(move) && move.location.type === LocationType.ArrowsStock

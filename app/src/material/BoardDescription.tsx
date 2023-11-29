@@ -2,7 +2,7 @@
 import board from '../images/board.jpg'
 import frenchBoard from '../images/board-fr.jpg'
 import { BoardDescription } from '@gamepark/react-game'
-import { BoardRules } from './BoardRules'
+import { BoardHelp } from './BoardHelp'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { nodes, RedNode, roads } from '@gamepark/expedition/material/Road'
 import { Location } from '@gamepark/rules-api'
@@ -19,7 +19,7 @@ class ExpeditionBoardDescription extends BoardDescription {
       { type: LocationType.Place, id: RedNode.RapaNui_South, x: 1 }
     ])
     .concat(roads.map(road => ({ type: LocationType.Road, id: road })))
-  rules = BoardRules
+  help = BoardHelp
 }
 
 export const boardDescription = new ExpeditionBoardDescription()

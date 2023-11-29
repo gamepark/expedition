@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import red from '../images/arrows/red-arrow.png'
-import blue from '../images/arrows/blue-arrow.png'
-import yellow from '../images/arrows/yellow-arrow.png'
 import { ArrowColor } from '@gamepark/expedition/material/ArrowColor'
-import { ArrowRules } from './ArrowRules'
 import { TokenDescription } from '@gamepark/react-game'
+import blue from '../images/arrows/blue-arrow.png'
+import red from '../images/arrows/red-arrow.png'
+import yellow from '../images/arrows/yellow-arrow.png'
+import { ArrowHelp } from './ArrowHelp'
 
 class ArrowDescription extends TokenDescription {
 
@@ -17,7 +17,7 @@ class ArrowDescription extends TokenDescription {
     [ArrowColor.Yellow]: yellow
   }
 
-  rules = ArrowRules
+  help = ArrowHelp
 }
 
 export const arrowDescription = new ArrowDescription()

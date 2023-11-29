@@ -7,13 +7,13 @@ import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { Place, places2StepsFromStart } from '@gamepark/expedition/material/Place'
 import { isBlueNode, isGreenNode, isRedNode, isRoadToNode, Node, RedNode } from '@gamepark/expedition/material/Road'
 import { RuleId } from '@gamepark/expedition/rules/RuleId'
-import { linkButtonCss, LocationRulesProps, MaterialComponent, PlayMoveButton, useLegalMove, useLegalMoves, usePlayerId, useRules } from '@gamepark/react-game'
-import { displayMaterialRules, isMoveItemType, MaterialMove, MoveItem } from '@gamepark/rules-api'
+import { linkButtonCss, LocationHelpProps, MaterialComponent, PlayMoveButton, useLegalMove, useLegalMoves, usePlayerId, useRules } from '@gamepark/react-game'
+import { displayMaterialHelp, isMoveItemType, MaterialMove, MoveItem } from '@gamepark/rules-api'
 import equal from 'fast-deep-equal'
 import { TFunction } from 'i18next'
 import { Trans, useTranslation } from 'react-i18next'
 
-export const PlaceRules = ({ location, closeDialog }: LocationRulesProps) => {
+export const PlaceHelp = ({ location, closeDialog }: LocationHelpProps) => {
   const { t } = useTranslation()
   const player = usePlayerId()
   const rules = useRules<ExpeditionRules>()
@@ -86,7 +86,7 @@ const getPlaceText = (t: TFunction, place: Node) => {
   if (isBlueNode(place)) return t('rules.board.place.blue')
   else if (isRedNode(place)) return (
     <Trans defaults="rules.board.place.red">
-      <PlayMoveButton css={linkButtonCss} move={displayMaterialRules(MaterialType.Ticket)} local/>
+      <PlayMoveButton css={linkButtonCss} move={displayMaterialHelp(MaterialType.Ticket)} local/>
     </Trans>
   )
   else if (isGreenNode(place)) return t('rules.board.place.green')

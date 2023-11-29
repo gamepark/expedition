@@ -7,10 +7,10 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { Road } from '@gamepark/expedition/material/Road'
 import { boardDescription, boardRatio } from '../material/BoardDescription'
 import { nodesCoordinates } from './PlaceLocator'
-import { RoadRules } from './RoadRules'
+import { RoadHelp } from './RoadHelp'
 
 export class RoadDescription extends LocationDescription<Color, MaterialType, LocationType> {
-  rules = RoadRules
+  help = RoadHelp
   rotationUnit = 'rad'
   borderRadius = 1
 
@@ -31,7 +31,7 @@ export class RoadDescription extends LocationDescription<Color, MaterialType, Lo
     return coordinates
   }
 
-  getRotation(location: Location<Color, LocationType, Road>) {
+  getRotateZ(location: Location<Color, LocationType, Road>) {
     return this.getAngle(this.getRoadCoordinates(location.id!))
   }
 

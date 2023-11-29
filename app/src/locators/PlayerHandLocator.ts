@@ -1,4 +1,4 @@
-import { HandLocator, ItemContext } from '@gamepark/react-game'
+import { getRelativePlayerIndex, HandLocator, ItemContext } from '@gamepark/react-game'
 import { Location, MaterialItem } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
@@ -10,10 +10,10 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
 
   getDisplayIndex(player: Color, context: ItemContext<Color, MaterialType, LocationType>) {
     if (context.player === undefined) {
-      return this.getRelativePlayerIndex(context, player)
+      return getRelativePlayerIndex(context, player)
     } else {
       const players = context.rules.players.length
-      return (this.getRelativePlayerIndex(context, player) + players - 1) % players
+      return (getRelativePlayerIndex(context, player) + players - 1) % players
     }
   }
 

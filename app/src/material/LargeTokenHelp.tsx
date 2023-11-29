@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialRulesProps, usePlayerName } from '@gamepark/react-game'
+import { MaterialHelpProps, usePlayerName } from '@gamepark/react-game'
 import { useTranslation } from 'react-i18next'
 
-export const LargeTokenRules = ({ item }: MaterialRulesProps) => {
+export const LargeTokenHelp = ({ item }: MaterialHelpProps) => {
   const { t } = useTranslation()
   const playerName = usePlayerName(item.id!)
   return <>

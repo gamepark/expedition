@@ -1,27 +1,29 @@
 /** @jsxImportSource @emotion/react */
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
+import { arrowRoad } from '@gamepark/expedition/material/Road'
 import { ItemContext, ItemLocator } from '@gamepark/react-game'
 import { Location, MaterialItem, XYCoordinates } from '@gamepark/rules-api'
-import Color from '@gamepark/expedition/Color'
-import { MaterialType } from '@gamepark/expedition/material/MaterialType'
-import { LocationType } from '@gamepark/expedition/material/LocationType'
-import { arrowRoad, Road } from '@gamepark/expedition/material/Road'
 import { RoadDescription } from './RoadDescription'
 
-export class RoadLocator extends ItemLocator<Color, MaterialType, LocationType> {
+export class RoadLocator extends ItemLocator {
   parentItemType = MaterialType.Board
-  rotationUnit = 'rad'
   locationDescription = new RoadDescription()
 
-  getRotateZ(item: MaterialItem<Color, LocationType>): number {
+  getRotateZ(item: MaterialItem): number {
     return this.locationDescription.getAngle(this.locationDescription.getRoadCoordinates(arrowRoad(item.location)))
   }
 
-  getPositionOnParent(location: Location<Color, LocationType, Road>): XYCoordinates {
+  getRotations(item: MaterialItem): string[] {
+    const rotateZ = this.getRotateZ(item)
+    return [`rotateZ(${rotateZ}rad)`];
+  }
+
+  getPositionOnParent(location: Location): XYCoordinates {
     const coordinates = this.locationDescription.getRoadCoordinates(location.id!)
     return { x: average(coordinates.map(c => c.x)), y: average(coordinates.map(c => c.y)) }
   }
 
-  transformOwnItemLocation(item: MaterialItem<Color, LocationType>, context: ItemContext<Color, MaterialType, LocationType>) {
+  transformOwnItemLocation(item: MaterialItem, context: ItemContext) {
     const transform = super.transformOwnItemLocation(item, context)
     const index = this.getItemIndex(item, context)
     if (index === 1) {

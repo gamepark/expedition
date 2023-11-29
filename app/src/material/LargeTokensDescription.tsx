@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { LocationType } from '@gamepark/expedition/material/LocationType'
-import { LargeTokenRules } from './LargeTokenRules'
+import { LargeTokenHelp } from './LargeTokenHelp'
 import { PlayerTokenDescription } from './PlayerTokenDescription'
 import { MaterialContext } from '@gamepark/react-game'
 
@@ -14,7 +14,7 @@ export class LargeTokenDescription extends PlayerTokenDescription {
     }))
   }
 
-  rules = LargeTokenRules
+  help = LargeTokenHelp
 }
 
 export const largeTokenDescription = new LargeTokenDescription()

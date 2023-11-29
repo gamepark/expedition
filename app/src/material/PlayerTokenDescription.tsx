@@ -7,7 +7,7 @@ import yellow from '../images/tokens/yellow-token.jpg'
 import white from '../images/tokens/white-token.jpg'
 import { RoundTokenDescription } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
-import { TokenRules } from './TokenRules'
+import { TokenHelp } from './TokenHelp'
 
 export class PlayerTokenDescription extends RoundTokenDescription {
   diameter = 1.4
@@ -22,7 +22,7 @@ export class PlayerTokenDescription extends RoundTokenDescription {
     [Color.White]: white
   }
 
-  rules = TokenRules
+  help = TokenHelp
 }
 
 export const playerTokensDescription = new PlayerTokenDescription()

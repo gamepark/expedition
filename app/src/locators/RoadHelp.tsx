@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { LocationRulesProps } from '@gamepark/react-game'
+import { LocationHelpProps } from '@gamepark/react-game'
 import { useTranslation } from 'react-i18next'
 import { RoadMovesButtons } from '../material/RoadMovesButtons'
 
-export const RoadRules = ({ location, closeDialog }: LocationRulesProps) => {
+export const RoadHelp = ({ location, closeDialog }: LocationHelpProps) => {
   const { t } = useTranslation()
   return <>
     <h2>{t('rules.road.title')}</h2>

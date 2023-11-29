@@ -1,16 +1,16 @@
-import { ItemContext, LineLocator } from '@gamepark/react-game'
-import { Coordinates, MaterialItem } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
-import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
+import { getRelativePlayerIndex, ItemContext, LineLocator } from '@gamepark/react-game'
+import { Coordinates, MaterialItem } from '@gamepark/rules-api'
 
 export class PlayerAreaLocator extends LineLocator<Color, MaterialType, LocationType> {
   getDisplayIndex(player: Color, context: ItemContext<Color, MaterialType, LocationType>) {
     if (context.player === undefined) {
-      return this.getRelativePlayerIndex(context, player)
+      return getRelativePlayerIndex(context, player)
     } else {
       const players = context.rules.players.length
-      return (this.getRelativePlayerIndex(context, player) + players - 1) % players
+      return (getRelativePlayerIndex(context, player) + players - 1) % players
     }
   }
 

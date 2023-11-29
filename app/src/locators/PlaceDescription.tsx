@@ -6,13 +6,13 @@ import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { css } from '@emotion/react'
 import { isGreenNode, Node } from '@gamepark/expedition/material/Road'
-import { PlaceRules } from './PlaceRules'
+import { PlaceHelp } from './PlaceHelp'
 
 export class PlaceDescription extends LocationDescription<Color, MaterialType, LocationType> {
   width = 1.8
   ratio = 1
   borderRadius = this.width / 2
-  rules = PlaceRules
+  help = PlaceHelp
 
   getSize(location: Location<Color, LocationType, Node>, context: MaterialContext<Color, MaterialType, LocationType>) {
     if (location.id === 0) return { width: 3, height: 3 }

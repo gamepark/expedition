@@ -83,7 +83,7 @@ import FiordlandNationalPark from '../images/cards/en/80-FiordlandNationalPark.j
 
 import { CardDescription, ItemContext } from '@gamepark/react-game'
 import { Place } from '@gamepark/expedition/material/Place'
-import { CardRules } from './CardRules'
+import { CardHelp } from './CardHelp'
 import { isCustomMove, MaterialMove } from '@gamepark/rules-api'
 import { CustomMoveType } from '@gamepark/expedition/rules/CustomMoveType'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
@@ -175,7 +175,7 @@ export class PlaceCardDescription extends CardDescription {
     [Place.FiordlandNationalPark]: FiordlandNationalPark
   }
 
-  rules = CardRules
+  help = CardHelp
 
   canDrag(move: MaterialMove, context: ItemContext): boolean {
     return super.canDrag(move, context) || this.canDrawCard(move, context)

@@ -8,7 +8,7 @@ import { MaterialComponent, PlayMoveButton, useLegalMoves, useRules } from '@gam
 import { isMoveItemType, MoveItem } from '@gamepark/rules-api'
 import equal from 'fast-deep-equal'
 import { useTranslation } from 'react-i18next'
-import { getPlaceTitle } from '../locators/PlaceRules'
+import { getPlaceTitle } from '../locators/PlaceHelp'
 
 type RoadMovesButtonsProps = {
   road: Road

@@ -7,12 +7,12 @@ import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { Place, places2StepsFromStart } from '@gamepark/expedition/material/Place'
 import { CustomMoveType } from '@gamepark/expedition/rules/CustomMoveType'
 import { RuleId } from '@gamepark/expedition/rules/RuleId'
-import { MaterialRulesProps, PlayMoveButton, useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
+import { MaterialHelpProps, PlayMoveButton, useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
 import { isCustomMoveType, isMoveItemType, MaterialMove, MoveItem } from '@gamepark/rules-api'
 import { TFunction } from 'i18next'
 import { Trans, useTranslation } from 'react-i18next'
 
-export const CardRules = (props: MaterialRulesProps) => {
+export const CardHelp = (props: MaterialHelpProps) => {
   const { item, itemIndex, closeDialog } = props
   const { t } = useTranslation()
   const rules = useRules<ExpeditionRules>()!
@@ -55,7 +55,7 @@ export const CardRules = (props: MaterialRulesProps) => {
   </>
 }
 
-const HandCardRules = ({ item, closeDialog }: MaterialRulesProps) => {
+const HandCardRules = ({ item, closeDialog }: MaterialHelpProps) => {
   const { t } = useTranslation()
   const player = usePlayerId<Color>()
   const rules = useRules<ExpeditionRules>()!

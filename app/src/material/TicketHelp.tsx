@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialRulesProps, PlayMoveButton, useLegalMove, usePlayerId, usePlayerName } from '@gamepark/react-game'
+import { MaterialHelpProps, PlayMoveButton, useLegalMove, usePlayerId, usePlayerName } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { Trans, useTranslation } from 'react-i18next'
 import { DeleteItem, isDeleteItemType } from '@gamepark/rules-api'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 
-export const TicketRules = ({ item, itemIndex, closeDialog }: MaterialRulesProps) => {
+export const TicketHelp = ({ item, itemIndex, closeDialog }: MaterialHelpProps) => {
   const { t } = useTranslation()
   const legalMove = useLegalMove<DeleteItem>(isDeleteItemType(MaterialType.Ticket, itemIndex))
   const player = usePlayerId<Color>()

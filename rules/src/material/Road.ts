@@ -273,10 +273,10 @@ export const redNodes = Object.values(RedNode).filter<RedNode>(isEnumValue)
 export const blueNodes = Object.values(BlueNode).filter<BlueNode>(isEnumValue)
 export const nodes = [StartNode, ...places, ...blueNodes, ...redNodes]
 
-export const isRoadToNode = (node: Node, location: Location): boolean => {
+export const isRoadToNode = (node: Node, location: Partial<Location>): boolean => {
   if (!Array.isArray(location.id)) return false
   if (location.rotation) return location.id[0] === node
   else return location.id[1] === node
 }
 
-export const arrowRoad = (location: Location): Road => location.rotation ? [location.id[1], location.id[0]] : location.id
+export const arrowRoad = (location: Partial<Location>): Road => location.rotation ? [location.id[1], location.id[0]] : location.id
