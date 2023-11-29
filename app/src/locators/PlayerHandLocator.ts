@@ -17,10 +17,6 @@ export class PlayerHandLocator extends HandLocator<Color, MaterialType, Location
     }
   }
 
-  isHidden(item: MaterialItem<Color, LocationType>, context: ItemContext<Color, MaterialType, LocationType>): boolean {
-    return item.location.player !== context.player
-  }
-
   getCoordinates(location: Location<Color, LocationType>, context: ItemContext<Color, MaterialType, LocationType>) {
     if (location.player === context.player) {
       const count = this.countItems(location, context)
