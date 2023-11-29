@@ -8,14 +8,10 @@ import { RoadDescription } from './RoadDescription'
 export class RoadLocator extends ItemLocator {
   parentItemType = MaterialType.Board
   locationDescription = new RoadDescription()
+  rotationUnit = 'rad'
 
   getRotateZ(item: MaterialItem): number {
     return this.locationDescription.getAngle(this.locationDescription.getRoadCoordinates(arrowRoad(item.location)))
-  }
-
-  getRotations(item: MaterialItem): string[] {
-    const rotateZ = this.getRotateZ(item)
-    return [`rotateZ(${rotateZ}rad)`];
   }
 
   getPositionOnParent(location: Location): XYCoordinates {

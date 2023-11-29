@@ -53,8 +53,7 @@ export class PlayerAreaLocator extends LineLocator<Color, MaterialType, Location
     }
   }
 
-  getRotations(item: MaterialItem<Color, LocationType>, { type, player }: ItemContext<Color, MaterialType, LocationType>): string[] {
-    const rotateZ = type === MaterialType.Card && item.location.player !== player ? -90 : 0
-    return [`rotateZ(${rotateZ}deg)`]
+  getRotateZ({ location }: MaterialItem<Color, LocationType>, { type, player }: ItemContext<Color, MaterialType, LocationType>): number {
+    return type === MaterialType.Card && location.player !== player ? -90 : 0
   }
 }
