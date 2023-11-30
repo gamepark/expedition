@@ -1,6 +1,6 @@
 {
   "name": "@gamepark/expedition-app",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "description": "React application",
   "author": "Romain Fromi <romain@game-park.com> (https://game-park.com/)",
@@ -13,8 +13,8 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@gamepark/avataaars": "^2.2.0",
-    "@gamepark/react-game": "~6.15.2",
     "@gamepark/react-client": "~6.15.2",
+    "@gamepark/react-game": "~6.15.2",
     "@gamepark/rules-api": "~6.15.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
