@@ -4,13 +4,12 @@ import ClotheColorName from '@gamepark/avataaars/dist/avatar/clothes/ClotheColor
 import SkinColor from '@gamepark/avataaars/dist/avatar/SkinColor'
 import HairColorName from '@gamepark/avataaars/dist/avatar/top/HairColorName'
 import Color from '@gamepark/expedition/Color'
-import { ArrowColor } from '@gamepark/expedition/material/ArrowColor'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { Place, places } from '@gamepark/expedition/material/Place'
 import { BlueNode, RedNode, StartNode } from '@gamepark/expedition/material/Road'
 import { MaterialTutorial, TutorialStep } from '@gamepark/react-game'
-import { isDeleteItemType, isMoveItem, isStartPlayerTurn, MaterialGame, MaterialMove } from '@gamepark/rules-api'
+import { isDeleteItemType, isMoveItem, isStartPlayerTurn, MaterialMove } from '@gamepark/rules-api'
 import { TFunction } from 'i18next'
 import { Trans } from 'react-i18next'
 import { boardDescription } from '../material/BoardDescription'
@@ -49,48 +48,52 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     },
     {
       popup: { text: (t: TFunction) => t('tuto.cards') },
-      focus: (game: MaterialGame) => this.material(game, MaterialType.Card).player(Color.Blue)
+      focus: game => ({
+        materials: [this.material(game, MaterialType.Card).player(Color.Blue)]
+      })
     },
     {
       popup: {
         text: (t: TFunction) => t('tuto.place'),
         position: { x: 45, y: 0 }
       },
-      focus: () => [
-        { type: MaterialType.Board, item: boardDescription.staticItem },
-        ...places.map(place => this.location(LocationType.Place).id(place))
-      ]
+      focus: () => ({
+        staticItems: [{ type: MaterialType.Board, item: boardDescription.staticItem }],
+        locations: places.map(place => ({ type: LocationType.Place, id: place }))
+      })
     },
     {
       popup: {
         text: (t: TFunction) => t('tuto.circles'),
         position: { x: 45, y: 0 }
       },
-      focus: (game: MaterialGame) => [
-        { type: MaterialType.Board, item: boardDescription.staticItem },
-        ...this.material(game, MaterialType.Card).player(Color.Blue).getItems().map(card =>
-          this.location(LocationType.Place).id(card.id)
-        )
-      ]
+      focus: game => ({
+        staticItems: [{ type: MaterialType.Board, item: boardDescription.staticItem }],
+        locations: this.material(game, MaterialType.Card).player(Color.Blue).getItems().map(card => (
+          { type: LocationType.Place, id: card.id }
+        ))
+      })
     },
     {
       popup: {
         text: (t: TFunction) => t('tuto.common'),
         position: { x: -20, y: 0 }
       },
-      focus: (game: MaterialGame) => [
-        this.material(game, MaterialType.Card).location(LocationType.CommonObjectives),
-        ...this.material(game, MaterialType.Card).location(LocationType.CommonObjectives).getItems().map(card =>
-          this.location(LocationType.Place).id(card.id)
-        )
-      ]
+      focus: game => ({
+        materials: [this.material(game, MaterialType.Card).location(LocationType.CommonObjectives)],
+        locations: this.material(game, MaterialType.Card).location(LocationType.CommonObjectives).getItems().map(card => (
+          { type: LocationType.Place, id: card.id }
+        ))
+      })
     },
     {
       popup: {
         text: (t: TFunction) => t('tuto.tokens'),
         position: { x: 0, y: -25 }
       },
-      focus: (game: MaterialGame) => this.material(game, MaterialType.Token).player(Color.Blue)
+      focus: game => ({
+        materials: [this.material(game, MaterialType.Token).player(Color.Blue)]
+      })
     },
     {
       popup: {
@@ -100,7 +103,9 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
       move: {
         filter: (move: MaterialMove) => isMoveItem(move) && move.location.id === Place.CanaryIslands
       },
-      focus: () => this.location(LocationType.Place).id(Place.CanaryIslands)
+      focus: () => ({
+        locations: [{ type: LocationType.Place, id: Place.CanaryIslands }]
+      })
     },
     {
       move: {
@@ -113,7 +118,9 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
         text: (t: TFunction) => t('tuto.tokens.opponent'),
         position: { x: -15, y: 25 }
       },
-      focus: (game: MaterialGame) => this.material(game, MaterialType.Token).location(LocationType.Place).locationId(Place.NorthwestPassage),
+      focus: game => ({
+        materials: [this.material(game, MaterialType.Token).location(LocationType.Place).locationId(Place.NorthwestPassage)]
+      }),
       move: { player: Color.Blue }
     },
     { move: { player: Color.Red } },
@@ -125,21 +132,31 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
       popup: {
         text: (t: TFunction) => t('tuto.arrows')
       },
-      focus: () => this.location(LocationType.ArrowsStock).id(ArrowColor.Yellow)
+      focus: game => ({
+        materials: [this.material(game, MaterialType.Arrow)],
+        scale: 0.5
+      })
     },
     {
       popup: {
         text: (t: TFunction) => t('tuto.start'),
         position: { x: -15, y: -25 }
       },
-      focus: () => this.location(LocationType.Place).id(StartNode)
+      focus: () => ({
+        locations: [{ type: LocationType.Place, id: StartNode }]
+      })
     },
     {
       popup: {
         text: (t: TFunction) => t('tuto.rome'),
         position: { x: -15, y: -25 }
       },
-      focus: () => [this.location(LocationType.Place).id(Place.Rome), this.location(LocationType.Road).id([StartNode, Place.Rome])],
+      focus: () => ({
+        locations: [
+          { type: LocationType.Place, id: Place.Rome },
+          { type: LocationType.Road, id: [StartNode, Place.Rome] }
+        ]
+      }),
       move: {
         filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.location.id[1] === Place.Rome
       }
@@ -169,7 +186,12 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
         text: (t: TFunction) => t('tuto.blue.goto'),
         position: { x: -15, y: -25 }
       },
-      focus: () => [this.location(LocationType.Place).id(BlueNode.Rome_West), this.location(LocationType.Road).id([Place.Rome, BlueNode.Rome_West])],
+      focus: () => ({
+        locations: [
+          { type: LocationType.Place, id: BlueNode.Rome_West },
+          { type: LocationType.Road, id: [Place.Rome, BlueNode.Rome_West] }
+        ]
+      }),
       move: {
         filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.location.id[1] === BlueNode.Rome_West
       }
@@ -179,11 +201,13 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
         text: (t: TFunction) => t('tuto.blue.replay'),
         position: { x: -15, y: -25 }
       },
-      focus: (game: MaterialGame) => [
-        this.location(LocationType.Place).id(Place.CanaryIslands),
-        this.location(LocationType.Road).id([BlueNode.Rome_West, Place.CanaryIslands]),
-        this.material(game, MaterialType.Token).location(LocationType.Place).locationId(Place.CanaryIslands)
-      ],
+      focus: game => ({
+        locations: [
+          { type: LocationType.Place, id: Place.CanaryIslands },
+          { type: LocationType.Road, id: [BlueNode.Rome_West, Place.CanaryIslands] }
+        ],
+        materials: [this.material(game, MaterialType.Token).location(LocationType.Place).locationId(Place.CanaryIslands)]
+      }),
       move: {
         filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.location.id[1] === Place.CanaryIslands
       }
@@ -193,10 +217,12 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
         text: (t: TFunction) => t('tuto.canary.score'),
         position: { x: -15, y: -25 }
       },
-      focus: (game: MaterialGame) => [
-        this.material(game, MaterialType.Card).id(Place.CanaryIslands),
-        this.material(game, MaterialType.Token).id(game.players[0]).location(LocationType.Card)
-      ],
+      focus: game => ({
+        materials: [
+          this.material(game, MaterialType.Card).id(Place.CanaryIslands),
+          this.material(game, MaterialType.Token).id(game.players[0]).location(LocationType.Card)
+        ]
+      }),
       move: {
         filter: (move: MaterialMove) => isStartPlayerTurn(move)
       }
@@ -224,10 +250,13 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
         text: (t: TFunction) => t('tuto.red.goto'),
         position: { x: -15, y: -25 }
       },
-      focus: () => [
-        this.location(LocationType.Place).id(RedNode.Tombouctou_West),
-        this.location(LocationType.Road).id([Place.CanaryIslands, RedNode.Tombouctou_West])
-      ],
+      focus: game => ({
+        locations: [
+          { type: LocationType.Place, id: RedNode.Tombouctou_West },
+          { type: LocationType.Road, id: [Place.CanaryIslands, RedNode.Tombouctou_West] }
+        ],
+        materials: [this.material(game, MaterialType.Token).location(LocationType.Place).locationId(Place.CanaryIslands)]
+      }),
       move: {
         filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.location.id[1] === RedNode.Tombouctou_West
       }
@@ -237,7 +266,10 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
         text: (t: TFunction) => t('tuto.red.ticket'),
         position: { x: -10, y: 10 }
       },
-      focus: (game: MaterialGame) => this.material(game, MaterialType.Ticket).player(Color.Blue),
+      focus: game => ({
+        materials: [this.material(game, MaterialType.Ticket).player(Color.Blue)],
+        scale: 0.6
+      }),
       move: {
         filter: (move: MaterialMove) => isDeleteItemType(MaterialType.Ticket)(move)
       }
@@ -247,11 +279,13 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
         text: (t: TFunction) => t('tuto.ticket'),
         position: { x: -15, y: -25 }
       },
-      focus: (game: MaterialGame) => [
-        this.location(LocationType.Place).id(Place.PuertoRico),
-        this.location(LocationType.Road).id([RedNode.Tombouctou_West, Place.PuertoRico]),
-        this.material(game, MaterialType.Token).location(LocationType.Place).locationId(Place.PuertoRico)
-      ],
+      focus: game => ({
+        locations: [
+          { type: LocationType.Place, id: Place.PuertoRico },
+          { type: LocationType.Road, id: [RedNode.Tombouctou_West, Place.PuertoRico] }
+        ],
+        materials: [this.material(game, MaterialType.Token).location(LocationType.Place).locationId(Place.PuertoRico)]
+      }),
       move: {
         filter: (move: MaterialMove) => isMoveItem(move) && move.itemIndex === 0 && move.location.id[1] === Place.PuertoRico
       }
