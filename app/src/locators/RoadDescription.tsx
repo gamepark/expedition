@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
+import Color from '@gamepark/expedition/Color'
+import { LocationType } from '@gamepark/expedition/material/LocationType'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
+import { Road } from '@gamepark/expedition/material/Road'
 import { LocationDescription } from '@gamepark/react-game'
 import { Location, XYCoordinates } from '@gamepark/rules-api'
-import Color from '@gamepark/expedition/Color'
-import { MaterialType } from '@gamepark/expedition/material/MaterialType'
-import { LocationType } from '@gamepark/expedition/material/LocationType'
-import { Road } from '@gamepark/expedition/material/Road'
 import { boardDescription, boardRatio } from '../material/BoardDescription'
 import { nodesCoordinates } from './PlaceLocator'
 import { RoadHelp } from './RoadHelp'
@@ -14,8 +14,8 @@ export class RoadDescription extends LocationDescription<Color, MaterialType, Lo
   rotationUnit = 'rad'
   borderRadius = 1
 
-  getSize(location: Location<Color, LocationType, Road>) {
-    const coordinates = this.getRoadCoordinates(location.id!)
+  getSize(road: Road) {
+    const coordinates = this.getRoadCoordinates(road)
     const distance = Math.hypot((coordinates[1].x - coordinates[0].x) * boardRatio, (coordinates[1].y - coordinates[0].y))
     return { width: 2, height: (distance - 3) * boardDescription.height / 100 }
   }

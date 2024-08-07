@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react'
+import Color from '@gamepark/expedition/Color'
+import { LocationType } from '@gamepark/expedition/material/LocationType'
+import { MaterialType } from '@gamepark/expedition/material/MaterialType'
+import { isGreenNode, Node, StartNode } from '@gamepark/expedition/material/Road'
 import { LocationDescription, MaterialContext } from '@gamepark/react-game'
 import { Location, Material } from '@gamepark/rules-api'
-import Color from '@gamepark/expedition/Color'
-import { MaterialType } from '@gamepark/expedition/material/MaterialType'
-import { LocationType } from '@gamepark/expedition/material/LocationType'
-import { css } from '@emotion/react'
-import { isGreenNode, Node } from '@gamepark/expedition/material/Road'
 import { PlaceHelp } from './PlaceHelp'
 
 export class PlaceDescription extends LocationDescription<Color, MaterialType, LocationType> {
@@ -14,9 +14,8 @@ export class PlaceDescription extends LocationDescription<Color, MaterialType, L
   borderRadius = this.width / 2
   help = PlaceHelp
 
-  getSize(location: Location<Color, LocationType, Node>, context: MaterialContext<Color, MaterialType, LocationType>) {
-    if (location.id === 0) return { width: 3, height: 3 }
-    return super.getSize(location, context)
+  getSize(node: Node) {
+    return node === StartNode ? { width: 3, height: 3 } : super.getSize(node)
   }
 
   getExtraCss(location: Location<Color, LocationType>, { rules }: MaterialContext<Color, MaterialType, LocationType>) {
