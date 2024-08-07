@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { arrowRoad } from '@gamepark/expedition/material/Road'
-import { ItemContext, ItemLocator } from '@gamepark/react-game'
+import { ItemContext, Locator } from '@gamepark/react-game'
 import { Location, MaterialItem, XYCoordinates } from '@gamepark/rules-api'
 import { RoadDescription } from './RoadDescription'
 
-export class RoadLocator extends ItemLocator {
+export class RoadLocator extends Locator {
   parentItemType = MaterialType.Board
   locationDescription = new RoadDescription()
   rotationUnit = 'rad'
