@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { ItemLocator } from '@gamepark/react-game'
+import { Locator } from '@gamepark/react-game'
 import { Location, XYCoordinates } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
@@ -8,7 +8,7 @@ import { Place } from '@gamepark/expedition/material/Place'
 import { BlueNode, Node, RedNode, StartNode } from '@gamepark/expedition/material/Road'
 import { PlaceDescription } from './PlaceDescription'
 
-export class PlaceLocator extends ItemLocator<Color, MaterialType, LocationType> {
+export class PlaceLocator extends Locator<Color, MaterialType, LocationType> {
   parentItemType = MaterialType.Board
 
   locationDescription = new PlaceDescription()
