@@ -6,6 +6,7 @@ import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { DeckLocationDescription } from './DeckLocationDescription'
 
 export class CardsDeckLocator extends DeckLocator<Color, MaterialType, LocationType> {
+  location = { type: LocationType.Deck }
   locationDescription = new DeckLocationDescription()
   coordinates = { x: -58, y: -28.5, z: 0 }
   delta = { x: -0.05, y: -0.05, z: 0.1 }

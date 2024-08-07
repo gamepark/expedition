@@ -6,7 +6,6 @@ import { LocationDescription, MaterialContext } from '@gamepark/react-game'
 import { Location } from '@gamepark/rules-api'
 
 export class PlayerHandDescription extends LocationDescription<Color, MaterialType, LocationType> {
-  location = { type: LocationType.Hand }
   width = 60
   height = 11
   borderRadius = 0.5
