@@ -1,4 +1,4 @@
-import { isEnumValue } from '@gamepark/rules-api'
+import { getEnumValues } from '@gamepark/rules-api'
 
 export enum Place {
   Svalbard = 1,
@@ -83,7 +83,7 @@ export enum Place {
   FiordlandNationalPark
 }
 
-export const places = Object.values(Place).filter<Place>(isEnumValue)
+export const places = getEnumValues(Place)
 
 export const places2StepsFromStart = [
   Place.Svalbard,
