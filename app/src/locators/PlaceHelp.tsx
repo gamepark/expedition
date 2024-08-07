@@ -8,10 +8,11 @@ import { Place, places2StepsFromStart } from '@gamepark/expedition/material/Plac
 import { isBlueNode, isGreenNode, isRedNode, isRoadToNode, Node, RedNode } from '@gamepark/expedition/material/Road'
 import { RuleId } from '@gamepark/expedition/rules/RuleId'
 import { linkButtonCss, LocationHelpProps, MaterialComponent, PlayMoveButton, useLegalMove, useLegalMoves, usePlayerId, useRules } from '@gamepark/react-game'
-import { displayMaterialHelp, isMoveItemType, MaterialMove, MoveItem } from '@gamepark/rules-api'
+import { isMoveItemType, MaterialMove, MaterialMoveBuilder, MoveItem } from '@gamepark/rules-api'
 import equal from 'fast-deep-equal'
 import { TFunction } from 'i18next'
 import { Trans, useTranslation } from 'react-i18next'
+import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
 export const PlaceHelp = ({ location, closeDialog }: LocationHelpProps) => {
   const { t } = useTranslation()

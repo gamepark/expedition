@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { linkButtonCss, PlayMoveButton } from '@gamepark/react-game'
-import { Trans, useTranslation } from 'react-i18next'
-import { displayMaterialHelp } from '@gamepark/rules-api'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
+import { linkButtonCss, PlayMoveButton } from '@gamepark/react-game'
+import { MaterialMoveBuilder } from '@gamepark/rules-api'
+import { Trans, useTranslation } from 'react-i18next'
+import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
 export const BoardHelp = () => {
   const { t } = useTranslation()
