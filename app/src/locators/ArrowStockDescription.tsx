@@ -1,23 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import Color from '@gamepark/expedition/Color'
-import { ArrowColor } from '@gamepark/expedition/material/ArrowColor'
-import { LocationType } from '@gamepark/expedition/material/LocationType'
-import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { LocationDescription } from '@gamepark/react-game'
-import { Coordinates, Location } from '@gamepark/rules-api'
 
-export class ArrowStockDescription extends LocationDescription<Color, MaterialType, LocationType> {
+export class ArrowStockDescription extends LocationDescription {
   width = 9
   ratio = 1
   borderRadius = this.width / 2
-
-  stockCoordinates: Record<ArrowColor, Coordinates> = {
-    [ArrowColor.Yellow]: { x: -59, y: -15, z: 0 },
-    [ArrowColor.Blue]: { x: -59, y: -5, z: 0 },
-    [ArrowColor.Red]: { x: -59, y: 5, z: 0 }
-  }
-
-  getCoordinates(location: Location<Color, LocationType>): Coordinates {
-    return this.stockCoordinates[location.id!]
-  }
 }

@@ -9,5 +9,4 @@ export class DeckLocationDescription extends LocationDescription<Color, Material
   width = placeCardDescription.width + 1
   height = placeCardDescription.width / placeCardDescription.ratio + 1
   borderRadius = placeCardDescription.borderRadius
-  coordinates = { x: -58.5, y: -29, z: 20 }
 }

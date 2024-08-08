@@ -11,7 +11,6 @@ import { RoadHelp } from './RoadHelp'
 
 export class RoadDescription extends LocationDescription<Color, MaterialType, LocationType> {
   help = RoadHelp
-  rotationUnit = 'rad'
   borderRadius = 1
 
   getSize(road: Road) {
