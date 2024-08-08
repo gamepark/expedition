@@ -10,8 +10,8 @@ export class RoadLocator extends Locator {
   locationDescription = new RoadDescription()
   rotationUnit = 'rad'
 
-  getRotateZ(item: MaterialItem): number {
-    return this.locationDescription.getAngle(this.locationDescription.getRoadCoordinates(arrowRoad(item.location)))
+  getRotateZ(location: Location): number {
+    return this.locationDescription.getAngle(this.locationDescription.getRoadCoordinates(arrowRoad(location)))
   }
 
   getPositionOnParent(location: Location): XYCoordinates {
@@ -19,8 +19,8 @@ export class RoadLocator extends Locator {
     return { x: average(coordinates.map(c => c.x)), y: average(coordinates.map(c => c.y)) }
   }
 
-  transformOwnItemLocation(item: MaterialItem, context: ItemContext) {
-    const transform = super.transformOwnItemLocation(item, context)
+  placeItem(item: MaterialItem, context: ItemContext) {
+    const transform = super.placeItem(item, context)
     const index = this.getItemIndex(item, context)
     if (index === 1) {
       transform.push('translateX(0.8em)')
