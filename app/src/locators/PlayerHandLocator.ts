@@ -5,8 +5,11 @@ import { Location } from '@gamepark/rules-api'
 import { PlayerHandDescription } from './PlayerHandDescription'
 
 export class PlayerHandLocator extends HandLocator {
-  location = { type: LocationType.Hand }
   locationDescription = new PlayerHandDescription()
+
+  getLocations({ player }: MaterialContext) {
+    return player !== undefined ? [{ type: LocationType.Hand, player }] : []
+  }
 
   getDisplayIndex(player: Color, context: MaterialContext) {
     if (context.player === undefined) {
@@ -15,6 +18,12 @@ export class PlayerHandLocator extends HandLocator {
       const players = context.rules.players.length
       return (getRelativePlayerIndex(context, player) + players - 1) % players
     }
+  }
+
+  placeLocation(location: Location, context: MaterialContext) {
+    const transform = super.placeLocation(location, context)
+    transform.push('translate3d(0, 0.5em, 10em)')
+    return transform
   }
 
   getCoordinates(location: Location, context: MaterialContext) {
