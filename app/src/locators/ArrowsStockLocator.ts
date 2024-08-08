@@ -1,7 +1,7 @@
-import { arrowColors } from '@gamepark/expedition/material/ArrowColor'
+import { ArrowColor, arrowColors } from '@gamepark/expedition/material/ArrowColor'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
-import { ItemContext, PileLocator } from '@gamepark/react-game'
-import { MaterialItem } from '@gamepark/rules-api'
+import { PileLocator } from '@gamepark/react-game'
+import { Coordinates, Location } from '@gamepark/rules-api'
 import { ArrowStockDescription } from './ArrowStockDescription'
 
 export class ArrowsStockLocator extends PileLocator {
@@ -9,9 +9,13 @@ export class ArrowsStockLocator extends PileLocator {
   locations = arrowColors.map(arrow => ({ type: LocationType.ArrowsStock, id: arrow }))
   locationDescription = new ArrowStockDescription()
 
-  getItemCoordinates(item: MaterialItem, context: ItemContext) {
-    const { x, y, z } = super.getItemCoordinates(item, context)
-    const { x: stockX, y: stockY } = this.locationDescription.stockCoordinates[item.id!]
-    return { x: x + stockX, y: y + stockY, z }
+  stockCoordinates: Record<ArrowColor, Coordinates> = {
+    [ArrowColor.Yellow]: { x: -59, y: -15, z: 0 },
+    [ArrowColor.Blue]: { x: -59, y: -5, z: 0 },
+    [ArrowColor.Red]: { x: -59, y: 5, z: 0 }
+  }
+
+  getCoordinates(location: Location): Coordinates {
+    return this.stockCoordinates[location.id]
   }
 }

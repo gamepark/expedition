@@ -9,7 +9,6 @@ export class PlayerHandDescription extends LocationDescription<Color, MaterialTy
   width = 60
   height = 11
   borderRadius = 0.5
-  coordinates = { x: 0, y: 0, z: 20 }
 
   getCoordinates(_location: Location<Color, LocationType>, { rules, player }: MaterialContext<Color, MaterialType, LocationType>) {
     const cards = rules.material(MaterialType.Card).location(LocationType.Hand).player(player).length
