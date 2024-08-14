@@ -22,9 +22,9 @@ export class RoadLocator extends Locator {
   placeItem(item: MaterialItem, context: ItemContext) {
     const transform = super.placeItem(item, context)
     const index = this.getItemIndex(item, context)
-    if (index === 1) {
+    if ((index === 1 && !item.location.rotation) || (index === 2 && item.location.rotation)) {
       transform.push('translateX(0.8em)')
-    } else if (index === 2) {
+    } else if ((index === 1 && item.location.rotation) || (index === 2 && !item.location.rotation)) {
       transform.push('translateX(-0.8em)')
     }
     return transform
