@@ -1,63 +1,34 @@
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
-import { getRelativePlayerIndex, ItemContext, LineLocator, MaterialContext } from '@gamepark/react-game'
-import { Location, MaterialItem } from '@gamepark/rules-api'
+import { getRelativePlayerIndex, ItemContext, Locator, MaterialContext } from '@gamepark/react-game'
+import { MaterialItem } from '@gamepark/rules-api'
+import { playerCompletedObjectivesLocator } from './PlayerCompletedObjectivesLocator'
+import { playerLargeTokenLocator } from './PlayerLargeTokenLocator'
+import { playerTicketLocator } from './PlayerTicketLocator'
+import { playerTokenLocator } from './PlayerTokenLocator'
 
-export class PlayerAreaLocator extends LineLocator {
-  getDisplayIndex(player: Color, context: MaterialContext) {
-    if (context.player === undefined) {
-      return getRelativePlayerIndex(context, player)
-    } else {
-      const players = context.rules.players.length
-      return (getRelativePlayerIndex(context, player) + players - 1) % players
-    }
-  }
-
-  getItemCoordinates(item: MaterialItem, context: ItemContext) {
-    const { x, y, z } = super.getItemCoordinates(item, context)
+export class PlayerAreaLocator extends Locator {
+  placeItem(item: MaterialItem, context: ItemContext) {
     switch (context.type) {
       case MaterialType.Token:
-        return { x: x + 30, y: y - 30, z }
+        return playerTokenLocator.placeItem(item, context)
       case MaterialType.Ticket:
-        return { x: x + 38.5, y: y - 27.2, z }
-      case MaterialType.LargeToken:
-        return { x: x + 38.5, y: y - 30.5, z }
-      default:
-        return item.location.player === context.player ? { x: x + 24, y: 28, z } : { x: x + 32, y: y - 29, z }
-    }
-  }
-
-  getCoordinates(location: Location, context: MaterialContext) {
-    const index = this.getDisplayIndex(location.player!, context)
-    const baseLocation = index * 54.5 / (context.rules.players.length - 1)
-    return { x: 0, y: baseLocation, z: 0 }
-  }
-
-  getDelta({ location }: MaterialItem, { type, player }: ItemContext) {
-    switch (type) {
-      case MaterialType.Token:
-        return { y: 1.5 }
-      case MaterialType.Ticket:
-        return { x: 0, y: 1.3, z: 0 }
-      case MaterialType.LargeToken:
-        return {}
-      default:
-        return location.player === player ? { x: -3, z: 0.01 } : { y: 1, z: 0.01 }
-    }
-  }
-
-  getDeltaMax({ location }: MaterialItem, { type, player }: ItemContext) {
-    switch (type) {
-      case MaterialType.Ticket:
-        return { y: 5 }
+        return playerTicketLocator.placeItem(item, context)
       case MaterialType.Card:
-        return location.player === player ? { x: 71.5 } : { y: 4 }
+        return playerCompletedObjectivesLocator.placeItem(item, context)
+      case MaterialType.LargeToken:
+        return playerLargeTokenLocator.placeItem(item, context)
       default:
-        return {}
+        return super.placeItem(item, context)
     }
   }
+}
 
-  getItemRotateZ({ location }: MaterialItem, { type, player }: ItemContext) {
-    return type === MaterialType.Card && location.player !== player ? -90 : 0
+export function getPlayerDisplayIndex(player: Color, context: MaterialContext) {
+  if (context.player === undefined) {
+    return getRelativePlayerIndex(context, player)
+  } else {
+    const players = context.rules.players.length
+    return (getRelativePlayerIndex(context, player) + players - 1) % players
   }
 }
