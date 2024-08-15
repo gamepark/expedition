@@ -3,13 +3,13 @@ import Color from '@gamepark/expedition/Color'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { Road } from '@gamepark/expedition/material/Road'
-import { LocationDescription } from '@gamepark/react-game'
+import { DropAreaDescription } from '@gamepark/react-game'
 import { Location, XYCoordinates } from '@gamepark/rules-api'
 import { boardDescription, boardRatio } from '../material/BoardDescription'
 import { nodesCoordinates } from './PlaceLocator'
 import { RoadHelp } from './RoadHelp'
 
-export class RoadDescription extends LocationDescription<Color, MaterialType, LocationType> {
+export class RoadDescription extends DropAreaDescription<Color, MaterialType, LocationType> {
   help = RoadHelp
   borderRadius = 1
 
