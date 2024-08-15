@@ -4,11 +4,11 @@ import Color from '@gamepark/expedition/Color'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { isGreenNode, Node, StartNode } from '@gamepark/expedition/material/Road'
-import { LocationDescription, MaterialContext } from '@gamepark/react-game'
+import { DropAreaDescription, MaterialContext } from '@gamepark/react-game'
 import { Location, Material } from '@gamepark/rules-api'
 import { PlaceHelp } from './PlaceHelp'
 
-export class PlaceDescription extends LocationDescription<Color, MaterialType, LocationType> {
+export class PlaceDescription extends DropAreaDescription<Color, MaterialType, LocationType> {
   width = 1.8
   ratio = 1
   borderRadius = this.width / 2
