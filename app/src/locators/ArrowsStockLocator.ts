@@ -15,7 +15,7 @@ export class ArrowsStockLocator extends PileLocator {
     [ArrowColor.Red]: { x: -59, y: 5, z: 0 }
   }
 
-  getPileCoordinates(location: Location): Coordinates {
+  getCoordinates(location: Location): Coordinates {
     return this.stockCoordinates[location.id]
   }
 }
