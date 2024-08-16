@@ -3,7 +3,7 @@ import { Location } from '@gamepark/rules-api'
 import { getPlayerDisplayIndex } from './PlayerAreaLocator'
 
 class PlayerCompletedObjectivesLocator extends ListLocator {
-  getOriginCoordinates(location: Location, context: MaterialContext) {
+  getCoordinates(location: Location, context: MaterialContext) {
     if (location.player === context.player) {
       return { x: 24, y: 28 }
     } else {

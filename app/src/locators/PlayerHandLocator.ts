@@ -17,7 +17,7 @@ export class PlayerHandLocator extends HandLocator {
     return transform
   }
 
-  getHandCoordinates(location: Location, context: MaterialContext) {
+  getCoordinates(location: Location, context: MaterialContext) {
     if (location.player === context.player) {
       const count = this.countItems(location, context)
       return { x: -55 + count * 3, y: 28, z: 10 }
