@@ -1,10 +1,9 @@
-import { CustomMove, ItemMove, ItemMoveType, MaterialMove } from '@gamepark/rules-api'
+import { isMoveItem, ItemMove, ItemMoveType, MaterialMove } from '@gamepark/rules-api'
 import Color from '../Color'
 import { arrowColors } from '../material/ArrowColor'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
 import { arrowRoad } from '../material/Road'
-import { CustomMoveType } from './CustomMoveType'
 import { Expedition } from './Expedition'
 import { PlayerTurn } from './PlayerTurn'
 import { RuleId } from './RuleId'
@@ -24,7 +23,7 @@ export class TicketRule extends PlayerTurn {
     }
 
     if (this.deckHasCard) {
-      moves.push(this.customMove(CustomMoveType.ExchangeCard))
+      moves.push(this.material(MaterialType.Card).location(LocationType.Deck).deck().dealOne({ type: LocationType.Hand, player: this.player }))
     }
 
     return moves
@@ -43,15 +42,11 @@ export class TicketRule extends PlayerTurn {
     return super.getRuleAfterArrowMove() ?? RuleId.PlayerTurn
   }
 
-  onCustomMove(move: CustomMove) {
-    if (move.type === CustomMoveType.ExchangeCard) {
-      const cards = this.material(MaterialType.Card).location(LocationType.Deck).sort((item) => -item.location.x!).limit(2)
-      return [
-        ...cards.moveItems({ type: LocationType.Hand, player: this.player }),
-        this.startRule(cards.length === 2 ? RuleId.ChooseCardRule : RuleId.DiscardRule)
-      ]
+  afterItemMove(move: ItemMove) {
+    super.afterItemMove(move)
+    if (isMoveItem(move) && move.itemType === MaterialType.Card && move.location.type === LocationType.Hand) {
+      return [this.startRule(RuleId.ChooseCardRule)]
     }
-
     return []
   }
 }

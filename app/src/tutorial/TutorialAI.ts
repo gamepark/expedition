@@ -2,11 +2,10 @@ import Color from '@gamepark/expedition/Color'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
-import { CustomMoveType } from '@gamepark/expedition/rules/CustomMoveType'
 import { Memory } from '@gamepark/expedition/rules/Memory'
 import { RuleId } from '@gamepark/expedition/rules/RuleId'
 import { GameAI } from '@gamepark/react-game'
-import { isEndGame, isMoveItemType, isStartPlayerTurn, MaterialGame, MaterialMove, MoveKind, playAction } from '@gamepark/rules-api'
+import { isEndGame, isMoveItem, isMoveItemType, isStartPlayerTurn, MaterialGame, MaterialMove, playAction } from '@gamepark/rules-api'
 import maxBy from 'lodash/maxBy'
 
 const TICKET_WEIGHT = 1
@@ -56,7 +55,7 @@ const countPlayerTickets = (rules: ExpeditionRules, player: Color) => {
 
 const filterStupidMoves = (rules: ExpeditionRules, legalMoves: MaterialMove[]) => {
   const moves = legalMoves.filter((move) =>
-    !isExchangeCard(move)
+    !isDrawCard(move)
     && !isPassWhenICanPlaceArrow(move, legalMoves)
     && !isPlaceFirstArrowWithTicket(rules, move)
     && !isRemoveArrowAfterPlacingArrow(rules, move))
@@ -65,7 +64,7 @@ const filterStupidMoves = (rules: ExpeditionRules, legalMoves: MaterialMove[]) =
   return moves
 }
 
-const isExchangeCard = (move: MaterialMove) => move.kind === MoveKind.CustomMove && move.type === CustomMoveType.ExchangeCard
+const isDrawCard = (move: MaterialMove) => isMoveItem(move) && move.itemType === MaterialType.Card && move.location.type === LocationType.Hand
 
 const isPassWhenICanPlaceArrow = (move: MaterialMove, legalMoves: MaterialMove[]) => isPass(move) && legalMoves.some(isPlaceArrow)
 

@@ -5,10 +5,9 @@ import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { Place, places2StepsFromStart } from '@gamepark/expedition/material/Place'
-import { CustomMoveType } from '@gamepark/expedition/rules/CustomMoveType'
 import { RuleId } from '@gamepark/expedition/rules/RuleId'
 import { MaterialHelpProps, PlayMoveButton, useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
-import { isCustomMoveType, isMoveItemType, MaterialMove, MoveItem } from '@gamepark/rules-api'
+import { isMoveItemType, MaterialMove, MoveItem } from '@gamepark/rules-api'
 import { TFunction } from 'i18next'
 import { Trans, useTranslation } from 'react-i18next'
 
@@ -19,7 +18,9 @@ export const CardHelp = (props: MaterialHelpProps) => {
   const discard = useLegalMove((move: MaterialMove) =>
     isMoveItemType(MaterialType.Card, itemIndex)(move) && move.location.type === LocationType.Deck
   )
-  const draw = useLegalMove(isCustomMoveType(CustomMoveType.ExchangeCard))
+  const draw = useLegalMove((move: MaterialMove) =>
+    isMoveItemType(MaterialType.Card, itemIndex)(move) && move.location.type === LocationType.Hand
+  )
   const player = usePlayerId<Color>()
   const deck = item.location?.type === LocationType.Deck
   const hand = item.location?.type === LocationType.Hand

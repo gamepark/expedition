@@ -1,4 +1,3 @@
-import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { HandLocator, MaterialContext } from '@gamepark/react-game'
 import { Location } from '@gamepark/rules-api'
 import { getPlayerDisplayIndex } from './PlayerAreaLocator'
@@ -6,10 +5,6 @@ import { PlayerHandDescription } from './PlayerHandDescription'
 
 export class PlayerHandLocator extends HandLocator {
   locationDescription = new PlayerHandDescription()
-
-  getLocations({ player }: MaterialContext) {
-    return player !== undefined ? [{ type: LocationType.Hand, player }] : []
-  }
 
   placeLocation(location: Location, context: MaterialContext) {
     const transform = super.placeLocation(location, context)
