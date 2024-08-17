@@ -15,7 +15,7 @@ export class ChooseCardRule extends PlayerTurnRule<Color, MaterialType, Location
 
   afterItemMove(move: ItemMove<Color, MaterialType, LocationType>) {
     if (move.itemType === MaterialType.Card) {
-      return [this.rules().startRule(RuleId.DiscardRule)]
+      return [this.startRule(RuleId.DiscardRule)]
     }
     return []
   }

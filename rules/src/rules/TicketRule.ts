@@ -24,7 +24,7 @@ export class TicketRule extends PlayerTurn {
     }
 
     if (this.deckHasCard) {
-      moves.push(this.rules().customMove(CustomMoveType.ExchangeCard))
+      moves.push(this.customMove(CustomMoveType.ExchangeCard))
     }
 
     return moves
@@ -48,7 +48,7 @@ export class TicketRule extends PlayerTurn {
       const cards = this.material(MaterialType.Card).location(LocationType.Deck).sort((item) => -item.location.x!).limit(2)
       return [
         ...cards.moveItems({ type: LocationType.Hand, player: this.player }),
-        this.rules().startRule(cards.length === 2 ? RuleId.ChooseCardRule : RuleId.DiscardRule)
+        this.startRule(cards.length === 2 ? RuleId.ChooseCardRule : RuleId.DiscardRule)
       ]
     }
 
