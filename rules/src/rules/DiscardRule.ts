@@ -12,7 +12,7 @@ export class DiscardRule extends PlayerTurnRule<Color, MaterialType, LocationTyp
 
   afterItemMove(move: ItemMove<Color, MaterialType, LocationType>) {
     if (move.itemType === MaterialType.Card) {
-      return [this.rules().startRule(RuleId.PlayerTurn)]
+      return [this.startRule(RuleId.PlayerTurn)]
     }
     return []
   }

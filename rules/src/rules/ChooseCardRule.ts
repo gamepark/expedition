@@ -23,7 +23,7 @@ export class ChooseCardRule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove) {
     if (isMoveItem(move) && move.itemType === MaterialType.Card && move.location.type === LocationType.Deck) {
-      return [this.rules().startRule(RuleId.DiscardRule)]
+      return [this.startRule(RuleId.DiscardRule)]
     }
     return []
   }

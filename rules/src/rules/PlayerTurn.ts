@@ -61,9 +61,9 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
   get passMove() {
     const nextPlayer = this.nextPlayer
     if (nextPlayer !== this.game.players[0] || !this.remind(Memory.LastTurn)) {
-      return this.rules().startPlayerTurn(RuleId.PlayerTurn, nextPlayer)
+      return this.startPlayerTurn(RuleId.PlayerTurn, nextPlayer)
     } else {
-      return this.rules().endGame()
+      return this.endGame()
     }
   }
 
@@ -85,7 +85,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
       case MaterialType.Ticket:
         if (move.type === ItemMoveType.Delete) {
           this.memorize(Memory.TicketsPlayed, ticketsPlayed => ticketsPlayed + 1)
-          consequences.push(this.rules().startRule(RuleId.TicketRule))
+          consequences.push(this.startRule(RuleId.TicketRule))
         }
         break
       case MaterialType.Card:
@@ -113,7 +113,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
     }
     const newRule = this.getRuleAfterArrowMove()
     if (newRule !== undefined) {
-      consequences.push(this.rules().startRule(newRule))
+      consequences.push(this.startRule(newRule))
     }
     return consequences
   }

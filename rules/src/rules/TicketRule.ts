@@ -44,7 +44,7 @@ export class TicketRule extends PlayerTurn {
 
   afterItemMove(move: ItemMove) {
     if (isMoveItem(move) && move.itemType === MaterialType.Card && move.location.type === LocationType.Hand) {
-      return [this.rules().startRule(RuleId.ChooseCardRule)]
+      return [this.startRule(RuleId.ChooseCardRule)]
     }
     return super.afterItemMove(move)
   }
