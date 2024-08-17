@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import back from '../images/cards/en/back.jpg'
+import { Place } from '@gamepark/expedition/material/Place'
+import { CardDescription } from '@gamepark/react-game'
 import Delani from '../images/cards/en/01-Denali.jpg'
 import MackenzieDelta from '../images/cards/en/02-MackenzieDelta.jpg'
 import NorthwestPassage from '../images/cards/en/03-NorthwestPassage.jpg'
@@ -80,14 +81,8 @@ import Uluru from '../images/cards/en/77-Uluru.jpg'
 import Perth from '../images/cards/en/78-Perth.jpg'
 import Tasmania from '../images/cards/en/79-Tasmania.jpg'
 import FiordlandNationalPark from '../images/cards/en/80-FiordlandNationalPark.jpg'
-
-import { CardDescription, ItemContext } from '@gamepark/react-game'
-import { Place } from '@gamepark/expedition/material/Place'
+import back from '../images/cards/en/back.jpg'
 import { CardHelp } from './CardHelp'
-import { isCustomMove, MaterialMove } from '@gamepark/rules-api'
-import { CustomMoveType } from '@gamepark/expedition/rules/CustomMoveType'
-import { LocationType } from '@gamepark/expedition/material/LocationType'
-import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 
 export class PlaceCardDescription extends CardDescription {
   backImage = back
@@ -176,16 +171,6 @@ export class PlaceCardDescription extends CardDescription {
   }
 
   help = CardHelp
-
-  canDrag(move: MaterialMove, context: ItemContext): boolean {
-    return super.canDrag(move, context) || this.canDrawCard(move, context)
-  }
-
-  canDrawCard(move: MaterialMove, { rules, index }: ItemContext) {
-    if (!isCustomMove(move) || move.type !== CustomMoveType.ExchangeCard) return false
-    const topDeckCard = rules.material(MaterialType.Card).location(LocationType.Deck).maxBy(item => item.location.x!)
-    return topDeckCard.getIndex() === index
-  }
 }
 
 export const placeCardDescription = new PlaceCardDescription()
