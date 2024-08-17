@@ -1,12 +1,10 @@
-import { ArrowColor, arrowColors } from '@gamepark/expedition/material/ArrowColor'
-import { LocationType } from '@gamepark/expedition/material/LocationType'
+import { ArrowColor } from '@gamepark/expedition/material/ArrowColor'
 import { PileLocator } from '@gamepark/react-game'
 import { Coordinates, Location } from '@gamepark/rules-api'
 import { ArrowStockDescription } from './ArrowStockDescription'
 
 export class ArrowsStockLocator extends PileLocator {
   radius = 3
-  locations = arrowColors.map(arrow => ({ type: LocationType.ArrowsStock, id: arrow }))
   locationDescription = new ArrowStockDescription()
 
   stockCoordinates: Record<ArrowColor, Coordinates> = {
