@@ -2,11 +2,11 @@
 import Color from '@gamepark/expedition/Color'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
-import { PileLocator } from '@gamepark/react-game'
-import { TicketStockDescription } from './TicketStockDescription'
+import { DropAreaDescription, PileLocator } from '@gamepark/react-game'
+import { ticketDescription } from '../material/TicketDescription'
 
 export class TicketStockLocator extends PileLocator<Color, MaterialType, LocationType> {
-  locationDescription = new TicketStockDescription()
+  locationDescription = new DropAreaDescription({ width: ticketDescription.width + 6, ratio: 1, borderRadius: (ticketDescription.width + 6) / 2 })
   coordinates = { x: -59, y: 18, z: 0 }
   radius = 3
 }

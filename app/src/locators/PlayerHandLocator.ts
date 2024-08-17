@@ -1,10 +1,9 @@
-import { HandLocator, MaterialContext } from '@gamepark/react-game'
+import { DropAreaDescription, HandLocator, MaterialContext } from '@gamepark/react-game'
 import { Location } from '@gamepark/rules-api'
 import { getPlayerDisplayIndex } from './PlayerAreaLocator'
-import { PlayerHandDescription } from './PlayerHandDescription'
 
 export class PlayerHandLocator extends HandLocator {
-  locationDescription = new PlayerHandDescription()
+  locationDescription = new DropAreaDescription({ width: 60, height: 11, borderRadius: 0.5 })
 
   placeLocation(location: Location, context: MaterialContext) {
     const transform = super.placeLocation(location, context)

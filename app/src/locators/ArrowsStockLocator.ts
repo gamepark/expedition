@@ -1,11 +1,10 @@
 import { ArrowColor } from '@gamepark/expedition/material/ArrowColor'
-import { PileLocator } from '@gamepark/react-game'
+import { DropAreaDescription, PileLocator } from '@gamepark/react-game'
 import { Coordinates, Location } from '@gamepark/rules-api'
-import { ArrowStockDescription } from './ArrowStockDescription'
 
 export class ArrowsStockLocator extends PileLocator {
   radius = 3
-  locationDescription = new ArrowStockDescription()
+  locationDescription = new DropAreaDescription({ width: 9, height: 9, borderRadius: 4.5 })
 
   stockCoordinates: Record<ArrowColor, Coordinates> = {
     [ArrowColor.Yellow]: { x: -59, y: -15, z: 0 },
