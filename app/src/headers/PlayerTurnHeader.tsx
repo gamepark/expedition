@@ -1,16 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import { Trans, useTranslation } from 'react-i18next'
-import { isDeleteItemType, isEndGame, isMoveItemType, isStartPlayerTurn, MaterialGame, MaterialMove } from '@gamepark/rules-api'
-import { PlayMoveButton, useGame, useLegalMoves, usePlayerName } from '@gamepark/react-game'
-import Color from '@gamepark/expedition/Color'
+import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
-import { LocationType } from '@gamepark/expedition/material/LocationType'
+import { PlayMoveButton, useLegalMoves, usePlayerName, useRules } from '@gamepark/react-game'
+import { isDeleteItemType, isEndGame, isMoveItemType, isStartPlayerTurn, MaterialMove } from '@gamepark/rules-api'
+import { Trans, useTranslation } from 'react-i18next'
 
 export const PlayerTurnHeader = () => {
   const { t } = useTranslation()
-  const game = useGame<MaterialGame<Color, MaterialType, LocationType>>()!
+  const rules = useRules<ExpeditionRules>()!
   const legalMoves = useLegalMoves<MaterialMove>()
-  const playerName = usePlayerName(game.rule!.player!)
+  const playerName = usePlayerName(rules.getActivePlayer())
   if (!legalMoves.length) {
     return <>{t('header.turn', { player: playerName })}</>
   }
