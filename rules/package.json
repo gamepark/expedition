@@ -2,6 +2,7 @@
   "name": "@gamepark/expedition",
   "version": "2.2.2",
   "description": "Expedition rules for Game Park",
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
