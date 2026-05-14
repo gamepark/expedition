@@ -23,7 +23,7 @@ export const LastTurnDialog = () => {
         <h2>{t('rules.lastTurn')}</h2>
         <p>{t('rules.lastTurn.lastPlayer', { player: lastPlayerName })}</p>
         <p>{t('rules.lastTurn.text')}</p>
-        <ThemeButton onClick={() => setExplainLastTurn(false)}>{t('OK')}</ThemeButton>
+        <ThemeButton onClick={() => setExplainLastTurn(false)}>{t('OK', { ns: 'common' })}</ThemeButton>
       </div>
     </RulesDialog>
   )
