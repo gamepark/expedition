@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { FC, HTMLAttributes } from 'react'
 import { playerColorCode } from '../locators/PlaceDescription'
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'

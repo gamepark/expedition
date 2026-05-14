@@ -1,4 +1,4 @@
-import { Coordinates, MaterialItem } from '@gamepark/rules-api'
+import { Coordinates, Location } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
@@ -10,7 +10,7 @@ export class ArrowsStockLocator extends PileLocator<Color, MaterialType, Locatio
   radius = 3
   locationDescription = new ArrowStockDescription()
 
-  getCoordinates(item: MaterialItem<Color, LocationType, ArrowColor>): Coordinates {
-    return this.locationDescription.stockCoordinates[item.id!]
+  getCoordinates(location: Location<Color, LocationType>): Coordinates {
+    return this.locationDescription.stockCoordinates[location.id as ArrowColor]
   }
 }

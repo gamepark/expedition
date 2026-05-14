@@ -22,9 +22,9 @@ export type ExpeditionOptions = {
 export const ExpeditionOptionsSpec: OptionsSpec<ExpeditionOptions> = {
   players: {
     id: {
-      label: (t: TFunction) => t('Player color'),
+      label: (t) => t('Player color', { ns: 'common' }),
       values: playerColors,
-      valueSpec: color => ({label: t => getPlayerName(color, t)})
+      valueSpec: color => ({ label: t => getPlayerName(color, t) })
     }
   }
 }
@@ -32,16 +32,16 @@ export const ExpeditionOptionsSpec: OptionsSpec<ExpeditionOptions> = {
 export function getPlayerName(playerId: Color, t: TFunction) {
   switch (playerId) {
     case Color.Red:
-      return t('Red')
-    case Color.Pink :
-      return t('Pink')
+      return t('Red', { ns: 'common' })
+    case Color.Pink:
+      return t('Pink', { ns: 'common' })
     case Color.Blue:
-      return t('Blue')
+      return t('Blue', { ns: 'common' })
     case Color.Green:
-      return t('Green')
+      return t('Green', { ns: 'common' })
     case Color.Yellow:
-      return t('Yellow')
+      return t('Yellow', { ns: 'common' })
     case Color.White:
-      return t('White')
+      return t('White', { ns: 'common' })
   }
 }

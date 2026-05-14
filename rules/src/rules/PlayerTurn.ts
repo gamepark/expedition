@@ -1,4 +1,4 @@
-import { isMoveItemLocation, ItemMove, ItemMoveType, MaterialMove, MoveItem, PlayerTurnRule, RuleMove, RuleMoveType } from '@gamepark/rules-api'
+import { isMoveItem, ItemMove, ItemMoveType, MaterialMove, MoveItem, PlayerTurnRule, RuleMove, RuleMoveType } from '@gamepark/rules-api'
 import Color from '../Color'
 import { MaterialType } from '../material/MaterialType'
 import { LocationType } from '../material/LocationType'
@@ -61,9 +61,9 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
   get passMove() {
     const nextPlayer = this.nextPlayer
     if (nextPlayer !== this.game.players[0] || !this.remind(Memory.LastTurn)) {
-      return this.rules().startPlayerTurn(RuleId.PlayerTurn, nextPlayer)
+      return this.startPlayerTurn(RuleId.PlayerTurn, nextPlayer)
     } else {
-      return this.rules().endGame()
+      return this.endGame()
     }
   }
 
@@ -85,12 +85,12 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
       case MaterialType.Ticket:
         if (move.type === ItemMoveType.Delete) {
           this.memorize(Memory.TicketsPlayed, ticketsPlayed => ticketsPlayed + 1)
-          consequences.push(this.rules().startRule(RuleId.TicketRule))
+          consequences.push(this.startRule(RuleId.TicketRule))
         }
         break
       case MaterialType.Card:
-        if (move.type === ItemMoveType.Move && move.position.location?.type === LocationType.PlayerArea) {
-          if (this.material(MaterialType.Card).location(LocationType.Hand).player(move.position.location.player).length === 0) {
+        if (move.type === ItemMoveType.Move && move.location?.type === LocationType.PlayerArea) {
+          if (this.material(MaterialType.Card).location(LocationType.Hand).player(move.location.player).length === 0) {
             this.memorize(Memory.LastTurn, true)
           }
         }
@@ -100,12 +100,12 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
 
   afterArrowMove(move: MoveItem<Color, MaterialType, LocationType>) {
     const consequences: MaterialMove[] = []
-    if (isMoveItemLocation(move) && move.position.location.type === LocationType.Road) {
+    if (isMoveItem(move) && move.location.type === LocationType.Road) {
       this.memorize(Memory.ArrowPlaced, true)
       if (!this.isFreeArrow) {
         this.memorize(Memory.ArrowsLeft, arrowsLeft => arrowsLeft - 1)
       }
-      const destination = arrowRoad(move.position)[1]
+      const destination = arrowRoad(move.location)[1]
       consequences.push(...this.onReachNode(destination))
       if (!this.arrowLeft) {
         this.memorize(Memory.LastTurn, true)
@@ -113,7 +113,7 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
     }
     const newRule = this.getRuleAfterArrowMove()
     if (newRule !== undefined) {
-      consequences.push(this.rules().startRule(newRule))
+      consequences.push(this.startRule(newRule))
     }
     return consequences
   }
@@ -145,15 +145,15 @@ export class PlayerTurn extends PlayerTurnRule<Color, MaterialType, LocationType
     const card = this.material(MaterialType.Card).id(place)
     const cardLocation = card.getItem()?.location
     if (cardLocation?.type === LocationType.CommonObjectives || cardLocation?.type === LocationType.Hand) {
-      consequences.push(card.moveItem({ location: { type: LocationType.PlayerArea, player: cardLocation.player ?? this.player } }))
+      consequences.push(card.moveItem({ type: LocationType.PlayerArea, player: cardLocation.player ?? this.player }))
       if (cardLocation.type === LocationType.Hand) {
         const token = this.material(MaterialType.Token).id(cardLocation.player).location(LocationType.Place).locationId(place)
         if (token.length) {
-          consequences.push(token.moveItem({ location: { type: LocationType.Card, parent: card.getIndex() } }))
+          consequences.push(token.moveItem({ type: LocationType.Card, parent: card.getIndex() }))
         }
       } else if (this.deckHasCard) {
         const topDeckCard = this.material(MaterialType.Card).location(LocationType.Deck).maxBy(item => item.location.x!)
-        consequences.push(topDeckCard.moveItem({ location: { type: LocationType.CommonObjectives } }))
+        consequences.push(topDeckCard.moveItem({ type: LocationType.CommonObjectives }))
       }
     }
     return consequences

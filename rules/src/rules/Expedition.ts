@@ -27,21 +27,21 @@ export class Expedition {
     const expeditionArrows = this.arrows.location(LocationType.Road).getItems()
     return this.getNextArrowOrigin().flatMap(node =>
       roads.filter(road => (road[0] === node || road[1] === node) && !expeditionArrows.some(arrow => equal(arrow.location.id, road)))
-        .map(road => stockArrows.moveItem({ location: { type: LocationType.Road, id: road }, rotation: { z: road[1] === node ? 1 : 0 } }))
+        .map(road => stockArrows.moveItem({ type: LocationType.Road, id: road, rotation: road[1] === node }))
     )
   }
 
   getNextArrowOrigin(): Node[] {
     const arrows = this.arrows.location(LocationType.Road).getItems()
     const lastArrow = this.lastArrow.getItem()
-    return lastArrow ? [arrowRoad(lastArrow)[1]] : [...new Set(arrows.map(arrow => arrowRoad(arrow)[1]).concat(StartNode))]
+    return lastArrow ? [arrowRoad(lastArrow.location)[1]] : [...new Set(arrows.map(arrow => arrowRoad(arrow.location)[1]).concat(StartNode))]
   }
 
   get lastArrow(): Material {
     const arrows = this.arrows.location(LocationType.Road).getItems()
     return this.arrows.location(LocationType.Road).filter(arrow => {
-      const destination = arrowRoad(arrow)[1]
-      return !arrows.some(otherArrow => arrowRoad(otherArrow)[0] === destination)
+      const destination = arrowRoad(arrow.location)[1]
+      return !arrows.some(otherArrow => arrowRoad(otherArrow.location)[0] === destination)
     })
   }
 

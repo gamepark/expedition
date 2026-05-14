@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import red from '../images/tokens/red-token.jpg'
 import pink from '../images/tokens/pink-token.jpg'
 import blue from '../images/tokens/blue-token.jpg'
@@ -22,7 +21,7 @@ export class PlayerTokenDescription extends RoundTokenDescription {
     [Color.White]: white
   }
 
-  rules = TokenRules
+  help = TokenRules
 }
 
 export const playerTokensDescription = new PlayerTokenDescription()

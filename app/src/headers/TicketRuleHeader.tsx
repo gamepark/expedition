@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { Trans, useTranslation } from 'react-i18next'
 import { isCustomMoveType, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { PlayMoveButton, useGame, useLegalMoves, usePlayerName } from '@gamepark/react-game'
@@ -14,7 +13,7 @@ export const TicketRuleHeader = () => {
   const exchangeCard = legalMoves.find(isCustomMoveType(CustomMoveType.ExchangeCard))
   const playerName = usePlayerName(rule.player!)
   if (legalMoves.length) {
-    return <Trans defaults="header.ticket.me"><PlayMoveButton move={exchangeCard}/></Trans>
+    return <Trans i18nKey="header.ticket.me"><PlayMoveButton move={exchangeCard}/></Trans>
   } else {
     return <>{t('header.ticket', { player: playerName })}</>
   }

@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { PileLocator } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'

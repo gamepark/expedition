@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { LocationDescription, MaterialContext } from '@gamepark/react-game'
 import { Location, Material } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'
@@ -12,11 +11,11 @@ export class PlaceDescription extends LocationDescription<Color, MaterialType, L
   width = 1.8
   ratio = 1
   borderRadius = this.width / 2
-  rules = PlaceRules
+  help = PlaceRules
 
-  getSize(location: Location<Color, LocationType, Node>, context: MaterialContext<Color, MaterialType, LocationType>) {
+  getLocationSize(location: Location<Color, LocationType, Node>, context: MaterialContext<Color, MaterialType, LocationType>) {
     if (location.id === 0) return { width: 3, height: 3 }
-    return super.getSize(location, context)
+    return super.getLocationSize(location, context)
   }
 
   getExtraCss(location: Location<Color, LocationType>, { rules }: MaterialContext<Color, MaterialType, LocationType>) {

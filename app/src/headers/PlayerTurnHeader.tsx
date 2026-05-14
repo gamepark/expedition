@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { Trans, useTranslation } from 'react-i18next'
 import { isDeleteItemType, isEndGame, isMoveItemType, isStartPlayerTurn, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { PlayMoveButton, useGame, useLegalMoves, usePlayerName } from '@gamepark/react-game'
@@ -19,29 +18,29 @@ export const PlayerTurnHeader = () => {
   const canPlaceArrow = legalMoves.some(isMoveItemType(MaterialType.Arrow))
   if (!passMove) {
     if (playTicket) {
-      return <Trans defaults="header.turn.arrowTicket"><PlayMoveButton move={playTicket}/></Trans>
+      return <Trans i18nKey="header.turn.arrowTicket"><PlayMoveButton move={playTicket}/></Trans>
     } else {
       return <>{t('header.turn.arrow')}</>
     }
   } else if (canPlaceArrow) {
     if (playTicket) {
       return (
-        <Trans defaults="header.turn.extraArrowTicket">
+        <Trans i18nKey="header.turn.extraArrowTicket">
           <PlayMoveButton move={playTicket}/>
           <PlayMoveButton move={passMove} confirmation={{ text: t('header.turn.confirm-pass')! }}/>
         </Trans>
       )
     } else {
-      return <Trans defaults="header.turn.extraArrow"><PlayMoveButton move={passMove} confirmation={{ text: t('header.turn.confirm-pass')! }}/></Trans>
+      return <Trans i18nKey="header.turn.extraArrow"><PlayMoveButton move={passMove} confirmation={{ text: t('header.turn.confirm-pass')! }}/></Trans>
     }
   } else if (playTicket) {
     return (
-      <Trans defaults="header.turn.ticket">
+      <Trans i18nKey="header.turn.ticket">
         <PlayMoveButton move={playTicket}/>
         <PlayMoveButton move={passMove}/>
       </Trans>
     )
   } else {
-    return <Trans defaults="header.turn.pass"><PlayMoveButton move={passMove}/></Trans>
+    return <Trans i18nKey="header.turn.pass"><PlayMoveButton move={passMove}/></Trans>
   }
 }

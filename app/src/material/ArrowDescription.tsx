@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import red from '../images/arrows/red-arrow.png'
 import blue from '../images/arrows/blue-arrow.png'
 import yellow from '../images/arrows/yellow-arrow.png'
@@ -10,6 +9,7 @@ class ArrowDescription extends TokenDescription {
 
   width = 1.44
   height = 4.77
+  transparency = true
 
   images = {
     [ArrowColor.Red]: red,
@@ -17,7 +17,7 @@ class ArrowDescription extends TokenDescription {
     [ArrowColor.Yellow]: yellow
   }
 
-  rules = ArrowRules
+  help = ArrowRules
 }
 
 export const arrowDescription = new ArrowDescription()

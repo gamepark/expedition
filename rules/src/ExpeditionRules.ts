@@ -24,6 +24,20 @@ export class ExpeditionRules extends SecretMaterialRules<Color, MaterialType, Lo
   implements CompetitiveScore<MaterialGame<Color, MaterialType, LocationType>, MaterialMove<Color, MaterialType, LocationType>, Color>,
     TimeLimit<MaterialGame<Color, MaterialType, LocationType>, MaterialMove<Color, MaterialType, LocationType>, Color> {
 
+  constructor(game: MaterialGame<Color, MaterialType, LocationType>) {
+    super(game)
+    const arrows = game.items?.[MaterialType.Arrow]
+    if (arrows) {
+      for (const item of arrows) {
+        const legacy = item as { rotation?: { z?: number } }
+        if (legacy.rotation !== undefined && item.location && item.location.rotation === undefined) {
+          item.location.rotation = !!legacy.rotation.z
+          delete legacy.rotation
+        }
+      }
+    }
+  }
+
   rules = {
     [RuleId.SetupKeyPlaces]: SetupKeyPlaces,
     [RuleId.PlayerTurn]: PlayerTurn,

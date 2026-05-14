@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { useTranslation } from 'react-i18next'
 import { MaterialGame } from '@gamepark/rules-api'
 import { useGame, usePlayerId, usePlayerName } from '@gamepark/react-game'

@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import back from '../images/cards/fr/back.jpg'
 import Delani from '../images/cards/fr/01-Denali.jpg'
 import MackenzieDelta from '../images/cards/fr/02-MackenzieDelta.jpg'

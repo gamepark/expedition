@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { LocationDescription } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
@@ -19,6 +18,6 @@ export class ArrowStockDescription extends LocationDescription<Color, MaterialTy
   }
 
   getCoordinates(location: Location<Color, LocationType>): Coordinates {
-    return this.stockCoordinates[location.id!]
+    return this.stockCoordinates[location.id as ArrowColor]
   }
 }

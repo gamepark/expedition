@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import back from '../images/cards/en/back.jpg'
 import Delani from '../images/cards/en/01-Denali.jpg'
 import MackenzieDelta from '../images/cards/en/02-MackenzieDelta.jpg'
@@ -81,13 +80,14 @@ import Perth from '../images/cards/en/78-Perth.jpg'
 import Tasmania from '../images/cards/en/79-Tasmania.jpg'
 import FiordlandNationalPark from '../images/cards/en/80-FiordlandNationalPark.jpg'
 
-import { CardDescription, ItemContext } from '@gamepark/react-game'
+import { CardDescription, ItemContext, MaterialContext } from '@gamepark/react-game'
 import { Place } from '@gamepark/expedition/material/Place'
 import { CardRules } from './CardRules'
-import { isCustomMove, MaterialMove } from '@gamepark/rules-api'
+import { isCustomMove, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import { CustomMoveType } from '@gamepark/expedition/rules/CustomMoveType'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
+import Color from '@gamepark/expedition/Color'
 
 export class PlaceCardDescription extends CardDescription {
   backImage = back
@@ -175,7 +175,13 @@ export class PlaceCardDescription extends CardDescription {
     [Place.FiordlandNationalPark]: FiordlandNationalPark
   }
 
-  rules = CardRules
+  help = CardRules
+
+  isFlipped(item: Partial<MaterialItem<Color, LocationType, Place>>, context: MaterialContext<Color, MaterialType, LocationType>): boolean {
+    if (item.location?.type === LocationType.Deck) return true
+    if (item.location?.type === LocationType.Hand && item.location.player !== context.player) return true
+    return false
+  }
 
   canDrag(move: MaterialMove, context: ItemContext): boolean {
     return super.canDrag(move, context) || this.canDrawCard(move, context)

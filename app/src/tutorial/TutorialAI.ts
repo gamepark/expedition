@@ -4,7 +4,7 @@ import Color from '@gamepark/expedition/Color'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
-import maxBy from 'lodash/maxBy'
+import { maxBy } from 'es-toolkit'
 import { CustomMoveType } from '@gamepark/expedition/rules/CustomMoveType'
 import { RuleId } from '@gamepark/expedition/rules/RuleId'
 import { Memory } from '@gamepark/expedition/rules/Memory'
@@ -34,7 +34,7 @@ const computeBestPath = (game: MaterialGame, bot: Color, path: MaterialMove[] = 
     }
   }
 
-  const paths = filterStupidMoves(rules, legalMoves).map(move =>
+  const paths: Path[] = filterStupidMoves(rules, legalMoves).map(move =>
     computeBestPath(applyMove(game, move, bot), bot, [...path, move], iteration + 1)
   )
 
@@ -71,7 +71,7 @@ const isPassWhenICanPlaceArrow = (move: MaterialMove, legalMoves: MaterialMove[]
 
 const isPass = (move: MaterialMove) => isStartPlayerTurn(move) || isEndGame(move)
 
-const isPlaceArrow = (move: MaterialMove) => isMoveItemType(MaterialType.Arrow)(move) && move.position.location?.type === LocationType.Road
+const isPlaceArrow = (move: MaterialMove) => isMoveItemType(MaterialType.Arrow)(move) && move.location?.type === LocationType.Road
 
 const isPlaceFirstArrowWithTicket = (rules: ExpeditionRules, move: MaterialMove) =>
   !arrowWasPlaced(rules) && rules.game.rule?.id === RuleId.TicketRule && isPlaceArrow(move)
@@ -80,7 +80,7 @@ const isRemoveArrowAfterPlacingArrow = (rules: ExpeditionRules, move: MaterialMo
 
 const arrowWasPlaced = (rules: ExpeditionRules) => rules.rulesStep?.remind(Memory.ArrowPlaced)
 
-const isRemoveArrow = (move: MaterialMove) => isMoveItemType(MaterialType.Arrow)(move) && move.position.location?.type === LocationType.ArrowsStock
+const isRemoveArrow = (move: MaterialMove) => isMoveItemType(MaterialType.Arrow)(move) && move.location?.type === LocationType.ArrowsStock
 
 
 

@@ -1,11 +1,11 @@
-/** @jsxImportSource @emotion/react */
-import { linkButtonCss, LocationRulesProps, MaterialComponent, PlayMoveButton, useLegalMove, useLegalMoves, usePlayerId, useRules } from '@gamepark/react-game'
+import { linkButtonCss, LocationHelpProps, MaterialComponent, PlayMoveButton, useLegalMove, useLegalMoves, usePlayerId, useRules } from '@gamepark/react-game'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { Trans, useTranslation } from 'react-i18next'
 import { isBlueNode, isGreenNode, isRedNode, isRoadToNode, Node, RedNode } from '@gamepark/expedition/material/Road'
 import { TFunction } from 'i18next'
-import { displayMaterialRules, isMoveItemType, isMoveItemTypeLocation, MaterialMove, MoveItem } from '@gamepark/rules-api'
+import { isMoveItemType, MaterialMove, MaterialMoveBuilder, MoveItem } from '@gamepark/rules-api'
+import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 import { arrowColors } from '@gamepark/expedition/material/ArrowColor'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { css } from '@emotion/react'
@@ -13,13 +13,13 @@ import { Place, places2StepsFromStart } from '@gamepark/expedition/material/Plac
 import { RuleId } from '@gamepark/expedition/rules/RuleId'
 import equal from 'fast-deep-equal'
 
-export const PlaceRules = ({ location, closeDialog }: LocationRulesProps) => {
+export const PlaceRules = ({ location, closeDialog }: LocationHelpProps) => {
   const { t } = useTranslation()
   const player = usePlayerId()
   const rules = useRules<ExpeditionRules>()
-  const placeToken = useLegalMove((move: MaterialMove) => isMoveItemType(MaterialType.Token)(move) && equal(move.position.location, location))
+  const placeToken = useLegalMove((move: MaterialMove) => isMoveItemType(MaterialType.Token)(move) && equal(move.location, location))
   const arrowMoves = useLegalMoves<MoveItem>(move =>
-    isMoveItemTypeLocation(MaterialType.Arrow)(move) && isRoadToNode(location.id, move.position.location, move.position.rotation?.z === 1)
+    isMoveItemType(MaterialType.Arrow)(move) && isRoadToNode(location.id, move.location)
   )
   return <>
     <h2>{getPlaceTitle(t, location.id)}</h2>
@@ -85,8 +85,8 @@ export const getPlaceTitle = (t: TFunction, place: Node) => {
 const getPlaceText = (t: TFunction, place: Node) => {
   if (isBlueNode(place)) return t('rules.board.place.blue')
   else if (isRedNode(place)) return (
-    <Trans defaults="rules.board.place.red">
-      <PlayMoveButton css={linkButtonCss} move={displayMaterialRules(MaterialType.Ticket)} local/>
+    <Trans i18nKey="rules.board.place.red">
+      <PlayMoveButton css={linkButtonCss} move={displayMaterialHelp(MaterialType.Ticket)} local/>
     </Trans>
   )
   else if (isGreenNode(place)) return t('rules.board.place.green')

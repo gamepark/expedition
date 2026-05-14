@@ -1,6 +1,6 @@
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { PlaceLocator } from './PlaceLocator'
-import { ItemLocator } from '@gamepark/react-game'
+import { Locator } from '@gamepark/react-game'
 import { PlayerHandLocator } from './PlayerHandLocator'
 import { CardsDeckLocator } from './CardsDeckLocator'
 import Color from '@gamepark/expedition/Color'
@@ -13,7 +13,7 @@ import { CardLocator } from './CardLocator'
 import { BoardLocator } from './BoardLocator'
 import { TicketStockLocator } from './TicketStockLocator'
 
-export const Locators: Record<LocationType, ItemLocator<Color, MaterialType, LocationType>> = {
+export const Locators: Record<LocationType, Locator<Color, MaterialType, LocationType>> = {
   [LocationType.Place]: new PlaceLocator(),
   [LocationType.Road]: new RoadLocator(),
   [LocationType.Hand]: new PlayerHandLocator(),

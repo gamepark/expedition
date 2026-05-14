@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { Trans, useTranslation } from 'react-i18next'
 import { isEndGame, isStartPlayerTurn, MaterialMove } from '@gamepark/rules-api'
 import { PlayMoveButton, useLegalMove, usePlayerName, useRules } from '@gamepark/react-game'
@@ -16,7 +15,7 @@ export const LoopRuleHeader = () => {
     return <>{t('header.loop', { player: playerName, arrow })}</>
   }
   return (
-    <Trans defaults="header.loop.me" values={{ arrow }}>
+    <Trans i18nKey="header.loop.me" values={{ arrow }}>
       <PlayMoveButton move={passMove}/>
     </Trans>
   )

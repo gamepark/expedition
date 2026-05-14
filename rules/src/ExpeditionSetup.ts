@@ -44,7 +44,7 @@ export class ExpeditionSetup extends MaterialGameSetup<Color, MaterialType, Loca
   dealPlayerCards(player: Color, quantity: number) {
     this.material(MaterialType.Card).location(LocationType.Deck)
       .sort(item => -item.location.x!).limit(quantity)
-      .moveItems({ location: { type: LocationType.Hand, player } })
+      .moveItems({ type: LocationType.Hand, player })
   }
 
   hasEnoughCards2StepsFromStart(player: Color) {
@@ -54,14 +54,14 @@ export class ExpeditionSetup extends MaterialGameSetup<Color, MaterialType, Loca
   }
 
   discardCards(player: Color) {
-    this.material(MaterialType.Card).location(LocationType.Hand).player(player).moveItems({ location: { type: LocationType.Deck, x: 0 } })
+    this.material(MaterialType.Card).location(LocationType.Hand).player(player).moveItems({ type: LocationType.Deck, x: 0 })
   }
 
   revealCommonObjectives() {
     this.drawCommonObjectives(COMMON_OBJECTIVES)
     let cardsToReplace
     while ((cardsToReplace = this.getCommonObjectives2StepsFromStart()).length > 0) {
-      cardsToReplace.moveItems({ location: { type: LocationType.Deck, x: 0 } })
+      cardsToReplace.moveItems({ type: LocationType.Deck, x: 0 })
       this.drawCommonObjectives(cardsToReplace.length)
     }
   }
@@ -69,7 +69,7 @@ export class ExpeditionSetup extends MaterialGameSetup<Color, MaterialType, Loca
   drawCommonObjectives(quantity: number) {
     this.material(MaterialType.Card).location(LocationType.Deck)
       .sort(item => -item.location.x!).limit(quantity)
-      .moveItems({ location: { type: LocationType.CommonObjectives } })
+      .moveItems({ type: LocationType.CommonObjectives })
   }
 
   getCommonObjectives2StepsFromStart() {
