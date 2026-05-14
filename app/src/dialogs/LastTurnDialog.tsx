@@ -31,15 +31,21 @@ export const LastTurnDialog = () => {
 
 const rulesCss = css`
   max-width: 40em;
-  margin: 1em;
+  padding: 1em 1em 1.5em;
   font-size: 3em;
 
   > h2 {
-    margin: 0 1em;
+    margin: 0 2em 0.8em 0;
     text-align: center;
   }
 
   > p {
     white-space: break-spaces;
+    margin: 0.5em 0;
+  }
+
+  > button {
+    display: block;
+    margin: 1em auto 0;
   }
 `
