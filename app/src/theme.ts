@@ -1,6 +1,5 @@
 import { css } from '@emotion/react'
 import { BottomBarNavigation, buttonCss, GameTheme } from '@gamepark/react-game'
-import background from './images/board.jpg'
 
 type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P]
@@ -17,11 +16,7 @@ const oceanMid = '#2d6a8e'
 
 export const expeditionTheme: DeepPartial<GameTheme> = {
   root: {
-    fontFamily: '"Cinzel", "Trajan Pro", "Cormorant Garamond", Georgia, serif',
-    background: {
-      image: background,
-      overlay: 'rgba(15, 35, 55, 0.78)'
-    }
+    fontFamily: '"Cinzel", "Trajan Pro", "Cormorant Garamond", Georgia, serif'
   },
   dialog: {
     backgroundColor: parchment,
