@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { useState } from 'react'
 import { usePlayerId, useRules } from '@gamepark/react-game'
 import { css } from '@emotion/react'

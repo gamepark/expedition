@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { Locator } from '@gamepark/react-game'
 import { Location, XYCoordinates } from '@gamepark/rules-api'
 import Color from '@gamepark/expedition/Color'

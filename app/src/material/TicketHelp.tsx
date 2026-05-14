@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialHelpProps, PlayMoveButton, useLegalMove, usePlayerId, usePlayerName } from '@gamepark/react-game'
 import Color from '@gamepark/expedition/Color'
 import { Trans, useTranslation } from 'react-i18next'
@@ -23,6 +22,6 @@ export const TicketHelp = ({ item, itemIndex, closeDialog }: MaterialHelpProps) 
     {owner !== undefined && !mine &&
       <p>{t('rules.ticket.other', { number: item.quantity, player: playerName })}</p>}
     <hr/>
-    <p><Trans defaults="rules.ticket.purpose"><strong/></Trans></p>
+    <p><Trans i18nKey="rules.ticket.purpose"><strong/></Trans></p>
   </>
 }

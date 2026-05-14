@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { RulesDialog, ThemeButton, usePlayerName, useRules } from '@gamepark/react-game'
 import { useEffect, useState } from 'react'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'

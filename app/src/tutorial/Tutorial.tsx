@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { ClotheType, EyebrowType, EyeType, FacialHairType, GraphicType, MouthType, TopType } from '@gamepark/avataaars'
 import ClotheColorName from '@gamepark/avataaars/dist/avatar/clothes/ClotheColorName'
 import SkinColor from '@gamepark/avataaars/dist/avatar/SkinColor'
@@ -41,7 +40,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
 
   steps: TutorialStep<Color, MaterialType, LocationType>[] = [
     {
-      popup: { text: () => <Trans defaults="tuto.welcome"><strong/></Trans> }
+      popup: { text: () => <Trans i18nKey="tuto.welcome"><strong/></Trans> }
     },
     {
       popup: { text: (t: TFunction) => t('tuto.goal') }
@@ -297,7 +296,7 @@ export class Tutorial extends MaterialTutorial<Color, MaterialType, LocationType
     },
     {
       popup: {
-        text: () => <Trans defaults="tuto.loop"><strong/></Trans>
+        text: () => <Trans i18nKey="tuto.loop"><strong/></Trans>
       }
     },
     {

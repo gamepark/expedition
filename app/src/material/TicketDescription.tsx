@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { TokenDescription } from '@gamepark/react-game'
 import ticket from '../images/ticket.jpg'

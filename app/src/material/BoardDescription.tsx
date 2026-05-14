@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import board from '../images/board.jpg'
 import frenchBoard from '../images/board-fr.jpg'
 import { BoardDescription } from '@gamepark/react-game'

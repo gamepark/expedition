@@ -12,6 +12,6 @@ export class ArrowsStockLocator extends PileLocator {
   }
 
   getCoordinates(location: Location): Coordinates {
-    return this.stockCoordinates[location.id]
+    return this.stockCoordinates[location.id as ArrowColor]
   }
 }

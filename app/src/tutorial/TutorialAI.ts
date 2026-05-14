@@ -6,7 +6,7 @@ import { Memory } from '@gamepark/expedition/rules/Memory'
 import { RuleId } from '@gamepark/expedition/rules/RuleId'
 import { GameAI } from '@gamepark/react-game'
 import { isEndGame, isMoveItem, isMoveItemType, isStartPlayerTurn, MaterialGame, MaterialMove, playAction } from '@gamepark/rules-api'
-import maxBy from 'lodash/maxBy'
+import { maxBy } from 'es-toolkit'
 
 const TICKET_WEIGHT = 1
 type Path = { moves: MaterialMove<Color, MaterialType, LocationType>[], score: number }

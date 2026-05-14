@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialHelpProps, usePlayerName } from '@gamepark/react-game'
 import { useTranslation } from 'react-i18next'
 

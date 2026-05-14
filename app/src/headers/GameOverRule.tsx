@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { Trans, useTranslation } from 'react-i18next'
 import { usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
 import { css } from '@emotion/react'
@@ -12,12 +11,12 @@ export const GameOverRule = () => {
     <div css={rulesCss}>
       <h2>{t('rules.end')}</h2>
       <p><strong>{t('rules.score')}</strong></p>
-      <p><Trans defaults="rules.score.card"><strong css={css`color: darkgreen;`}/></Trans></p>
-      <p><Trans defaults="rules.score.token"><strong css={css`color: darkgreen;`}/></Trans></p>
-      <p><Trans defaults="rules.malus.card"><strong css={css`color: darkred;`}/></Trans></p>
-      <p><Trans defaults="rules.malus.token"><strong css={css`color: darkred;`}/></Trans></p>
+      <p><Trans i18nKey="rules.score.card"><strong css={css`color: darkgreen;`}/></Trans></p>
+      <p><Trans i18nKey="rules.score.token"><strong css={css`color: darkgreen;`}/></Trans></p>
+      <p><Trans i18nKey="rules.malus.card"><strong css={css`color: darkred;`}/></Trans></p>
+      <p><Trans i18nKey="rules.malus.token"><strong css={css`color: darkred;`}/></Trans></p>
       <p>{t('rules.winner')}</p>
-      {player && <p><Trans defaults="rules.score.mine" values={{
+      {player && <p><Trans i18nKey="rules.score.mine" values={{
         score: rules.getScore(player),
         tickets: rules.getTieBreaker(1, player)
       }}><strong css={css`color: darkgreen;`}/><strong css={css`color: darkred;`}/></Trans></p>}
@@ -28,7 +27,7 @@ export const GameOverRule = () => {
 
 const PlayerStats = ({ rules, player }: { rules: ExpeditionRules, player: number }) => {
   const playerName = usePlayerName(player)
-  return <p><Trans defaults="rules.score.player" values={{
+  return <p><Trans i18nKey="rules.score.player" values={{
     player: playerName,
     score: rules.getScore(player),
     tickets: rules.getTieBreaker(1, player)

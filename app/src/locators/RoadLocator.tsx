@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { arrowRoad } from '@gamepark/expedition/material/Road'
 import { ItemContext, Locator } from '@gamepark/react-game'

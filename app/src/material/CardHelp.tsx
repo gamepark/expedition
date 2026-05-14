@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import Color from '@gamepark/expedition/Color'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
@@ -69,7 +68,7 @@ const HandCardRules = ({ item, closeDialog }: MaterialHelpProps) => {
     {mine && !isRevealed && <p>{t('rules.card.hand.private')}</p>}
     {mine && isRevealed && <p>{t('rules.card.hand.revealed')}</p>}
     {placeTokenMove &&
-      <Trans defaults="rules.card.hand.place.token">
+      <Trans i18nKey="rules.card.hand.place.token">
         <PlayMoveButton move={placeTokenMove} onPlay={closeDialog}/>
       </Trans>
     }

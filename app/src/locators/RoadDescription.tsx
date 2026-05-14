@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import Color from '@gamepark/expedition/Color'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'

@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { Place } from '@gamepark/expedition/material/Place'
 import { CardDescription } from '@gamepark/react-game'
 import Delani from '../images/cards/en/01-Denali.jpg'

@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { ArrowColor } from '@gamepark/expedition/material/ArrowColor'
 import { TokenDescription } from '@gamepark/react-game'
 import blue from '../images/arrows/blue-arrow.png'
@@ -10,6 +9,7 @@ class ArrowDescription extends TokenDescription {
 
   width = 1.44
   height = 4.77
+  transparency = true
 
   images = {
     [ArrowColor.Red]: red,

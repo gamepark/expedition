@@ -1,5 +1,4 @@
 import { OptionsSpec } from '@gamepark/rules-api'
-import { TFunction } from 'i18next'
 import Color, { playerColors } from './Color'
 
 /**
@@ -22,18 +21,18 @@ export type ExpeditionOptions = {
 export const ExpeditionOptionsSpec: OptionsSpec<ExpeditionOptions> = {
   players: {
     id: {
-      label: (t: TFunction) => t('Player color'),
+      label: (t) => t('Player color'),
       values: playerColors,
-      valueSpec: color => ({label: t => getPlayerName(color, t)})
+      valueSpec: color => ({ label: t => getPlayerName(color, t) })
     }
   }
 }
 
-export function getPlayerName(playerId: Color, t: TFunction) {
+export function getPlayerName(playerId: Color, t: (key: string) => string) {
   switch (playerId) {
     case Color.Red:
       return t('Red')
-    case Color.Pink :
+    case Color.Pink:
       return t('Pink')
     case Color.Blue:
       return t('Blue')

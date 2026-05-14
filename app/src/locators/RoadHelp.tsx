@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { LocationHelpProps } from '@gamepark/react-game'
 import { useTranslation } from 'react-i18next'
 import { RoadMovesButtons } from '../material/RoadMovesButtons'

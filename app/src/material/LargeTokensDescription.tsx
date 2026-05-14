@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { LargeTokenHelp } from './LargeTokenHelp'
 import { PlayerTokenDescription } from './PlayerTokenDescription'

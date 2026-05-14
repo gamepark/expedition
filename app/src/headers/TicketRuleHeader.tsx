@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import Color from '@gamepark/expedition/Color'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
@@ -15,7 +14,7 @@ export const TicketRuleHeader = () => {
   )
   const playerName = usePlayerName(rule.player!)
   if (legalMoves.length) {
-    return <Trans defaults="header.ticket.me"><PlayMoveButton move={exchangeCard}/></Trans>
+    return <Trans i18nKey="header.ticket.me"><PlayMoveButton move={exchangeCard}/></Trans>
   } else {
     return <>{t('header.ticket', { player: playerName })}</>
   }

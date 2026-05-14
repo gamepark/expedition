@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { arrowColors } from '@gamepark/expedition/material/ArrowColor'
@@ -86,7 +85,7 @@ export const getPlaceTitle = (t: TFunction, place: Node) => {
 const getPlaceText = (t: TFunction, place: Node) => {
   if (isBlueNode(place)) return t('rules.board.place.blue')
   else if (isRedNode(place)) return (
-    <Trans defaults="rules.board.place.red">
+    <Trans i18nKey="rules.board.place.red">
       <PlayMoveButton css={linkButtonCss} move={displayMaterialHelp(MaterialType.Ticket)} local/>
     </Trans>
   )

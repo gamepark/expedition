@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { linkButtonCss, PlayMoveButton } from '@gamepark/react-game'
 import { MaterialMoveBuilder } from '@gamepark/rules-api'
@@ -13,7 +12,7 @@ export const BoardHelp = () => {
     <p>{t('rules.board.place.green')}</p>
     <p>{t('rules.board.place.blue')}</p>
     <p>
-      <Trans defaults="rules.board.place.red">
+      <Trans i18nKey="rules.board.place.red">
         <PlayMoveButton css={linkButtonCss} move={displayMaterialHelp(MaterialType.Ticket)} local/>
       </Trans>
     </p>
