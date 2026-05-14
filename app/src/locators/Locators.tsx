@@ -1,8 +1,9 @@
 import Color from '@gamepark/expedition/Color'
 import { LocationType } from '@gamepark/expedition/material/LocationType'
 import { MaterialType } from '@gamepark/expedition/material/MaterialType'
-import { DeckLocator, ListLocator, Locator, PileLocator } from '@gamepark/react-game'
+import { DeckLocator, Locator, PileLocator } from '@gamepark/react-game'
 import { ArrowsStockLocator } from './ArrowsStockLocator'
+import { CommonObjectivesLocator } from './CommonObjectivesLocator'
 import { PlaceLocator } from './PlaceLocator'
 import { PlayerAreaLocator } from './PlayerAreaLocator'
 import { PlayerHandLocator } from './PlayerHandLocator'
@@ -13,7 +14,7 @@ export const Locators: Record<LocationType, Locator<Color, MaterialType, Locatio
   [LocationType.Road]: new RoadLocator(),
   [LocationType.Hand]: new PlayerHandLocator(),
   [LocationType.Deck]: new DeckLocator({ coordinates: { x: -58, y: -28.5 } }),
-  [LocationType.CommonObjectives]: new ListLocator({ coordinates: { x: -51, y: -28.5 }, gap: { y: 9.4 } }),
+  [LocationType.CommonObjectives]: new CommonObjectivesLocator(),
   [LocationType.PlayerArea]: new PlayerAreaLocator(),
   [LocationType.ArrowsStock]: new ArrowsStockLocator(),
   [LocationType.Card]: new Locator({ parentItemType: MaterialType.Card, positionOnParent: { x: 80, y: 60 } }),

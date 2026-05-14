@@ -1,5 +1,5 @@
-import { HandLocator, MaterialContext } from '@gamepark/react-game'
-import { Location } from '@gamepark/rules-api'
+import { HandLocator, ItemContext, MaterialContext } from '@gamepark/react-game'
+import { Location, MaterialItem } from '@gamepark/rules-api'
 import { getPlayerDisplayIndex } from './PlayerAreaLocator'
 
 export class PlayerHandLocator extends HandLocator {
@@ -28,5 +28,13 @@ export class PlayerHandLocator extends HandLocator {
 
   getRadius(location: Location, { player }: MaterialContext) {
     return location.player === player ? 300 : 100
+  }
+
+  getHoverTransform(item: MaterialItem, context: ItemContext) {
+    const transform = super.getHoverTransform(item, context)
+    if (item.location.player === context.player) {
+      transform.push('translateY(-2em)')
+    }
+    return transform
   }
 }

@@ -22,6 +22,21 @@ export class PlayerAreaLocator extends Locator {
         return super.placeItem(item, context)
     }
   }
+
+  getHoverTransform(item: MaterialItem, context: ItemContext) {
+    switch (context.type) {
+      case MaterialType.Token:
+        return playerTokenLocator.getHoverTransform(item, context)
+      case MaterialType.Ticket:
+        return playerTicketLocator.getHoverTransform(item, context)
+      case MaterialType.Card:
+        return playerCompletedObjectivesLocator.getHoverTransform(item, context)
+      case MaterialType.LargeToken:
+        return playerLargeTokenLocator.getHoverTransform(item, context)
+      default:
+        return super.getHoverTransform(item, context)
+    }
+  }
 }
 
 export function getPlayerDisplayIndex(player: Color, context: MaterialContext) {

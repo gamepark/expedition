@@ -1,5 +1,5 @@
-import { ListLocator, MaterialContext } from '@gamepark/react-game'
-import { Location } from '@gamepark/rules-api'
+import { ItemContext, ListLocator, MaterialContext } from '@gamepark/react-game'
+import { Location, MaterialItem } from '@gamepark/rules-api'
 import { getPlayerDisplayIndex } from './PlayerAreaLocator'
 
 class PlayerCompletedObjectivesLocator extends ListLocator {
@@ -23,6 +23,16 @@ class PlayerCompletedObjectivesLocator extends ListLocator {
 
   getRotateZ(location: Location, { player }: MaterialContext) {
     return location.player !== player ? -90 : 0
+  }
+
+  getHoverTransform(item: MaterialItem, context: ItemContext) {
+    const transform = ['translateZ(10em)', 'scale(2)']
+    if (item.location.player === context.player) {
+      transform.push('translateY(-2em)')
+    } else {
+      transform.push('rotateZ(90deg) translateY(2em)')
+    }
+    return transform
   }
 }
 
