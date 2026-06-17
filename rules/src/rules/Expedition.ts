@@ -27,7 +27,7 @@ export class Expedition {
     const expeditionArrows = this.arrows.location(LocationType.Road).getItems()
     return this.getNextArrowOrigin().flatMap(node =>
       roads.filter(road => (road[0] === node || road[1] === node) && !expeditionArrows.some(arrow => equal(arrow.location.id, road)))
-        .map(road => stockArrows.moveItem({ type: LocationType.Road, id: road, rotation: road[1] === node }))
+        .map(road => stockArrows.moveItem({ type: LocationType.Road, id: road, rotation: road[1] === node }, 1))
     )
   }
 
