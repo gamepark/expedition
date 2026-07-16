@@ -24,7 +24,7 @@ export const ExpeditionPlayerPanel: FC<ExpeditionPlayerPanelProps> = ({ index, p
   const rules = useRules<ExpeditionRules>()
   return (
     <PlayerPanel playerId={player} color={playerColorCode[player]} css={[panelCss(player), extraCss]} {...props}>
-      <div css={indicators}>
+      <div css={indicators(player)}>
         <PlayerPanelCounter
           width={3}
           icon={faStar}
@@ -60,6 +60,22 @@ const playerGradients: Record<Color, string> = {
   [Color.White]: 'linear-gradient(135deg, #FFFAEB 0%, #BEAF91 100%)'
 }
 
+// The panels use a 135° light→dark gradient: the name / timer / score (top-left) sit on the
+// *light* end, while the counters (bottom) sit on the *dark* end. A single text colour can't be
+// readable on both, so the base colour is dark (for the top region) and the counters override to
+// cream — except White, whose gradient is light all the way through and needs dark text everywhere.
+const darkText = '#241a0d'
+const creamText = '#f4ead2'
+
+const counterTextColor: Record<Color, string> = {
+  [Color.Red]: creamText,
+  [Color.Pink]: creamText,
+  [Color.Blue]: creamText,
+  [Color.Green]: creamText,
+  [Color.Yellow]: creamText,
+  [Color.White]: darkText
+}
+
 const panelCss = (player: Color) => css`
   background: ${playerGradients[player]};
   border: 0.15em solid ${playerColorCode[player]};
@@ -67,7 +83,11 @@ const panelCss = (player: Color) => css`
   box-shadow:
     0 0.25em 0.6em rgba(0, 0, 0, 0.45),
     inset 0 0.05em 0 rgba(255, 250, 235, 0.18);
-  color: #f4ead2;
+  color: ${darkText};
+
+  h2 {
+    text-shadow: 0 0.02em 0.1em rgba(255, 250, 235, 0.35);
+  }
 `
 
 export const countPlayerTickets = (rules: ExpeditionRules, player: Color) => {
@@ -75,7 +95,7 @@ export const countPlayerTickets = (rules: ExpeditionRules, player: Color) => {
   return tickets ? tickets.quantity ?? 1 : 0
 }
 
-const indicators = css`
+const indicators = (player: Color) => css`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -84,4 +104,5 @@ const indicators = css`
   right: 0;
   justify-content: space-evenly;
   flex-wrap: wrap;
+  color: ${counterTextColor[player]};
 `
