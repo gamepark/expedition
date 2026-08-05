@@ -6,13 +6,13 @@ import { ArrowsStockLocator } from './ArrowsStockLocator'
 import { CommonObjectivesLocator } from './CommonObjectivesLocator'
 import { PlaceLocator } from './PlaceLocator'
 import { PlayerAreaLocator } from './PlayerAreaLocator'
-import { PlayerHandLocator } from './PlayerHandLocator'
+import { playerHandLocator } from './PlayerHandLocator'
 import { RoadLocator } from './RoadLocator'
 
 export const Locators: Record<LocationType, Locator<Color, MaterialType, LocationType>> = {
   [LocationType.Place]: new PlaceLocator(),
   [LocationType.Road]: new RoadLocator(),
-  [LocationType.Hand]: new PlayerHandLocator(),
+  [LocationType.Hand]: playerHandLocator,
   [LocationType.Deck]: new DeckLocator({ coordinates: { x: -58, y: -28.5 } }),
   [LocationType.CommonObjectives]: new CommonObjectivesLocator(),
   [LocationType.PlayerArea]: new PlayerAreaLocator(),
