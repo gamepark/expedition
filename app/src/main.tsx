@@ -1,4 +1,4 @@
-import { ExpeditionOptionsSpec } from '@gamepark/expedition/ExpeditionOptions'
+import { ExpeditionOptionsSpecV2 } from '@gamepark/expedition/ExpeditionOptions'
 import { ExpeditionRules } from '@gamepark/expedition/ExpeditionRules'
 import { ExpeditionSetup } from '@gamepark/expedition/ExpeditionSetup'
 import { GameProvider, MaterialGameAnimations } from '@gamepark/react-game'
@@ -17,7 +17,7 @@ createRoot(document.getElementById('root')!).render(
       game="expedition"
       GameSetup={ExpeditionSetup}
       Rules={ExpeditionRules}
-      optionsSpec={ExpeditionOptionsSpec}
+      optionsSpec={ExpeditionOptionsSpecV2}
       material={material}
       locators={Locators}
       animations={new MaterialGameAnimations()}

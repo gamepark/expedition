@@ -1,4 +1,4 @@
-import { OptionsSpec } from '@gamepark/rules-api'
+import { OptionsSpecV2 } from '@gamepark/rules-api'
 import Color, { playerColors } from './Color'
 
 /**
@@ -15,17 +15,16 @@ export type ExpeditionOptions = {
 }
 
 /**
- * This object describes all the options a game can have, and will be used by GamePark website to create automatically forms for you game
- * (forms for friendly games, or forms for matchmaking preferences, for instance).
+ * The option space of expedition: structure only.
+ *
+ * Labels live in the game's presentation document, published beside its translations at
+ * `/options/<locale>.json` and keyed by convention. Subscription and competitive gates live in
+ * the platform database, so they can change without releasing the game again.
  */
-export const ExpeditionOptionsSpec: OptionsSpec<ExpeditionOptions> = {
-  players: {
-    id: {
-      label: (t) => t('Player color'),
-      values: playerColors,
-      valueSpec: color => ({ label: t => getPlayerName(color, t) })
-    }
-  }
+export const ExpeditionOptionsSpecV2: OptionsSpecV2 = {
+  specVersion: 2,
+  players: { min: 2, max: 6 },
+  identities: { values: playerColors }
 }
 
 export function getPlayerName(playerId: Color, t: (key: string) => string) {
