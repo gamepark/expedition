@@ -1,5 +1,5 @@
 import { Material } from '@gamepark/rules-api'
-import equal from 'fast-deep-equal'
+import { isEqual } from 'es-toolkit'
 import { ArrowColor } from '../material/ArrowColor'
 import { LocationType } from '../material/LocationType'
 import { arrowRoad, Node, roads, StartNode } from '../material/Road'
@@ -26,7 +26,7 @@ export class Expedition {
     if (!stockArrows.length) return []
     const expeditionArrows = this.arrows.location(LocationType.Road).getItems()
     return this.getNextArrowOrigin().flatMap(node =>
-      roads.filter(road => (road[0] === node || road[1] === node) && !expeditionArrows.some(arrow => equal(arrow.location.id, road)))
+      roads.filter(road => (road[0] === node || road[1] === node) && !expeditionArrows.some(arrow => isEqual(arrow.location.id, road)))
         .map(road => stockArrows.moveItem({ type: LocationType.Road, id: road, rotation: road[1] === node }, 1))
     )
   }

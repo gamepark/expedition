@@ -8,7 +8,7 @@ import { isBlueNode, isGreenNode, isRedNode, isRoadToNode, Node, RedNode } from 
 import { RuleId } from '@gamepark/expedition/rules/RuleId'
 import { linkButtonCss, LocationHelpProps, MaterialComponent, PlayMoveButton, useLegalMove, useLegalMoves, usePlayerId, useRules } from '@gamepark/react-game'
 import { isMoveItemType, MaterialMove, MaterialMoveBuilder, MoveItem } from '@gamepark/rules-api'
-import equal from 'fast-deep-equal'
+import { isEqual } from 'es-toolkit'
 import { TFunction } from 'i18next'
 import { Trans, useTranslation } from 'react-i18next'
 import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
@@ -17,7 +17,7 @@ export const PlaceHelp = ({ location, closeDialog }: LocationHelpProps) => {
   const { t } = useTranslation()
   const player = usePlayerId()
   const rules = useRules<ExpeditionRules>()
-  const placeToken = useLegalMove((move: MaterialMove) => isMoveItemType(MaterialType.Token)(move) && equal(move.location, location))
+  const placeToken = useLegalMove((move: MaterialMove) => isMoveItemType(MaterialType.Token)(move) && isEqual(move.location, location))
   const arrowMoves = useLegalMoves<MoveItem>(move =>
     isMoveItemType(MaterialType.Arrow)(move) && isRoadToNode(location.id, move.location)
   )

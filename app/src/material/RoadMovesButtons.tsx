@@ -5,7 +5,7 @@ import { MaterialType } from '@gamepark/expedition/material/MaterialType'
 import { arrowRoad, Road } from '@gamepark/expedition/material/Road'
 import { MaterialComponent, PlayMoveButton, useLegalMoves, useRules } from '@gamepark/react-game'
 import { isMoveItemType, MoveItem } from '@gamepark/rules-api'
-import equal from 'fast-deep-equal'
+import { isEqual } from 'es-toolkit'
 import { useTranslation } from 'react-i18next'
 import { getPlaceTitle } from '../locators/PlaceHelp'
 
@@ -18,7 +18,7 @@ export const RoadMovesButtons = ({ road, closeDialog }: RoadMovesButtonsProps) =
   const { t } = useTranslation()
   const rules = useRules<ExpeditionRules>()
   const legalMoves = useLegalMoves<MoveItem>(move => isMoveItemType(MaterialType.Arrow)(move)
-    && move.location.type === LocationType.Road && equal(move.location.id, road))
+    && move.location.type === LocationType.Road && isEqual(move.location.id, road))
   return <>
     {legalMoves.map(move => {
       const color = rules?.material(MaterialType.Arrow).getItem((move as MoveItem).itemIndex)?.id
